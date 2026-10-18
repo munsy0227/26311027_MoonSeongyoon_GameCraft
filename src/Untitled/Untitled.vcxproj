@@ -71,6 +71,11 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalOptions>/source-charset:.949 /execution-charset:.949 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -125,9 +130,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="GameBossMob.cpp" />
+    <ClCompile Include="GameCharacter.cpp" />
     <ClCompile Include="GameInput.cpp" />
+    <ClCompile Include="GameMob.cpp" />
+    <ClCompile Include="GameNpc.cpp" />
+    <ClCompile Include="GamePlayer.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GameTime.cpp" />
+    <ClCompile Include="GraphicEngine.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -135,9 +146,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="GameBossMob.h" />
+    <ClInclude Include="GameCharacter.h" />
     <ClInclude Include="GameInput.h" />
+    <ClInclude Include="GameMob.h" />
+    <ClInclude Include="GameNpc.h" />
+    <ClInclude Include="GamePlayer.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameTime.h" />
+    <ClInclude Include="GraphicEngine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

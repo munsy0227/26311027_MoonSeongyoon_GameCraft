@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameTime.h"
+#include "GraphicEngine.h"
 
 class GameInput;
 class GameScene;
@@ -12,15 +13,24 @@ public:
 	virtual ~App();
 
 	int Init();
-	int Destroy();
-	int Update();
-	int Render();
+	void Destroy();
+	int  Update();
+	int  Render();
 
 	int Run();
 protected:
-	GameTime    m_gameTime   {};
-	GameInput*  m_pGameInput {};
-	GameScene*  m_pGameScene {};
+	GraphicEngine::GAME_WINDOW m_gameWin
+	{
+		120, 50
+		, 960, 600
+		, "GameTitle"
+		, true
+		, 1.4F
+	};
+	GraphicEngine m_graphicEngine{};
+	GameTime	m_gameTime	 {};
+	GameInput*	m_pGameInput {};
+	GameScene*  m_pGameScene {};	// 현재의 게임씬
 };
 
 extern App* g_pApp;

@@ -426,3 +426,10 @@ FodyWeavers.xsd
 
 # Official VS Code C# Dev Kit Extension exclusion
 #*.lscache
+
+# Font binaries are not bundled; use fonts installed on Windows.
+*.[tT][tT][fF]
+*.[oO][tT][fF]
+*.[tT][tT][cC]
+*.[wW][oO][fF][fF]
+*.[wW][oO][fF][fF]2

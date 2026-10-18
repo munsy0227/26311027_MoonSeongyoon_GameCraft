@@ -4,89 +4,90 @@
 
 App::App()
 {
+
 }
 
 App::~App()
 {
+
 }
 
 int App::Init()
 {
-    // GameTime 관련 초기화
-    m_gameTime.Init();
+	// Glc2d 초기화
+	if (0 > m_graphicEngine.Init(m_gameWin))
+		return -1;
 
-    // Glc2d 초기화
+	m_graphicEngine.SetColor(0xFF006699);
 
-    // Input 초기화
-    m_pGameInput = new GameInput;
-    if (0 > m_pGameInput->Init())
-    {
-        delete m_pGameInput;
-        return -1;
-    }
+	// GameTime 초기화
+	m_gameTime.Init();
 
-    // GameScene 초기화
-    m_pGameScene = new GameScene;
-    if (0 > m_pGameInput->Init())
-    {
-        Destroy();
-        return -2;
-    }
-        
+	// Input 초기화
+	m_pGameInput = new GameInput;
+	if (0 > m_pGameInput->Init())
+	{
+		Destroy();
+		return -2;
+	}
 
-    return 0;
+	//게임 씬 초기화
+	m_pGameScene = new GameScene;
+	if(0> m_pGameScene->Init())
+	{
+		Destroy();
+		return -3;
+	}
+
+	return 0;
 }
 
-int App::Destroy()
+void App::Destroy()
 {
-    if (m_pGameInput) {
-        delete m_pGameInput; m_pGameInput = nullptr;
-    }
-
-    if (m_pGameInput) {
-        delete m_pGameScene; m_pGameScene = nullptr;
-    }
-    return 0;
+	if (m_pGameInput) {
+		delete m_pGameInput; m_pGameInput = nullptr;
+	}
+	if (m_pGameScene) {
+		delete m_pGameScene; m_pGameScene = nullptr;
+	}
 }
 
-int App::Update()
+int  App::Update()
 {
-    // GameTime 관련 업데이트
+	// GameTime 업데이트
+	m_gameTime.Update();
 
-    // Input 업데이트
-    
-    // GameScene 업데이트
+	// Input 업데이트
+	if (0 > m_pGameInput->Update())
+	{
+		return -1;
+	}
 
-    return 0;
+	// GameScene 업데이트
+	if(0>m_pGameScene->Update())
+	{
+		return -1;
+	}
+
+	return 0;
 }
 
-int App::Render()
-{
-    // GameScene 렌더링
 
-    return 0;
+int  App::Render()
+{
+	// GameScene 렌더링
+	if (0 > m_pGameScene->Render())
+	{
+		return -1;
+	}
+
+	return 0;
 }
 
 int App::Run()
 {
-    int hr = 0;
-    while (true)
-    {
-        // 게임 업데이트
-        if (0 > this->Update())
-        {
-            hr = -1;
-            break;
-        }
+	m_graphicEngine.Run();
 
-        // 게임 렌더링
-        if (0 > this->Render())
-        {
-            hr = -2;
-            break;
-        }
-    }
-
-    this->Destroy();
-    return 0;
+	this->Destroy();
+	return 0;
 }

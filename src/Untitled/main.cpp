@@ -2,9 +2,7 @@
 #include "App.h"
 using namespace std;
 
-
 App* g_pApp;
-
 int main(int argc, char** argv)
 {
 	App app;
@@ -12,15 +10,14 @@ int main(int argc, char** argv)
 
 	if (0 > g_pApp->Init())
 		return 0;
-	
-	
-	auto r = g_pApp->Run();
-	//  hr 에러 처리 코드
+
+
+	auto hr = g_pApp->Run();
+	//  hr
 	{
 
 	}
 
-	cout << "Untitled \n";
 
 	return 0;
 }

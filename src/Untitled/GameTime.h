@@ -1,11 +1,10 @@
 #pragma once
 
-class GameTime
+struct GameTime
 {
-public:
 	int Init();
-	long long beginTime		{};
+	int Update();
+	long long begintime	{};
 	long long eplapsedTime	{};
-	long long deltaTime		{};		// millisecond
+	long long deltaTime	{};			// millisecond
 };
-
