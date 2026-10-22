@@ -33,6 +33,18 @@
     <ClCompile Include="GraphicEngine.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="SceneBegin.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneLobby.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenePlay.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenePlayResult.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="GameCharacter.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -81,6 +93,18 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="GamePlayer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneBegin.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneLobby.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenePlay.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenePlayResult.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

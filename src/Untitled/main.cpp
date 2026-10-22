@@ -1,18 +1,13 @@
 #include <iostream>
 #include "App.h"
-using namespace std;
 
-App* g_pApp;
 int main(int argc, char** argv)
 {
 	App app;
-	g_pApp = &app;
-
-	if (0 > g_pApp->Init())
+	if (0 > app.Init())
 		return 0;
 
-
-	auto hr = g_pApp->Run();
+	auto hr = app.Run();
 	//  hr
 	{
 

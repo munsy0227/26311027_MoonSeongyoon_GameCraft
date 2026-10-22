@@ -139,6 +139,10 @@
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="GraphicEngine.cpp" />
+    <ClCompile Include="SceneBegin.cpp" />
+    <ClCompile Include="SceneLobby.cpp" />
+    <ClCompile Include="ScenePlay.cpp" />
+    <ClCompile Include="ScenePlayResult.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +159,10 @@
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="GraphicEngine.h" />
+    <ClInclude Include="SceneBegin.h" />
+    <ClInclude Include="SceneLobby.h" />
+    <ClInclude Include="ScenePlay.h" />
+    <ClInclude Include="ScenePlayResult.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

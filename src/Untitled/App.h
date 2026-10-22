@@ -1,7 +1,8 @@
 #pragma once
-
+#include <vector>
 #include "GameTime.h"
 #include "GraphicEngine.h"
+#include "GameScene.h"
 
 class GameInput;
 class GameScene;
@@ -12,12 +13,16 @@ public:
 	App();
 	virtual ~App();
 
-	int Init();
-	void Destroy();
-	int  Update();
-	int  Render();
+	virtual int Init();
+	virtual void Destroy();
+	virtual int  Update();
+	virtual int  Render();
 
 	int Run();
+
+public:
+	void ChangeScene(GAME_PHASE nextScene);
+
 protected:
 	GraphicEngine::GAME_WINDOW m_gameWin
 	{
@@ -30,7 +35,12 @@ protected:
 	GraphicEngine m_graphicEngine{};
 	GameTime	m_gameTime	 {};
 	GameInput*	m_pGameInput {};
-	GameScene*  m_pGameScene {};	// 현재의 게임씬
+
+	std::vector<GameScene*> m_sceneList;
+	GameScene* m_pGameScene		{};	// 현재의 게임씬
+	bool       m_sceneChanged	{};
+	GAME_PHASE m_sceneCurrent	{SCENE_BEGIN};
+	GAME_PHASE m_sceneNext		{};
 };
 
 extern App* g_pApp;
