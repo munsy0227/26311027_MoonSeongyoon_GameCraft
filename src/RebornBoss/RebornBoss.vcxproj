@@ -23,7 +23,7 @@
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{c38a554f-9886-4550-83bb-20f7eb3a802f}</ProjectGuid>
-    <RootNamespace>Untitled</RootNamespace>
+    <RootNamespace>RebornBoss</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
