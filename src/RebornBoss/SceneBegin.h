@@ -4,7 +4,11 @@
 class SceneBegin : public GameScene
 {
 public:
-	SceneBegin();
+    int Init() override;
+    int Update() override;
+    int Render() override;
 
-	int Update() override;
+private:
+    int m_selected{};
+    bool m_controls{};
 };

@@ -1,0 +1,636 @@
+{
+  "date": "2026-10-26",
+  "windows_verified": false,
+  "catalog": [
+    {
+      "id": "CHR_LEON",
+      "path": "images/characters/leon_sheet.png",
+      "size": [
+        128,
+        144
+      ],
+      "origin": "character_assets_v1",
+      "runtime_variant": "images/characters/leon_animations.png",
+      "applied": true,
+      "status": "적용",
+      "sha256": "5390c74bc430a1283818a0ad29bbc4cdaa18f24c616771320790547cc4e4b966"
+    },
+    {
+      "id": "POR_LEON",
+      "path": "images/portraits/leon_portrait.png",
+      "size": [
+        320,
+        480
+      ],
+      "origin": "character_assets_v1",
+      "applied": true,
+      "status": "적용",
+      "sha256": "2c5e2bbd8cab5ed364edb3d2d5cf0ff111f90510feebd20115e39b92e02ecb3c"
+    },
+    {
+      "id": "CHR_LILLIAN",
+      "path": "images/characters/lillian_sheet.png",
+      "size": [
+        256,
+        128
+      ],
+      "origin": "character_assets_v1",
+      "runtime_variant": "images/characters/lillian_animations.png",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "6b861652543514cd7ee51b9b6d852e601da54ba3c99e1996be99c82c3a139326"
+    },
+    {
+      "id": "POR_LILLIAN",
+      "path": "images/portraits/lillian_portrait.png",
+      "size": [
+        320,
+        480
+      ],
+      "origin": "character_assets_v1",
+      "applied": true,
+      "status": "적용",
+      "sha256": "b07cef5a845cf6e56f6c0092cd0ea9431045ed7b5e2444baf9f82f35d09665f6"
+    },
+    {
+      "id": "CHR_VIVIAN",
+      "path": "images/characters/vivian_sheet.png",
+      "size": [
+        256,
+        128
+      ],
+      "origin": "character_assets_v1",
+      "runtime_variant": "images/characters/vivian_animations.png",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "2dbcfba7a00562357213b27689b01c59d8d5bda9400011018f3e0ac46daa640e"
+    },
+    {
+      "id": "POR_VIVIAN",
+      "path": "images/portraits/vivian_portrait.png",
+      "size": [
+        320,
+        480
+      ],
+      "origin": "character_assets_v1",
+      "applied": true,
+      "status": "적용",
+      "sha256": "ca5a3f402744d652bb6cd140cbb8d736de1ecbbfd9704180baf0b7d9d90da15d"
+    },
+    {
+      "id": "CHR_ELEANOR",
+      "path": "images/characters/eleanor_sheet.png",
+      "size": [
+        256,
+        128
+      ],
+      "origin": "character_assets_v1",
+      "runtime_variant": "images/characters/eleanor_animations.png",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "02b4865ced262f235df8bb4eaae0ff1428fed2cebb482307d982fdc08a42b424"
+    },
+    {
+      "id": "POR_ELEANOR",
+      "path": "images/portraits/eleanor_portrait.png",
+      "size": [
+        320,
+        480
+      ],
+      "origin": "character_assets_v1",
+      "applied": true,
+      "status": "적용",
+      "sha256": "25ea39aa04a61b7f536d786128860a922d049fabcc40a0edee4737c5a450be82"
+    },
+    {
+      "id": "BG_STAGE01",
+      "path": "images/backgrounds/stage01_forest.png",
+      "size": [
+        480,
+        600
+      ],
+      "columns": 1,
+      "cell": null,
+      "transparent": false,
+      "origin": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/stage01_forest.png",
+      "applied": true,
+      "status": "적용",
+      "sha256": "2ba8d57a92fa2be45577cb3f60d9792ad22d6234e08df782094dbd9ce2b2abbd",
+      "source_sha256": "286d4de9f899487bdc83a91eef8f8ed65f62deb01fa840448a95deeebb78c72b"
+    },
+    {
+      "id": "BG_STAGE02",
+      "path": "images/backgrounds/stage02_lake.png",
+      "size": [
+        480,
+        600
+      ],
+      "columns": 1,
+      "cell": null,
+      "transparent": false,
+      "origin": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/stage02_lake.png",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "5f941108ccad8327558acc17a5e48078fa5ce7dd16debe44c1cc66462a068a31",
+      "source_sha256": "89ffde7145e0e9a6c0e5f73b05dc3380985dc9fb3fd171c9ad239cf6eb8cd2d1"
+    },
+    {
+      "id": "BG_STAGE03",
+      "path": "images/backgrounds/stage03_shrine.png",
+      "size": [
+        480,
+        600
+      ],
+      "columns": 1,
+      "cell": null,
+      "transparent": false,
+      "origin": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/stage03_shrine.png",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "0cadee4e5cfeef9a0a8ef0ec901b5980bdfb48f562414d83c68371090aff0e30",
+      "source_sha256": "43674d8d1c2eebe3a20f3e17dc02e39fc8da8fc85a6674526008427620586caf"
+    },
+    {
+      "id": "BG_TITLE",
+      "path": "images/backgrounds/title_background.png",
+      "size": [
+        960,
+        600
+      ],
+      "columns": 1,
+      "cell": null,
+      "transparent": false,
+      "origin": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/title_background.png",
+      "applied": true,
+      "status": "적용",
+      "sha256": "e237c083b9b43f610d2746febb7da41a70f6d696772ccf98d929d2d71be67a5c",
+      "source_sha256": "e1f34ee374bc3055afb5e989c4952311c235be5e999ef92515b4159392221161"
+    },
+    {
+      "id": "BG_ENDING",
+      "path": "images/backgrounds/ending_background.png",
+      "size": [
+        960,
+        600
+      ],
+      "columns": 1,
+      "cell": null,
+      "transparent": false,
+      "origin": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/ending_background.png",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "33adbb5bde194ff0efcbf49148e387035bb65a4e67985f46270979473b45efed",
+      "source_sha256": "ea5c84577ece8251d8cefda67b59d0003172a5cc5e06c328cfcaf27d3e17f22d"
+    },
+    {
+      "id": "ENM_FAIRY",
+      "path": "images/enemies/patrol_fairy_sheet.png",
+      "size": [
+        128,
+        32
+      ],
+      "columns": 4,
+      "cell": [
+        32,
+        32
+      ],
+      "transparent": true,
+      "origin": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/patrol_fairy_sheet.png",
+      "applied": true,
+      "status": "적용",
+      "sha256": "fdf8e9906e921af276e8e43ce929f0635256c8bbf28c3fb6fd91ad26c1df6603",
+      "source_sha256": "912d497da98f191cc8bbe50ce281be79e2cf5b0b2c142b8dc7ace83211af7922"
+    },
+    {
+      "id": "ENM_FAMILIAR",
+      "path": "images/enemies/mist_familiar_sheet.png",
+      "size": [
+        128,
+        32
+      ],
+      "columns": 4,
+      "cell": [
+        32,
+        32
+      ],
+      "transparent": true,
+      "origin": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/mist_familiar_sheet.png",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "b4496b1fc4fb7da125d1c5aa538d6fc62ffea7372343bbfe78dd8eae4e7ac867",
+      "source_sha256": "255bdf3f6311b7b4a56b86f1cbcd7cf90cb99aac49b28878844486eab2bd2a8e"
+    },
+    {
+      "id": "ENM_GUARDIAN",
+      "path": "images/enemies/barrier_guardian_sheet.png",
+      "size": [
+        160,
+        40
+      ],
+      "columns": 4,
+      "cell": [
+        40,
+        40
+      ],
+      "transparent": true,
+      "origin": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/barrier_guardian_sheet.png",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "ba13fcda3b7cd1c4402f35c344c8d9303a374e4b67291c0721bad00ff48e3a8e",
+      "source_sha256": "38aed21964d07ed875ae1e299d82c68c5fd31ddc2cdd87b619d25eacee81ab46"
+    },
+    {
+      "id": "BUL_PLAYER",
+      "path": "images/bullets/player_shot.png",
+      "size": [
+        12,
+        24
+      ],
+      "columns": 1,
+      "cell": null,
+      "transparent": true,
+      "origin": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/player_shot.png",
+      "applied": true,
+      "status": "적용",
+      "sha256": "15b778d97683743e260a0d9bda6e4abc73607b11bc9c6a4abf1a3b44ad535c2c",
+      "source_sha256": "5db524e732549b8cd028f45ee96ee5df6b34d331e3e61203b0a02b21547403c7"
+    },
+    {
+      "id": "BUL_PETAL",
+      "path": "images/bullets/enemy_petal.png",
+      "size": [
+        16,
+        24
+      ],
+      "columns": 1,
+      "cell": null,
+      "transparent": true,
+      "origin": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/enemy_petal.png",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "83bfe3899d3fbe031119080dbc3d09827db3132211b5d3e4154322292abe3626",
+      "source_sha256": "26aee1477dd88a4c0fb51bfcec046cd1ab0ec5ead160246695e7f6a6b1353745"
+    },
+    {
+      "id": "BUL_ORB",
+      "path": "images/bullets/enemy_orb.png",
+      "size": [
+        16,
+        16
+      ],
+      "columns": 1,
+      "cell": null,
+      "transparent": true,
+      "origin": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/enemy_orb.png",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "ba928b4fe2d9ba85a27ff78261bf1eb9548cc12c96dc9bf51feb5ea1ac712c62",
+      "source_sha256": "8075ed65873f4980e1f09c43c56e27c142fd63b05b19581c3cb9892bd6ce0adb"
+    },
+    {
+      "id": "BUL_NEEDLE",
+      "path": "images/bullets/enemy_needle.png",
+      "size": [
+        12,
+        24
+      ],
+      "columns": 1,
+      "cell": null,
+      "transparent": true,
+      "origin": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/enemy_needle.png",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "d871959354f2119f8eeaee429d01271efea3e3597a22991d9a0af82cd8d5415a",
+      "source_sha256": "be111f7c034e317f6ccff8a69490920827a6a00f85d504ebb963e48ad8f79ef5"
+    },
+    {
+      "id": "FX_HIT",
+      "path": "images/effects/hit_sheet.png",
+      "size": [
+        256,
+        64
+      ],
+      "columns": 4,
+      "cell": [
+        64,
+        64
+      ],
+      "transparent": true,
+      "origin": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/hit_sheet.png",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "16f98f766f27f014dd2869186715901498deb6394ac69ffca8645e145068bed3",
+      "source_sha256": "e19146672c490988537ac2369fc59a0e2aeeb33b866a56f3a5773280575100db"
+    },
+    {
+      "id": "FX_EXPLOSION",
+      "path": "images/effects/explosion_sheet.png",
+      "size": [
+        384,
+        64
+      ],
+      "columns": 6,
+      "cell": [
+        64,
+        64
+      ],
+      "transparent": true,
+      "origin": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/explosion_sheet.png",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "f267740f8c0ecc9bdac56da42a96e52befc751a40bee585a98d4fa3e94619cde",
+      "source_sha256": "c8a52f4181ae5d78eca4e7caeec87bcd7afc362957104ff2cfe8621ffebb4bb5"
+    },
+    {
+      "id": "FX_BOMB",
+      "path": "images/effects/bomb_sheet.png",
+      "size": [
+        768,
+        128
+      ],
+      "columns": 6,
+      "cell": [
+        128,
+        128
+      ],
+      "transparent": true,
+      "origin": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/bomb_sheet.png",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "4020a504bae48c4c90e9ced816c9e7c2b981cb9e43713d449bce791314fee5c2",
+      "source_sha256": "1e0edab6f193231ef3c140b57f3e35c3610f6bb0729fad07641605ca71ad7a8f"
+    },
+    {
+      "id": "FX_MAGIC",
+      "path": "images/effects/magic_circle_sheet.png",
+      "size": [
+        512,
+        128
+      ],
+      "columns": 4,
+      "cell": [
+        128,
+        128
+      ],
+      "transparent": true,
+      "origin": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/magic_circle_sheet.png",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "5c8be23f19e287e8087356366c55e7efff562ccba63a453fcc73367c147d03f7",
+      "source_sha256": "270c0652d6c072b3a39321ff7cb99c4cc9779b4b929507c46ee397c7c36be047"
+    },
+    {
+      "id": "UI_PANEL",
+      "path": "images/ui/info_panel.png",
+      "size": [
+        480,
+        600
+      ],
+      "columns": 1,
+      "cell": null,
+      "transparent": false,
+      "origin": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/info_panel.png",
+      "applied": true,
+      "status": "적용",
+      "sha256": "3e4a918bfe54e81f4fdba4312a66873049a355c56881436ee1dc26d63c477a37",
+      "source_sha256": "322d30c131e7b5cf8951376ad43f8801a633dcc2889b03aee988debcaf9a3121"
+    },
+    {
+      "id": "UI_DIALOGUE",
+      "path": "images/ui/dialogue_box.png",
+      "size": [
+        960,
+        160
+      ],
+      "columns": 1,
+      "cell": null,
+      "transparent": true,
+      "origin": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/dialogue_box.png",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "0f7d2165ce8dc03235e9db4be9e0e5dbcdaf1ad983136716a1cdf09d91ed48a0",
+      "source_sha256": "b1569720b9c8c6dd84f8ca4ed0d5e1a8c02a711218ad3134c1c89a1ddebd3a5a"
+    },
+    {
+      "id": "UI_LIFE",
+      "path": "images/ui/life_icon.png",
+      "size": [
+        24,
+        24
+      ],
+      "columns": 1,
+      "cell": null,
+      "transparent": true,
+      "origin": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/life_icon.png",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "2a7c626266b225f3aa334fb19b2c0c948619a830a32e30fe6614a131b95d2bb6",
+      "source_sha256": "ae9808f10ca27771eddc3ef4956ba665db24b0fb3294b888a321f7feacbec87c"
+    },
+    {
+      "id": "UI_BOMB",
+      "path": "images/ui/bomb_icon.png",
+      "size": [
+        24,
+        24
+      ],
+      "columns": 1,
+      "cell": null,
+      "transparent": true,
+      "origin": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/bomb_icon.png",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "b1aad4a89dc480394ef40b55168b1d43388fbb52fa6d461274ca53d830c1b162",
+      "source_sha256": "65d8c5b872a0c490a41e42873b8afcef30648d57f86a5aea9b2b6044cba0230e"
+    },
+    {
+      "id": "UI_LOCK",
+      "path": "images/ui/lock_icon.png",
+      "size": [
+        24,
+        24
+      ],
+      "columns": 1,
+      "cell": null,
+      "transparent": true,
+      "origin": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/lock_icon.png",
+      "applied": true,
+      "status": "적용",
+      "sha256": "40aee04cc44760263e3ee45d5d12c8fd0dfd6d3ef41b6321b934af7078fbecfd",
+      "source_sha256": "d739c7b1db89d3d6e3f0a5ecb0a0ede13962ad962573a0af37538a5663d1c1e6"
+    },
+    {
+      "id": "UI_HITBOX",
+      "path": "images/ui/hitbox_marker.png",
+      "size": [
+        12,
+        12
+      ],
+      "columns": 1,
+      "cell": null,
+      "transparent": true,
+      "origin": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/hitbox_marker.png",
+      "applied": true,
+      "status": "적용",
+      "sha256": "206ad81912e96d4f8ee5cd4c67e396b2445d1145510dd144a974ab73fd8ec8ac",
+      "source_sha256": "0d6c2287ee68637bf321205c0b9664afc3f01f741e2825f287934edcfa2348e6"
+    },
+    {
+      "id": "BGM_MENU",
+      "path": "audio/bgm/menu.wav",
+      "seconds": 32,
+      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "applied": true,
+      "status": "적용",
+      "sha256": "a8831f390206adafe80d638f57fecab394b9430df950a80933b44b6866dd14f2"
+    },
+    {
+      "id": "BGM_STAGE01",
+      "path": "audio/bgm/stage01_forest.wav",
+      "seconds": 64,
+      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "applied": true,
+      "status": "적용",
+      "sha256": "1c14f40e152f4001b65da0a4582b467acd7644c0ac0b1b1ba4714b86c347ee88"
+    },
+    {
+      "id": "BGM_STAGE02",
+      "path": "audio/bgm/stage02_lake.wav",
+      "seconds": 64,
+      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "56136e29f4e89bf8d599483052a44c8c4da6e967b9f17fc7331422b7688bae58"
+    },
+    {
+      "id": "BGM_STAGE03",
+      "path": "audio/bgm/stage03_shrine.wav",
+      "seconds": 64,
+      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "a68189be27d3a56933e3ca5b2ee04e179c1ef8298118482368b2011c107127f1"
+    },
+    {
+      "id": "BGM_BOSS",
+      "path": "audio/bgm/boss.wav",
+      "seconds": 64,
+      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "0ec7f65961ab0d8743d41ea469d71be69c0f8ae47ad0fa3a72bf940b27be7e99"
+    },
+    {
+      "id": "BGM_ENDING",
+      "path": "audio/bgm/ending.wav",
+      "seconds": 32,
+      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "fd58b6867602136e62b5f300aeca0d8c357a6b0385639eee1e14f4f6236be220"
+    },
+    {
+      "id": "SFX_SHOT",
+      "path": "audio/sfx/player_shot.wav",
+      "seconds": 0.1,
+      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "applied": true,
+      "status": "적용",
+      "sha256": "d685be82c4873c14dec47982a74d790b75d730e7c5acad030122c0d3d0e264ab"
+    },
+    {
+      "id": "SFX_ENEMY_HIT",
+      "path": "audio/sfx/enemy_hit.wav",
+      "seconds": 0.12,
+      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "2960eb8a07c51ad91a960a8d2cc2242302e3a4f3822f17a1d8aeb9c73fec7a34"
+    },
+    {
+      "id": "SFX_PLAYER_HIT",
+      "path": "audio/sfx/player_hit.wav",
+      "seconds": 0.32,
+      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "933a1426a2243e18cd2bbe91dc2a8f4bc8f9e397be878e1eee663ab7ec0a0ca2"
+    },
+    {
+      "id": "SFX_EXPLOSION",
+      "path": "audio/sfx/explosion.wav",
+      "seconds": 0.45,
+      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "8d1b579562e6a0be45b9b126aebf20836fa72d8e92c20ecdd6cc84609892253e"
+    },
+    {
+      "id": "SFX_BOMB",
+      "path": "audio/sfx/bomb.wav",
+      "seconds": 0.7,
+      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "3db52d15757040fb6dd2ddc7b015d41f09ae63b2c443bf0f57173351c111806e"
+    },
+    {
+      "id": "SFX_MENU_MOVE",
+      "path": "audio/sfx/menu_move.wav",
+      "seconds": 0.08,
+      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "applied": true,
+      "status": "적용",
+      "sha256": "025df3662c0d380adb610446b6d9de61d08ee6036a1c8480f5a1e4ea1ecbb149"
+    },
+    {
+      "id": "SFX_MENU_CONFIRM",
+      "path": "audio/sfx/menu_confirm.wav",
+      "seconds": 0.18,
+      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "applied": true,
+      "status": "적용",
+      "sha256": "f516f3ba226fdda70b8e92e629f9675043f6022e74e370ac07c636ae8f19ee0c"
+    },
+    {
+      "id": "SFX_CLEAR",
+      "path": "audio/sfx/stage_clear.wav",
+      "seconds": 2.0,
+      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "c6b8508cdc77b252aa7516a9c208b66ef78c52005add0a3d896c6526f7aec0fc"
+    },
+    {
+      "id": "SFX_GAME_OVER",
+      "path": "audio/sfx/game_over.wav",
+      "seconds": 2.0,
+      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "applied": false,
+      "status": "편집 완료",
+      "sha256": "3b43611cfd351b6bf43864391652ae16c3f3809df609934233ef099c17a970be"
+    }
+  ]
+}

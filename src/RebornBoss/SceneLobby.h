@@ -4,6 +4,11 @@
 class SceneLobby : public GameScene
 {
 public:
-	SceneLobby();
-	int Update() override;
+    int Init() override;
+    int Update() override;
+    int Render() override;
+
+private:
+    int m_selected{};
+    bool m_lockedNotice{};
 };

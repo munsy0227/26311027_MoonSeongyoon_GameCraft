@@ -1,0 +1,222 @@
+{
+  "prompts": "art_sources/week2/asset_jobs.json",
+  "postprocessing": "User-approved Python/Pillow export in tools/build_week2_assets.py",
+  "records": [
+    {
+      "id": "BG_STAGE01",
+      "date": "2026-10-25",
+      "tool": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/stage01_forest.png",
+      "original_path": "/home/munsy0227/.codex/generated_images/01a17388-eefb-7511-9987-4b9b730ad251/exec-dc4f7a1f-de44-44ec-bed5-60f99fd6ca82.png",
+      "reference_images": [
+        "src/RebornBoss/resources/images/portraits/lillian_portrait.png"
+      ],
+      "transparent_background": false
+    },
+    {
+      "id": "BG_STAGE02",
+      "date": "2026-10-26",
+      "tool": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/stage02_lake.png",
+      "original_path": "/home/munsy0227/.codex/generated_images/01a17388-eefb-7511-9987-4b9b730ad251/exec-5d91426e-bf87-444a-b52d-c4b5d9809ce2.png",
+      "reference_images": [
+        "src/RebornBoss/resources/images/portraits/lillian_portrait.png"
+      ],
+      "transparent_background": false
+    },
+    {
+      "id": "BG_STAGE03",
+      "date": "2026-10-26",
+      "tool": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/stage03_shrine.png",
+      "original_path": "/home/munsy0227/.codex/generated_images/01a17388-eefb-7511-9987-4b9b730ad251/exec-5654bd1e-1930-4d76-9d9d-a0bfc1fc5da8.png",
+      "reference_images": [
+        "src/RebornBoss/resources/images/portraits/lillian_portrait.png"
+      ],
+      "transparent_background": false
+    },
+    {
+      "id": "BG_TITLE",
+      "date": "2026-10-26",
+      "tool": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/title_background.png",
+      "original_path": "/home/munsy0227/.codex/generated_images/01a17388-eefb-7511-9987-4b9b730ad251/exec-6be5c6fc-bf88-4fe2-bb2a-ad9c882f1105.png",
+      "reference_images": [
+        "src/RebornBoss/resources/images/portraits/lillian_portrait.png"
+      ],
+      "transparent_background": false
+    },
+    {
+      "id": "BG_ENDING",
+      "date": "2026-10-26",
+      "tool": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/ending_background.png",
+      "original_path": "/home/munsy0227/.codex/generated_images/01a17388-eefb-7511-9987-4b9b730ad251/exec-e8a1ff51-3113-447b-a3bf-50f6b7c45568.png",
+      "reference_images": [
+        "src/RebornBoss/resources/images/portraits/lillian_portrait.png"
+      ],
+      "transparent_background": false
+    },
+    {
+      "id": "ENM_FAIRY",
+      "date": "2026-10-26",
+      "tool": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/patrol_fairy_sheet.png",
+      "original_path": "/home/munsy0227/.codex/generated_images/01a17388-eefb-7511-9987-4b9b730ad251/exec-2a4614ea-fc04-4379-9ee3-dab0de4ea916.png",
+      "reference_images": [
+        "src/RebornBoss/resources/images/portraits/lillian_portrait.png"
+      ],
+      "transparent_background": true
+    },
+    {
+      "id": "ENM_FAMILIAR",
+      "date": "2026-10-26",
+      "tool": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/mist_familiar_sheet.png",
+      "original_path": "/home/munsy0227/.codex/generated_images/01a17388-eefb-7511-9987-4b9b730ad251/exec-7825d511-2d7f-4459-86e1-9879b761e410.png",
+      "reference_images": [
+        "src/RebornBoss/resources/images/portraits/lillian_portrait.png"
+      ],
+      "transparent_background": true
+    },
+    {
+      "id": "ENM_GUARDIAN",
+      "date": "2026-10-26",
+      "tool": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/barrier_guardian_sheet.png",
+      "original_path": "/home/munsy0227/.codex/generated_images/01a17388-eefb-7511-9987-4b9b730ad251/exec-cc2d636b-3a68-4f4b-a788-af51888ef45d.png",
+      "reference_images": [
+        "src/RebornBoss/resources/images/portraits/lillian_portrait.png"
+      ],
+      "transparent_background": true
+    },
+    {
+      "id": "BUL_PLAYER",
+      "date": "2026-10-26",
+      "tool": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/player_shot.png",
+      "original_path": "/home/munsy0227/.codex/generated_images/01a17388-eefb-7511-9987-4b9b730ad251/exec-7758ac6b-9897-4a32-ba72-e1bf15bf521d.png",
+      "reference_images": [
+        "src/RebornBoss/resources/images/portraits/lillian_portrait.png"
+      ],
+      "transparent_background": true
+    },
+    {
+      "id": "BUL_PETAL",
+      "date": "2026-10-26",
+      "tool": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/enemy_petal.png",
+      "original_path": "/home/munsy0227/.codex/generated_images/01a17388-eefb-7511-9987-4b9b730ad251/exec-8d91ac74-c782-46a1-bffe-f25b1dd9d80d.png",
+      "reference_images": [],
+      "transparent_background": true
+    },
+    {
+      "id": "BUL_ORB",
+      "date": "2026-10-26",
+      "tool": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/enemy_orb.png",
+      "original_path": "/home/munsy0227/.codex/generated_images/01a17388-eefb-7511-9987-4b9b730ad251/exec-e961be40-fc49-4c21-bb45-c2c0152bed95.png",
+      "reference_images": [],
+      "transparent_background": true
+    },
+    {
+      "id": "BUL_NEEDLE",
+      "date": "2026-10-26",
+      "tool": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/enemy_needle.png",
+      "original_path": "/home/munsy0227/.codex/generated_images/01a17388-eefb-7511-9987-4b9b730ad251/exec-b37cdca5-dd06-4e97-98bf-b64f8b9f8071.png",
+      "reference_images": [],
+      "transparent_background": true
+    },
+    {
+      "id": "FX_HIT",
+      "date": "2026-10-26",
+      "tool": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/hit_sheet.png",
+      "original_path": "/home/munsy0227/.codex/generated_images/01a17388-eefb-7511-9987-4b9b730ad251/exec-f7246046-d70a-4509-a63f-424e2c6835df.png",
+      "reference_images": [],
+      "transparent_background": true
+    },
+    {
+      "id": "FX_EXPLOSION",
+      "date": "2026-10-26",
+      "tool": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/explosion_sheet.png",
+      "original_path": "/home/munsy0227/.codex/generated_images/01a17388-eefb-7511-9987-4b9b730ad251/exec-6535aaf4-36c4-482c-a31d-e1a04b90955d.png",
+      "reference_images": [],
+      "transparent_background": true
+    },
+    {
+      "id": "FX_BOMB",
+      "date": "2026-10-26",
+      "tool": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/bomb_sheet.png",
+      "original_path": "/home/munsy0227/.codex/generated_images/01a17388-eefb-7511-9987-4b9b730ad251/exec-09ddfd83-d279-40eb-a549-e25df73e2a54.png",
+      "reference_images": [],
+      "transparent_background": true
+    },
+    {
+      "id": "FX_MAGIC",
+      "date": "2026-10-26",
+      "tool": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/magic_circle_sheet.png",
+      "original_path": "/home/munsy0227/.codex/generated_images/01a17388-eefb-7511-9987-4b9b730ad251/exec-73f8e1b5-d96e-4b34-bb14-8880c0cf8e66.png",
+      "reference_images": [],
+      "transparent_background": true
+    },
+    {
+      "id": "UI_PANEL",
+      "date": "2026-10-26",
+      "tool": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/info_panel.png",
+      "original_path": "/home/munsy0227/.codex/generated_images/01a17388-eefb-7511-9987-4b9b730ad251/exec-d611e603-53a8-4cef-8a17-752794460eb4.png",
+      "reference_images": [],
+      "transparent_background": false
+    },
+    {
+      "id": "UI_DIALOGUE",
+      "date": "2026-10-26",
+      "tool": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/dialogue_box.png",
+      "original_path": "/home/munsy0227/.codex/generated_images/01a17388-eefb-7511-9987-4b9b730ad251/exec-ee046c9e-7bc7-4754-b888-4d0369a344c4.png",
+      "reference_images": [],
+      "transparent_background": true
+    },
+    {
+      "id": "UI_LIFE",
+      "date": "2026-10-26",
+      "tool": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/life_icon.png",
+      "original_path": "/home/munsy0227/.codex/generated_images/01a17388-eefb-7511-9987-4b9b730ad251/exec-8f67c0dc-438a-492f-b7e6-4e03a8725e0e.png",
+      "reference_images": [],
+      "transparent_background": true
+    },
+    {
+      "id": "UI_BOMB",
+      "date": "2026-10-26",
+      "tool": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/bomb_icon.png",
+      "original_path": "/home/munsy0227/.codex/generated_images/01a17388-eefb-7511-9987-4b9b730ad251/exec-ec644204-b20e-40e6-94a6-95e1df9a13ae.png",
+      "reference_images": [],
+      "transparent_background": true
+    },
+    {
+      "id": "UI_LOCK",
+      "date": "2026-10-26",
+      "tool": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/lock_icon.png",
+      "original_path": "/home/munsy0227/.codex/generated_images/01a17388-eefb-7511-9987-4b9b730ad251/exec-dfa931a5-49af-4c8d-8714-418545b5d879.png",
+      "reference_images": [],
+      "transparent_background": true
+    },
+    {
+      "id": "UI_HITBOX",
+      "date": "2026-10-26",
+      "tool": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/hitbox_marker.png",
+      "original_path": "/home/munsy0227/.codex/generated_images/01a17388-eefb-7511-9987-4b9b730ad251/exec-c4b7bef9-f435-4792-9756-30905b8c4ca0.png",
+      "reference_images": [],
+      "transparent_background": true
+    }
+  ]
+}

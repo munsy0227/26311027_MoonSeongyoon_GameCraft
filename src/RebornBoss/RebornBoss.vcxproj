@@ -73,6 +73,8 @@
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup>
     <ClCompile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <PreprocessorDefinitions>NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>/source-charset:.949 /execution-charset:.949 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -130,6 +132,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="GameResources.cpp" />
+    <ClCompile Include="BulletManager.cpp" />
+    <ClCompile Include="GamePlayChecks.cpp" />
     <ClCompile Include="GameBossMob.cpp" />
     <ClCompile Include="GameCharacter.cpp" />
     <ClCompile Include="GameInput.cpp" />
@@ -150,6 +155,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="GameResources.h" />
+    <ClInclude Include="GameBullet.h" />
+    <ClInclude Include="BulletManager.h" />
     <ClInclude Include="GameBossMob.h" />
     <ClInclude Include="GameCharacter.h" />
     <ClInclude Include="GameInput.h" />
@@ -174,5 +182,14 @@
     </PropertyGroup>
     <Error Condition="!Exists('packages\Microsoft.DXSDK.D3DX.9.29.952.8\build\native\Microsoft.DXSDK.D3DX.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.DXSDK.D3DX.9.29.952.8\build\native\Microsoft.DXSDK.D3DX.targets'))" />
     <Error Condition="!Exists('packages\glc2d.0.1.0.8\build\native\glc2d.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\glc2d.0.1.0.8\build\native\glc2d.props'))" />
+  </Target>
+  <PropertyGroup>
+    <LocalDebuggerWorkingDirectory>$(OutDir)</LocalDebuggerWorkingDirectory>
+  </PropertyGroup>
+  <Target Name="CopyGameResources" AfterTargets="Build">
+    <ItemGroup>
+      <GameResource Include="$(ProjectDir)resources\**\*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(GameResource)" DestinationFiles="@(GameResource-&gt;'$(OutDir)resources\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
   </Target>
 </Project>

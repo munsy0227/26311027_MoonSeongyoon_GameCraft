@@ -1,43 +1,23 @@
-#include <glc2d.h>
-#include <windows.h>
-#include <chrono>
-#include <thread>
 #include "GameScene.h"
 #include "GameInput.h"
+#include "App.h"
 
-GameScene::GameScene()
+void GameScene::Text(int x, int y, const char* text, DWORD color, bool title) const
 {
-	m_message = "Game Scene";
+    const auto& resources = g_pApp->Resources();
+    const int font = title ? resources.TitleFont() : resources.Font();
+    g2_FontDrawText(font, VEC2i{x + 2, y + 2}, 0xE0000000, "%s", text);
+    g2_FontDrawText(font, VEC2i{x, y}, color, "%s", text);
 }
 
-int GameScene::Init()
+bool GameScene::MoveSelection(int& selected, int count) const
 {
-	// Windows에 설치된 글꼴을 사용하므로 폰트 파일을 배포하지 않습니다.
-	m_font1 = g2_FontCreate("Malgun Gothic", 64);
-	if (0 > m_font1)
-		return -1;
-	return 0;
-}
-
-int GameScene::Destroy()
-{
-	return 0;
-}
-
-int GameScene::Update()
-{
-	auto keyEvent = GetGameInput()->GetKeyState(VK_RIGHT);
-	if (keyEvent == EInput::EINPUT_DOWN)
-	{
-		// next window
-	}
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
-
-	return 0;
-}
-
-int GameScene::Render()
-{
-	g2_FontDrawText(m_font1, { 10, 10 }, 0xFFFF00FF, m_message.c_str());
-	return 0;
+    const auto* input = GetGameInput();
+    const int direction = (input->Pressed(VK_DOWN) || input->Pressed(VK_RIGHT) ? 1 : 0)
+                        - (input->Pressed(VK_UP) || input->Pressed(VK_LEFT) ? 1 : 0);
+    if (direction == 0)
+        return false;
+    selected = (selected + direction + count) % count;
+    g_pApp->Resources().PlaySound(SoundId::MenuMove);
+    return true;
 }

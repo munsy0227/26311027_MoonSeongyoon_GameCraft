@@ -1,11 +1,38 @@
-#include "GameCharacter.h"
 #include "GamePlayer.h"
+#include "GameResources.h"
+#include <algorithm>
+#include <cmath>
 
-int GamePlayer::Attack(GameCharacter* pMob, int damage)
+GamePlayer::GamePlayer()
 {
-	// 내일을 처리하고
+    m_x = 240.0F;
+    m_y = 520.0F;
+}
 
-	//
-	pMob->Damage(damage);
-	return 0;
+void GamePlayer::Update(float seconds, float directionX, float directionY, bool slow, bool shooting)
+{
+    const float length = std::sqrt(directionX * directionX + directionY * directionY);
+    if (length > 0.0F)
+    {
+        const float distance = (slow ? 100.0F : 240.0F) * seconds / length;
+        m_x += directionX * distance;
+        m_y += directionY * distance;
+    }
+    m_x = std::clamp(m_x, 16.0F, 464.0F);
+    m_y = std::clamp(m_y, 24.0F, 576.0F);
+    const int row = directionX < 0.0F ? 1 : directionX > 0.0F ? 2 : shooting ? 3 : 0;
+    if (row != m_row)
+        m_animationSeconds = 0.0F;
+    m_row = row;
+    m_animationSeconds += seconds;
+    m_slow = slow;
+}
+
+void GamePlayer::Render(const GameResources& resources) const
+{
+    const float frameSeconds = m_row == 0 ? 0.12F : m_row == 3 ? 0.09F : 0.10F;
+    const int column = static_cast<int>(m_animationSeconds / frameSeconds) % 4;
+    resources.DrawFrame(ImageId::Leon, column, m_row, 32, 48, m_x - 16.0F, m_y - 24.0F);
+    if (m_slow)
+        resources.Draw(ImageId::Hitbox, m_x - 6.0F, m_y - 6.0F);
 }

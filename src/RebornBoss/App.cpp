@@ -1,123 +1,125 @@
 #include "App.h"
-#include "GameInput.h"
-#include "GameScene.h"
 #include "SceneBegin.h"
 #include "SceneLobby.h"
 #include "ScenePlay.h"
 #include "ScenePlayResult.h"
+#include <algorithm>
+#include <filesystem>
+#include <cstdio>
+#include <windows.h>
 
-App* g_pApp;
+#ifndef NDEBUG
+void CheckWeek2Gameplay();
+#endif
+
+App* g_pApp{};
 
 App::App()
 {
-	g_pApp = this;
-	m_pGameInput = new GameInput;
-
-	m_sceneList.push_back(new SceneBegin);
-	m_sceneList.push_back(new SceneLobby);
-	m_sceneList.push_back(new ScenePlay);
-	m_sceneList.push_back(new ScenePlayResult);
-
-	m_pGameScene = m_sceneList[m_sceneCurrent];
+    g_pApp = this;
+    m_sceneList.push_back(std::make_unique<SceneBegin>());
+    m_sceneList.push_back(std::make_unique<SceneLobby>());
+    m_sceneList.push_back(std::make_unique<ScenePlay>());
+    m_sceneList.push_back(std::make_unique<ScenePlayResult>());
 }
 
 App::~App()
 {
-
+    Destroy();
+    g_pApp = nullptr;
 }
 
 int App::Init()
 {
-	// Glc2d 초기화
-	if (0 > m_graphicEngine.Init(m_gameWin))
-		return -1;
-
-	m_graphicEngine.SetColor(0xFF006699);
-
-	// GameTime 초기화
-	m_gameTime.Init();
-
-	// Input 초기화
-	if (0 > m_pGameInput->Init())
-	{
-		Destroy();
-		return -2;
-	}
-
-	//게임 씬 초기화
-	if(0> m_pGameScene->Init())
-	{
-		Destroy();
-		return -3;
-	}
-
-	return 0;
+    // 실행 파일을 직접 실행해도 같은 resources 폴더를 찾는다.
+    std::vector<wchar_t> path(32768);
+    const DWORD length = GetModuleFileNameW(nullptr, path.data(), static_cast<DWORD>(path.size()));
+    if (length == 0 || length >= path.size())
+    {
+        std::fprintf(stderr, "Cannot locate the executable directory.\n");
+        return -1;
+    }
+    std::error_code error;
+    std::filesystem::current_path(std::filesystem::path(path.data()).parent_path(), error);
+    if (error)
+    {
+        std::fprintf(stderr, "Cannot set the executable directory: %s\n", error.message().c_str());
+        return -1;
+    }
+#ifndef NDEBUG
+    CheckWeek2Gameplay();
+    std::puts("Week2 gameplay checks passed.");
+#endif
+    if (m_graphicEngine.Init(m_gameWin) < 0)
+        return -1;
+    m_graphicsReady = true;
+    m_graphicEngine.SetColor(0xFF101223);
+    if (m_gameInput.Init() < 0 || m_resources.Init() < 0)
+        return -1;
+    m_gameTime.Init();
+    m_pGameScene = m_sceneList[SCENE_BEGIN].get();
+    return m_pGameScene->Init();
 }
 
 void App::Destroy()
 {
-	if (m_pGameInput) {
-		delete m_pGameInput; m_pGameInput = nullptr;
-	}
-	if (m_pGameScene) {
-		delete m_pGameScene; m_pGameScene = nullptr;
-	}
+    if (m_pGameScene)
+        m_pGameScene->Destroy();
+    m_pGameScene = nullptr;
+    m_sceneList.clear();
+    if (m_graphicsReady)
+    {
+        m_resources.Destroy();
+        m_graphicEngine.Destroy();
+        m_graphicsReady = false;
+    }
 }
 
-int  App::Update()
+int App::Update()
 {
-	// update change scene
-	if (m_sceneChanged)
-	{
-		m_pGameScene->Destroy();			// 현재의 게임 씬 해제
-
-		m_sceneChanged = false;
-		m_sceneCurrent = m_sceneNext;		// 다음 씬을 현재 씬으로
-		m_pGameScene   = m_sceneList[m_sceneCurrent];
-
-		m_pGameScene->Init();				// 설정된 현재 씬을 초기화
-	}
-
-	// GameTime 업데이트
-	m_gameTime.Update();
-
-	// Input 업데이트
-	if (0 > m_pGameInput->Update())
-	{
-		return -1;
-	}
-
-	// GameScene 업데이트
-	if(0>m_pGameScene->Update())
-	{
-		return -1;
-	}
-
-	return 0;
+    if (m_sceneChanged)
+    {
+        m_pGameScene->Destroy();
+        m_sceneCurrent = m_sceneNext;
+        m_sceneChanged = false;
+        m_pGameScene = m_sceneList[static_cast<size_t>(m_sceneCurrent)].get();
+        if (m_pGameScene->Init() < 0)
+            return m_loopError = -1;
+    }
+    m_gameTime.Update();
+    if (m_gameInput.Update() < 0)
+        return m_loopError = -1;
+    const int result = m_pGameScene->Update();
+    if (result < 0)
+        m_loopError = result;
+    return result;
 }
 
-
-int  App::Render()
+int App::Render()
 {
-	// GameScene 렌더링
-	if (0 > m_pGameScene->Render())
-	{
-		return -1;
-	}
-
-	return 0;
+    const int result = m_pGameScene->Render();
+    if (result < 0)
+        m_loopError = result;
+    return result;
 }
 
 int App::Run()
 {
-	m_graphicEngine.Run();
-
-	this->Destroy();
-	return 0;
+    // glc2d 루프는 콜백 오류로 끝나도 0을 반환하므로 오류를 보관한다.
+    const int result = m_graphicEngine.Run();
+    return m_loopError < 0 ? m_loopError : result;
 }
 
 void App::ChangeScene(GAME_PHASE nextScene)
 {
-	m_sceneChanged = true;
-	m_sceneNext = nextScene;
+    if (nextScene >= SCENE_BEGIN && static_cast<size_t>(nextScene) < m_sceneList.size())
+    {
+        m_sceneNext = nextScene;
+        m_sceneChanged = true;
+    }
+}
+
+float App::DeltaSeconds() const
+{
+    return std::clamp(static_cast<float>(m_gameTime.deltaTime) / 1000.0F, 0.0F, 0.05F);
 }

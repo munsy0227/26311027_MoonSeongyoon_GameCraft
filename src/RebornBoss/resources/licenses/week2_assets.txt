@@ -1,0 +1,28 @@
+Week 2 resource creation record
+Date: 2026-10-26
+
+Catalog: resources/week2_assets.json (30 representative PNGs and 15 WAVs).
+Existing characters and portraits: eight representative files are reused unchanged.
+Their original creation record remains in character_assets_v1.txt.
+
+New images: 22 original assets generated with OpenAI built-in image_gen.
+Style reference for backgrounds, ordinary enemies and player shot: existing Lillian portrait.
+This is a project art direction reference, not an external stock image license.
+Prompts and target specifications: art_sources/week2/asset_jobs.json.
+Generation dates, tool and original-file correspondence: art_sources/week2/generation_records.json.
+Preserved source PNGs: art_sources/week2/generated/.
+User-approved Python/Pillow processing: tools/build_week2_assets.py.
+Processing: alpha cleanup, atlas separation, common framing, pixel-size export, shared enemy palettes.
+The original generated PNGs and all prior character assets were preserved.
+
+Audio: original synthesized compositions and sound effects in tools/build_week2_assets.py.
+Six music tracks use original eight-bar phrases, cyclic note tails, 120 BPM and stereo pan.
+The sixteen-second phrases repeat to 32 seconds (menu/ending) or 64 seconds (stage/boss).
+Nine mono effects use deterministic sweeps, fixed-seed noise or original note sequences.
+No external recordings, samples or downloaded melodies were incorporated.
+Format: 44100 Hz, signed 16-bit little-endian PCM WAV.
+Music normalized peak: 0.60; sound effect normalized peak: 0.78.
+
+This file records provenance and production, and does not assign a license to third-party tools.
+The user reported normal operation on Windows on 2026-10-26.
+Configuration-specific visual/audio verification has not been recorded; automated manifests are file-validation results.

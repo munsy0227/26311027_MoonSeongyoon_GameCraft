@@ -433,3 +433,6 @@ FodyWeavers.xsd
 *.[tT][tT][cC]
 *.[wW][oO][fF][fF]
 *.[wW][oO][fF][fF]2
+
+# Local Codex working notes and configuration.
+/.codex/

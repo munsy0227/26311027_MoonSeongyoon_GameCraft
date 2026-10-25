@@ -1,0 +1,314 @@
+{
+  "tool": "OpenAI built-in image_gen",
+  "date": "2026-10-25",
+  "postprocessing": "Python/Pillow authorized by user; preserve original images",
+  "jobs": [
+    {
+      "id": "BG_STAGE01",
+      "name": "stage01_forest",
+      "prompt": "Create a finished vertical 2D bullet-hell game background, asset stage01_forest. Fantasy fairy forest matching the reference character's warm anime fantasy colors (reference for style/color only, do not draw the character). Portrait 4:5 canvas intended to be cropped/resized to 480x600. Top-down/slightly elevated game field: luminous green trees and white flowers cluster around the left and right edges, a subdued mossy clearing through the center with scattered small petals. The middle 70 percent must stay low contrast and open so small player/enemy bullets remain easy to see. Rich painted game art, clean stylized details, no blur, no UI, no text, no watermarks, no characters or enemies, no border. Opaque full background. Game asset, not a mockup.",
+      "transparent": false,
+      "size": [
+        480,
+        600
+      ],
+      "path": "images/backgrounds/stage01_forest.png",
+      "columns": 1,
+      "cell": null
+    },
+    {
+      "id": "BG_STAGE02",
+      "name": "stage02_lake",
+      "path": "images/backgrounds/stage02_lake.png",
+      "size": [
+        480,
+        600
+      ],
+      "transparent": false,
+      "columns": 1,
+      "cell": null,
+      "prompt": "Finished production asset for a 2D vertical fantasy bullet-hell game. Clean warm anime-fantasy painted game art matching the supplied reference's aesthetic. No text, letters, labels, logos, UI mockup, checkerboard, or watermark. Vertical 4:5 top-down magical lake battlefield in blue and turquoise. Mist and dark reeds around the two edges, shallow water and subtle moon reflections. Keep central 70 percent open and low-contrast for readable bullets. No characters. Opaque full-bleed image."
+    },
+    {
+      "id": "BG_STAGE03",
+      "name": "stage03_shrine",
+      "path": "images/backgrounds/stage03_shrine.png",
+      "size": [
+        480,
+        600
+      ],
+      "transparent": false,
+      "columns": 1,
+      "cell": null,
+      "prompt": "Finished production asset for a 2D vertical fantasy bullet-hell game. Clean warm anime-fantasy painted game art matching the supplied reference's aesthetic. No text, letters, labels, logos, UI mockup, checkerboard, or watermark. Vertical 4:5 top-down shrine courtyard at night, indigo and silver moonlight. Stone tiles, faint circular ward markings, temple pillars at the two edges. Keep central 70 percent open, low saturation and low contrast. No characters. Opaque full-bleed image."
+    },
+    {
+      "id": "BG_TITLE",
+      "name": "title_background",
+      "path": "images/backgrounds/title_background.png",
+      "size": [
+        960,
+        600
+      ],
+      "transparent": false,
+      "columns": 1,
+      "cell": null,
+      "prompt": "Finished production asset for a 2D vertical fantasy bullet-hell game. Clean warm anime-fantasy painted game art matching the supplied reference's aesthetic. No text, letters, labels, logos, UI mockup, checkerboard, or watermark. Landscape 8:5 fantasy title background: fairy forest on the left, mysterious blue lake at center, moonlit shrine on the right, small distant silhouette of a purple-caped sorcerer near the bottom edge. Dark subdued center and upper half reserved for real game title and menu text drawn later. No embedded text. Opaque full-bleed image."
+    },
+    {
+      "id": "BG_ENDING",
+      "name": "ending_background",
+      "path": "images/backgrounds/ending_background.png",
+      "size": [
+        960,
+        600
+      ],
+      "transparent": false,
+      "columns": 1,
+      "cell": null,
+      "prompt": "Finished production asset for a 2D vertical fantasy bullet-hell game. Clean warm anime-fantasy painted game art matching the supplied reference's aesthetic. No text, letters, labels, logos, UI mockup, checkerboard, or watermark. Landscape 8:5 whimsical fantasy throne room after a mischievous sorcerer's victory. Empty purple throne and tiny magical prank sparkles, scattered harmless paper complaints and flower petals with no writing. Gentle funny atmosphere, subdued central area, no people or text. Opaque full-bleed image."
+    },
+    {
+      "id": "ENM_FAIRY",
+      "name": "patrol_fairy_sheet",
+      "path": "images/enemies/patrol_fairy_sheet.png",
+      "size": [
+        128,
+        32
+      ],
+      "transparent": true,
+      "columns": 4,
+      "cell": [
+        32,
+        32
+      ],
+      "prompt": "Finished production asset for a 2D vertical fantasy bullet-hell game. Clean warm anime-fantasy painted game art matching the supplied reference's aesthetic. No text, letters, labels, logos, UI mockup, checkerboard, or watermark. One horizontal animation sprite sheet, exactly FOUR equally spaced columns, ONE row. Four subtly different hovering-wing poses of the SAME tiny nameless green forest patrol fairy, white flower, tiny wings, viewed from front for a vertical shooter. It is an ordinary enemy, not the reference heroine. Simple readable pixel-friendly shapes, consistent scale and centered feet, complete bodies. Final each cell 32x32, do not draw a grid. Use a genuinely transparent RGBA background, transparent gutters and generous empty margins."
+    },
+    {
+      "id": "ENM_FAMILIAR",
+      "name": "mist_familiar_sheet",
+      "path": "images/enemies/mist_familiar_sheet.png",
+      "size": [
+        128,
+        32
+      ],
+      "transparent": true,
+      "columns": 4,
+      "cell": [
+        32,
+        32
+      ],
+      "prompt": "Finished production asset for a 2D vertical fantasy bullet-hell game. Clean warm anime-fantasy painted game art matching the supplied reference's aesthetic. No text, letters, labels, logos, UI mockup, checkerboard, or watermark. One horizontal animation sprite sheet, exactly FOUR equally spaced columns, ONE row. Four sequential hovering poses of the SAME tiny blue fox-shaped mist familiar wisp, curved translucent tail, round eyes, front view, consistent scale. Readable pixel-friendly shapes, complete silhouette. Final each cell 32x32, no grid. Use a genuinely transparent RGBA background, transparent gutters and generous empty margins."
+    },
+    {
+      "id": "ENM_GUARDIAN",
+      "name": "barrier_guardian_sheet",
+      "path": "images/enemies/barrier_guardian_sheet.png",
+      "size": [
+        160,
+        40
+      ],
+      "transparent": true,
+      "columns": 4,
+      "cell": [
+        40,
+        40
+      ],
+      "prompt": "Finished production asset for a 2D vertical fantasy bullet-hell game. Clean warm anime-fantasy painted game art matching the supplied reference's aesthetic. No text, letters, labels, logos, UI mockup, checkerboard, or watermark. One horizontal animation sprite sheet, exactly FOUR equally spaced columns, ONE row. Four sequential hovering poses of the SAME tiny silver-indigo shrine guardian spirit, crescent crest and floating paper charm wings (no writing), front view, consistent scale. Simple pixel-friendly shapes and complete silhouette. Final each cell 40x40, no grid. Use a genuinely transparent RGBA background, transparent gutters and generous empty margins."
+    },
+    {
+      "id": "BUL_PLAYER",
+      "name": "player_shot",
+      "path": "images/bullets/player_shot.png",
+      "size": [
+        12,
+        24
+      ],
+      "transparent": true,
+      "columns": 1,
+      "cell": null,
+      "prompt": "Finished production asset for a 2D vertical fantasy bullet-hell game. Clean warm anime-fantasy painted game art matching the supplied reference's aesthetic. No text, letters, labels, logos, UI mockup, checkerboard, or watermark. Single isolated vertical upward magic projectile icon, tapered violet core surrounded by a bright ivory outline, symmetric, simple clean compact silhouette for 12x24 pixel display. Point up, no other objects. Use a genuinely transparent RGBA background, transparent gutters and generous empty margins."
+    },
+    {
+      "id": "BUL_PETAL",
+      "name": "enemy_petal",
+      "path": "images/bullets/enemy_petal.png",
+      "size": [
+        16,
+        24
+      ],
+      "transparent": true,
+      "columns": 1,
+      "cell": null,
+      "prompt": "Finished production asset for a 2D vertical fantasy bullet-hell game. Clean warm anime-fantasy painted game art matching the supplied reference's aesthetic. No text, letters, labels, logos, UI mockup, checkerboard, or watermark. Single isolated vertically oriented pink flower-petal projectile icon with bright cream outline and darker pink core, symmetric readable pointed teardrop for 16x24 pixel display. No other objects. Use a genuinely transparent RGBA background, transparent gutters and generous empty margins."
+    },
+    {
+      "id": "BUL_ORB",
+      "name": "enemy_orb",
+      "path": "images/bullets/enemy_orb.png",
+      "size": [
+        16,
+        16
+      ],
+      "transparent": true,
+      "columns": 1,
+      "cell": null,
+      "prompt": "Finished production asset for a 2D vertical fantasy bullet-hell game. Clean warm anime-fantasy painted game art matching the supplied reference's aesthetic. No text, letters, labels, logos, UI mockup, checkerboard, or watermark. Single isolated circular cyan magic orb projectile icon with bright white rim, deep blue center, clean solid small silhouette for 16x16 pixels. No decorative trails or other objects. Use a genuinely transparent RGBA background, transparent gutters and generous empty margins."
+    },
+    {
+      "id": "BUL_NEEDLE",
+      "name": "enemy_needle",
+      "path": "images/bullets/enemy_needle.png",
+      "size": [
+        12,
+        24
+      ],
+      "transparent": true,
+      "columns": 1,
+      "cell": null,
+      "prompt": "Finished production asset for a 2D vertical fantasy bullet-hell game. Clean warm anime-fantasy painted game art matching the supplied reference's aesthetic. No text, letters, labels, logos, UI mockup, checkerboard, or watermark. Single isolated vertical slender indigo and silver magic needle projectile icon, sharp upward point, thick bright white outline for readability at 12x24 pixels, simple symmetric silhouette. No other objects. Use a genuinely transparent RGBA background, transparent gutters and generous empty margins."
+    },
+    {
+      "id": "FX_HIT",
+      "name": "hit_sheet",
+      "path": "images/effects/hit_sheet.png",
+      "size": [
+        256,
+        64
+      ],
+      "transparent": true,
+      "columns": 4,
+      "cell": [
+        64,
+        64
+      ],
+      "prompt": "Finished production asset for a 2D vertical fantasy bullet-hell game. Clean warm anime-fantasy painted game art matching the supplied reference's aesthetic. No text, letters, labels, logos, UI mockup, checkerboard, or watermark. One horizontal effect sprite sheet, exactly FOUR equally spaced square columns, ONE row. Sequential animation frames of one compact golden-white magical hit spark: small star, expanding pointed flash, broken spark ring, sparse fading motes. Same center in every frame, each complete inside its cell, no grid. Final cells64x64. Use a genuinely transparent RGBA background, transparent gutters and generous empty margins."
+    },
+    {
+      "id": "FX_EXPLOSION",
+      "name": "explosion_sheet",
+      "path": "images/effects/explosion_sheet.png",
+      "size": [
+        384,
+        64
+      ],
+      "transparent": true,
+      "columns": 6,
+      "cell": [
+        64,
+        64
+      ],
+      "prompt": "Finished production asset for a 2D vertical fantasy bullet-hell game. Clean warm anime-fantasy painted game art matching the supplied reference's aesthetic. No text, letters, labels, logos, UI mockup, checkerboard, or watermark. One horizontal effect sprite sheet, exactly SIX equally spaced square columns, ONE row. Sequential nonviolent magical explosion animation: tiny gold core, swelling gold-pink starburst, broad pink-white ring, fragmented ring, small fading sparks, faint last motes. Same center in every cell, complete within cell, no grid. Final cells64x64. Use a genuinely transparent RGBA background, transparent gutters and generous empty margins."
+    },
+    {
+      "id": "FX_BOMB",
+      "name": "bomb_sheet",
+      "path": "images/effects/bomb_sheet.png",
+      "size": [
+        768,
+        128
+      ],
+      "transparent": true,
+      "columns": 6,
+      "cell": [
+        128,
+        128
+      ],
+      "prompt": "Finished production asset for a 2D vertical fantasy bullet-hell game. Clean warm anime-fantasy painted game art matching the supplied reference's aesthetic. No text, letters, labels, logos, UI mockup, checkerboard, or watermark. One horizontal magic effect sprite sheet, exactly SIX equally spaced square columns, ONE row. Sequential violet player spell wave animation: small star core, small rune-free concentric ring, medium ring, large ring with red-violet flares, broken broad ring, sparse last motes. No letters or symbols resembling text. Same center and complete silhouettes, no grid. Final cells128x128. Use a genuinely transparent RGBA background, transparent gutters and generous empty margins."
+    },
+    {
+      "id": "FX_MAGIC",
+      "name": "magic_circle_sheet",
+      "path": "images/effects/magic_circle_sheet.png",
+      "size": [
+        512,
+        128
+      ],
+      "transparent": true,
+      "columns": 4,
+      "cell": [
+        128,
+        128
+      ],
+      "prompt": "Finished production asset for a 2D vertical fantasy bullet-hell game. Clean warm anime-fantasy painted game art matching the supplied reference's aesthetic. No text, letters, labels, logos, UI mockup, checkerboard, or watermark. One horizontal magic effect sprite sheet, exactly FOUR equally spaced square columns, ONE row. Four sequential pulsing/rotating poses of the SAME silver-indigo geometric magic circle with crescent and small stars, rune-free, no writing. Same size, common center, fully inside each cell, no grid. Final cells128x128. Use a genuinely transparent RGBA background, transparent gutters and generous empty margins."
+    },
+    {
+      "id": "UI_PANEL",
+      "name": "info_panel",
+      "path": "images/ui/info_panel.png",
+      "size": [
+        480,
+        600
+      ],
+      "transparent": false,
+      "columns": 1,
+      "cell": null,
+      "prompt": "Finished production asset for a 2D vertical fantasy bullet-hell game. Clean warm anime-fantasy painted game art matching the supplied reference's aesthetic. No text, letters, labels, logos, UI mockup, checkerboard, or watermark. Vertical 4:5 fantasy game sidebar panel, dark purple/navy parchment texture with a thin restrained gold ornamental frame and faint crescent at bottom. Entire inner 85 percent must be dark, quiet, empty usable space for real portraits and text drawn later. No lettering, no icons, no slots, no invented dashboard. Final480x600. Opaque full-bleed image."
+    },
+    {
+      "id": "UI_DIALOGUE",
+      "name": "dialogue_box",
+      "path": "images/ui/dialogue_box.png",
+      "size": [
+        960,
+        160
+      ],
+      "transparent": true,
+      "columns": 1,
+      "cell": null,
+      "prompt": "Finished production asset for a 2D vertical fantasy bullet-hell game. Clean warm anime-fantasy painted game art matching the supplied reference's aesthetic. No text, letters, labels, logos, UI mockup, checkerboard, or watermark. Single very wide low fantasy dialogue box panel with dark translucent navy-purple interior and thin pale-gold rounded ornamental border. Inner area empty for text. No text, portrait, icons, or extra panels. Width to height six to one intended for960x160; full box centered in transparent canvas. Use a genuinely transparent RGBA background, transparent gutters and generous empty margins."
+    },
+    {
+      "id": "UI_LIFE",
+      "name": "life_icon",
+      "path": "images/ui/life_icon.png",
+      "size": [
+        24,
+        24
+      ],
+      "transparent": true,
+      "columns": 1,
+      "cell": null,
+      "prompt": "Finished production asset for a 2D vertical fantasy bullet-hell game. Clean warm anime-fantasy painted game art matching the supplied reference's aesthetic. No text, letters, labels, logos, UI mockup, checkerboard, or watermark. Single isolated small crimson magic heart life icon with warm ivory outline and violet shadow, compact unmistakable heart silhouette, clean few-color pixel-friendly style at24x24. No other objects. Use a genuinely transparent RGBA background, transparent gutters and generous empty margins."
+    },
+    {
+      "id": "UI_BOMB",
+      "name": "bomb_icon",
+      "path": "images/ui/bomb_icon.png",
+      "size": [
+        24,
+        24
+      ],
+      "transparent": true,
+      "columns": 1,
+      "cell": null,
+      "prompt": "Finished production asset for a 2D vertical fantasy bullet-hell game. Clean warm anime-fantasy painted game art matching the supplied reference's aesthetic. No text, letters, labels, logos, UI mockup, checkerboard, or watermark. Single isolated small violet four-point magic star with red center and ivory outline, player spell charge icon, compact clean few-color pixel-friendly style at24x24. No fuse, no text or other objects. Use a genuinely transparent RGBA background, transparent gutters and generous empty margins."
+    },
+    {
+      "id": "UI_LOCK",
+      "name": "lock_icon",
+      "path": "images/ui/lock_icon.png",
+      "size": [
+        24,
+        24
+      ],
+      "transparent": true,
+      "columns": 1,
+      "cell": null,
+      "prompt": "Finished production asset for a 2D vertical fantasy bullet-hell game. Clean warm anime-fantasy painted game art matching the supplied reference's aesthetic. No text, letters, labels, logos, UI mockup, checkerboard, or watermark. Single isolated closed silver padlock icon with navy keyhole, clean bold outlined shape, compact and readable in24x24 pixels. Fantasy game UI, no other objects. Use a genuinely transparent RGBA background, transparent gutters and generous empty margins."
+    },
+    {
+      "id": "UI_HITBOX",
+      "name": "hitbox_marker",
+      "path": "images/ui/hitbox_marker.png",
+      "size": [
+        12,
+        12
+      ],
+      "transparent": true,
+      "columns": 1,
+      "cell": null,
+      "prompt": "Finished production asset for a 2D vertical fantasy bullet-hell game. Clean warm anime-fantasy painted game art matching the supplied reference's aesthetic. No text, letters, labels, logos, UI mockup, checkerboard, or watermark. Single isolated perfectly centered tiny white circular ring with vivid red dot at its exact center and thin dark outer outline. A precision player hitbox marker for12x12 pixels, geometric minimal readable shape, no ornament. Use a genuinely transparent RGBA background, transparent gutters and generous empty margins."
+    }
+  ]
+}

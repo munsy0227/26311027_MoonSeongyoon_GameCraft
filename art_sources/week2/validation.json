@@ -1,0 +1,114 @@
+{
+  "images": 30,
+  "sounds": 15,
+  "new_images": 22,
+  "applied": 17,
+  "audio": {
+    "BGM_MENU": {
+      "seconds": 32.0,
+      "channels": 2,
+      "peak": 0.59998,
+      "rms": 0.11597,
+      "boundary_jump": 0.00275
+    },
+    "BGM_STAGE01": {
+      "seconds": 64.0,
+      "channels": 2,
+      "peak": 0.59998,
+      "rms": 0.1118,
+      "boundary_jump": 0.00186
+    },
+    "BGM_STAGE02": {
+      "seconds": 64.0,
+      "channels": 2,
+      "peak": 0.59998,
+      "rms": 0.12145,
+      "boundary_jump": 0.00287
+    },
+    "BGM_STAGE03": {
+      "seconds": 64.0,
+      "channels": 2,
+      "peak": 0.59998,
+      "rms": 0.12312,
+      "boundary_jump": 0.00052
+    },
+    "BGM_BOSS": {
+      "seconds": 64.0,
+      "channels": 2,
+      "peak": 0.59998,
+      "rms": 0.12404,
+      "boundary_jump": 0.00354
+    },
+    "BGM_ENDING": {
+      "seconds": 32.0,
+      "channels": 2,
+      "peak": 0.59998,
+      "rms": 0.11684,
+      "boundary_jump": 0.00201
+    },
+    "SFX_SHOT": {
+      "seconds": 0.1,
+      "channels": 1,
+      "peak": 0.77997,
+      "rms": 0.25204,
+      "boundary_jump": 0.0
+    },
+    "SFX_ENEMY_HIT": {
+      "seconds": 0.12,
+      "channels": 1,
+      "peak": 0.77997,
+      "rms": 0.23361,
+      "boundary_jump": 0.0
+    },
+    "SFX_PLAYER_HIT": {
+      "seconds": 0.32,
+      "channels": 1,
+      "peak": 0.77997,
+      "rms": 0.16079,
+      "boundary_jump": 0.0
+    },
+    "SFX_EXPLOSION": {
+      "seconds": 0.45,
+      "channels": 1,
+      "peak": 0.77997,
+      "rms": 0.12452,
+      "boundary_jump": 0.0
+    },
+    "SFX_BOMB": {
+      "seconds": 0.7,
+      "channels": 1,
+      "peak": 0.77997,
+      "rms": 0.14293,
+      "boundary_jump": 0.0
+    },
+    "SFX_MENU_MOVE": {
+      "seconds": 0.08,
+      "channels": 1,
+      "peak": 0.77997,
+      "rms": 0.25233,
+      "boundary_jump": 0.0
+    },
+    "SFX_MENU_CONFIRM": {
+      "seconds": 0.18,
+      "channels": 1,
+      "peak": 0.77997,
+      "rms": 0.24922,
+      "boundary_jump": 0.0
+    },
+    "SFX_CLEAR": {
+      "seconds": 2.0,
+      "channels": 1,
+      "peak": 0.77997,
+      "rms": 0.24326,
+      "boundary_jump": 0.0
+    },
+    "SFX_GAME_OVER": {
+      "seconds": 2.0,
+      "channels": 1,
+      "peak": 0.77997,
+      "rms": 0.25115,
+      "boundary_jump": 0.0
+    }
+  },
+  "windows_verified": false
+}

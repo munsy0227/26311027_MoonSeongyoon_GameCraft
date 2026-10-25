@@ -52,7 +52,10 @@ int GraphicEngine::Init(const GAME_WINDOW& gameWindow)
 					, gameWindow.bWindowed
 					, gameWindow.scnScale);
 	if (0 > hr)
+	{
+		g2_DestroyWin();
 		return -2;
+	}
 
 	printf("Starting ...\n\n");
 	return 0;

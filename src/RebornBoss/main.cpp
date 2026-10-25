@@ -1,18 +1,10 @@
-#include <iostream>
 #include "App.h"
+#include <cstdlib>
 
-int main(int argc, char** argv)
+int main()
 {
-	App app;
-	if (0 > app.Init())
-		return 0;
-
-	auto hr = app.Run();
-	//  hr
-	{
-
-	}
-
-
-	return 0;
+    App app;
+    if (app.Init() < 0)
+        return EXIT_FAILURE;
+    return app.Run() < 0 ? EXIT_FAILURE : EXIT_SUCCESS;
 }
