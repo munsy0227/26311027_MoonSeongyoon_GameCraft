@@ -1,0 +1,11 @@
+{
+  "tool": "OpenAI built-in image_gen",
+  "date": "2026-10-25",
+  "generated_original": "/home/munsy0227/.codex/generated_images/01a16171-1b73-7f22-9096-3bb5b9f9baeb/exec-9199f751-336e-48de-98e1-b46ba3f88d16.png",
+  "saved_source": "art_sources/characters/lillian/poses_source_v1.png",
+  "references": [
+    "docs/character-design/samples/lillian_v01/lillian_angry_v01.png",
+    "docs/character-design/anima/ComfyUI_02676_.png"
+  ],
+  "prompt": "poses_v1.prompt.txt"
+}

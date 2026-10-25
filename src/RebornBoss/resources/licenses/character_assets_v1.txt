@@ -1,0 +1,10 @@
+Character assets v1 - creation record
+Date: 2026-10-25
+Characters: Leon Ashford, Lillian Bloom, Vivian Mistwood, Eleanor Nightvale.
+Design source: the user's four Anima images under docs/character-design/anima/.
+Generated artwork: OpenAI built-in image_gen, using those designs and the approved character samples as references.
+Postprocessing: Python/Pillow, explicitly authorized by the user in this conversation.
+Edits: atlas separation, alpha cleanup, portrait crop, aligned canvases, native pixel dimensions, shared combat palettes, frame sheets and appearance/exit alpha transitions.
+Prompts, source PNGs, generation records: art_sources/characters/.
+Runtime file and frame index: resources/character_assets.json.
+The original Anima files and previous character samples were preserved.

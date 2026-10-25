@@ -1,0 +1,11 @@
+{
+  "tool": "OpenAI built-in image_gen",
+  "date": "2026-10-25",
+  "generated_original": "/home/munsy0227/.codex/generated_images/01a16171-1b73-7f22-9096-3bb5b9f9baeb/exec-9d8e044a-72d2-428f-a57f-6f226b96ab94.png",
+  "saved_source": "art_sources/characters/vivian/combat_source_v1.png",
+  "references": [
+    "docs/character-design/samples/vivian_v01/vivian_surprised_v01.png",
+    "docs/character-design/samples/vivian_v01/vivian_pixel_motion_concept_v01.png"
+  ],
+  "prompt": "combat_v1.prompt.txt"
+}

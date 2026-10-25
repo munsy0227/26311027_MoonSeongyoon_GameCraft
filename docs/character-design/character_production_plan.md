@@ -3,8 +3,22 @@
 - 기준: 사용자가 제시한 Anima 화풍 커스텀 → 표정·동작 확장 → 슈팅 화면용 픽셀 표현의 제작 흐름
 - 대상: 레온 애쉬포드, 릴리안 블룸, 비비안 미스트우드, 엘레노어 나이트베일
 - 연결 문서: [1차 디자인 시안](character_design_v01.md), [게임 기획서](../게임기획서.md), [리소스 계획서](../리소스계획서.md)
-- 현재 단계: 사용자가 Anima에서 화풍을 다듬은 기준 이미지를 제공하기 전
-- 이 문서는 후속 제작 기준이다. 아래 표정·동작·픽셀 파일은 아직 제작되지 않았다.
+- 현재 단계: 네 캐릭터의 감정 6종·전신 동작 8종·전투 9상태를 실제 규격의 파일로 제작하고 편집 완료했다.
+- 최신 파일·시트·프레임 시간은 [캐릭터 이미지 완성본 v1](character_assets_delivery_v1.md)을 기준으로 한다. 아래 1차 시안 기록은 제작 이력이다.
+- 이미지 편집 완료와 C++ 게임 연결·Windows 실행 확인은 구분한다.
+
+## 수신한 기준 원화
+
+2026-10-25 확인. 네 파일 모두 1024 × 1536 px의 RGB PNG이며 흰 배경이 포함되어 있다. 원본 파일명과 이미지는 보존한다.
+
+| 캐릭터 | 기준 파일 | 확인한 모습 |
+|---|---|---|
+| 릴리안 블룸 | [ComfyUI_02676_.png](anima/ComfyUI_02676_.png) | 금발 단발, 녹색 눈과 잎사귀 의상, 흰 꽃, 날개를 갖춘 전신 |
+| 레온 애쉬포드 | [ComfyUI_02677_.png](anima/ComfyUI_02677_.png) | 뾰족한 흑발, 호박색 눈, 높은 보라색 옷깃과 망토, 붉은 가슴 문양, 갈색 부츠를 갖춘 전신 |
+| 비비안 미스트우드 | [ComfyUI_02681_.png](anima/ComfyUI_02681_.png) | 같은 캐릭터의 두 포즈. 청회색 긴 머리, 큰 여우 귀와 꼬리, 푸른 겉옷과 밝은 속의상 |
+| 엘레노어 나이트베일 | [ComfyUI_02685_.png](anima/ComfyUI_02685_.png) | 앞·뒷모습. 은발, 남색 긴 의상, 밝은 옷깃, 초승달 장식과 등에 배치된 결계 |
+
+새 표정과 포즈는 이 원화의 얼굴형, 의상 구조, 색, 선과 셀 채색을 기준으로 제작한다. 투명 배경이 필요한 출력물은 원본과 별도로 제작한다.
 
 ## 제작 흐름
 
@@ -15,7 +29,7 @@
 5. 고정된 셀 안에서 동작 프레임을 제작하고 개별 PNG와 스프라이트 시트를 정리한다.
 6. 대사 장면과 슈팅 장면에서 크기·가독성·동작 연결을 확인한다.
 
-첫 제작은 캐릭터 한 명의 기본 표정, 표정 변화 하나, 전투용 대기·이동 샘플로 진행한다. 이 샘플에서 화풍과 픽셀 밀도를 정한 다음 나머지 표정과 캐릭터로 확장한다. 기본 시작 대상은 플레이어 레온으로 제안한다.
+첫 제작은 플레이어 레온의 표정 변화와 전투용 대기·이동 샘플로 진행했고, 같은 구성으로 나머지 세 캐릭터까지 확장했다. 이후 사용자의 완성본 제작 요청과 Python 후처리 승인에 따라 전체 감정·동작과 실제 셀 규격의 애니메이션을 제작했다.
 
 ## 기준 이미지
 
@@ -75,7 +89,7 @@
 | 비비안 | 64 × 64 px | 4열 × 2행, 256 × 128 px |
 | 엘레노어 | 64 × 64 px | 4열 × 2행, 256 × 128 px |
 
-위 규격을 첫 샘플의 기준으로 삼는다. 날개·꼬리·망토가 잘리거나 화면에서 구별되지 않으면 샘플을 보며 셀 크기와 표시 크기를 함께 조정한다. 확장 동작은 기존 시트의 칸에 무리하게 넣지 않고 동작별 추가 시트로 분리할 수 있다.
+기본 시트는 위 규격을 유지했다. 확장 동작은 캐릭터마다 4열 × 9행의 전체 시트와 동작별 가로 4프레임 시트로 분리했다. 셀 크기·기준점·시간·반복 여부는 완성본 JSON에 기록했다.
 
 ## 파일 구성
 
@@ -101,4 +115,50 @@
 - 이미지 외곽과 충돌 판정 크기를 분리한다.
 - 애니메이션은 프레임 연결과 반복 경계를 확인한다.
 - Windows의 실제 이미지 표시·애니메이션과 Visual Studio 컴파일·실행은 사용자가 확인한다.
+
+## 레온 1차 샘플
+
+2026-10-25, 내장 image_gen으로 제작했다. 두 샘플 모두 [레온 Anima 원화](anima/ComfyUI_02677_.png)를 직접 참조했으며, 생성된 PNG 원본을 후편집 없이 보관했다.
+
+| 샘플 | 파일 | 실제 크기·형식 | 용도 |
+|---|---|---|---|
+| 당황·발끈 표정 | [leon_flustered_v01.png](samples/leon_v01/leon_flustered_v01.png) | 1024 × 1536 px, RGBA PNG | 원화의 전신 자세·의상·화풍을 유지하면서 표정 변화 비교 |
+| 픽셀 동작 시안 | [leon_pixel_motion_concept_v01.png](samples/leon_v01/leon_pixel_motion_concept_v01.png) | 1659 × 948 px, RGBA PNG | 뒤에서 본 대기·왼쪽 이동·오른쪽 이동의 세 자세 비교 |
+
+- 표정은 원화의 자신만만한 미소에서 놀라고 발끈하는 얼굴로 바꾸었다. 흑발, 호박색 눈, 보라색 높은 옷깃·망토, 붉은 가슴 문양과 갈색 부츠를 유지한다.
+- 픽셀 시안은 왼쪽부터 대기, 왼쪽으로 기울기, 오른쪽으로 기울기다. 이동 반대쪽으로 망토가 흐르도록 표현했다.
+- 뒤에서 보이는 의상은 원화에 없는 뒷면을 제안한 것이다. 가슴의 붉은 문양을 망토 등에 새로 넣지 않았다.
+- 두 PNG에서 투명 채널을 확인했다. 외곽의 낮은 알파 잔여 픽셀과 여백은 최종 게임용 출력 단계에서 정리해야 한다.
+- 픽셀 시안은 32 × 48 px 셀에 맞춘 완성 시트가 아니다. 고정 격자와 팔레트 정리, 개별 프레임 분리, 기준점 정렬, 중간 프레임과 반복 동작 제작이 남아 있다.
+- 나머지 세 캐릭터의 픽셀 시안에는 레온 시안을 보조 참고 자료로 사용했다. 캐릭터별 비율과 픽셀 밀도의 최종 통일은 게임용 셀 제작 단계에서 확인한다.
+- 기존 리소스 계획서의 게임용 스프라이트·초상화를 확보 완료로 변경하지 않았다. Windows 적용·실행 검증도 수행하지 않았다.
+
+생성 요청문: [당황 표정](samples/leon_v01/leon_flustered_v01.prompt.txt), [픽셀 동작](samples/leon_v01/leon_pixel_motion_concept_v01.prompt.txt).
+
+## 릴리안·비비안·엘레노어 1차 샘플
+
+2026-10-25, 내장 image_gen으로 캐릭터마다 표정 1장과 세 자세를 비교하는 픽셀 시안 1장, 총 6개의 PNG를 제작했다. 각 Anima 원화를 직접 참조했으며, 픽셀 시안에는 레온의 픽셀 시안을 화풍 참고로 함께 제공했다. 생성된 원본을 후편집 없이 보관했다.
+
+| 캐릭터 | 구분 | 파일 | 실제 크기·형식 |
+|---|---|---|---|
+| 릴리안 | 화난 표정 | [lillian_angry_v01.png](samples/lillian_v01/lillian_angry_v01.png) | 1024 × 1536 px, RGBA PNG |
+| 릴리안 | 픽셀 동작 시안 | [lillian_pixel_motion_concept_v01.png](samples/lillian_v01/lillian_pixel_motion_concept_v01.png) | 1881 × 836 px, RGBA PNG |
+| 비비안 | 놀람·당황 표정 | [vivian_surprised_v01.png](samples/vivian_v01/vivian_surprised_v01.png) | 1024 × 1536 px, RGBA PNG |
+| 비비안 | 픽셀 동작 시안 | [vivian_pixel_motion_concept_v01.png](samples/vivian_v01/vivian_pixel_motion_concept_v01.png) | 1969 × 799 px, RGBA PNG |
+| 엘레노어 | 옅은 미소 | [eleanor_gentle_smile_v01.png](samples/eleanor_v01/eleanor_gentle_smile_v01.png) | 1024 × 1536 px, RGBA PNG |
+| 엘레노어 | 픽셀 동작 시안 | [eleanor_pixel_motion_concept_v01.png](samples/eleanor_v01/eleanor_pixel_motion_concept_v01.png) | 1659 × 948 px, RGBA PNG |
+
+- 릴리안은 원화의 금발 단발, 녹색 눈, 흰 꽃과 네 날개를 유지하고 표정을 꾸짖는 얼굴로 바꾸었다.
+- 비비안은 원화의 오른쪽 포즈만 한 인물로 분리했다. 청회색 머리, 큰 귀와 꼬리 한 개, 푸른 의상을 유지하며 놀란 표정으로 바꾸었다.
+- 엘레노어는 원화의 왼쪽 정면 포즈만 한 인물로 분리했다. 은발, 남색 긴 의상, 초승달과 결계를 유지하며 옅은 미소로 바꾸었다.
+- 세 픽셀 시안은 모두 왼쪽부터 대기, 화면 왼쪽으로 이동, 화면 오른쪽으로 이동의 세 자세다. 보스가 화면 아래의 플레이어를 바라보는 정면 시점으로 표현했다.
+- 날개 각도, 꼬리와 머리카락, 긴 치마의 흐름으로 이동 방향을 구분한다. 레온의 뒤에서 본 시점과 보스들의 정면 시점을 구분한다.
+- 6개 PNG의 RGBA 모드와 투명 채널을 확인했다. 픽셀 시안은 실제 64 × 64 px 셀에 정렬된 스프라이트 시트가 아니며, 자세별 위치·비율·팔레트·외곽 픽셀을 최종 규격에 맞추는 작업이 남아 있다.
+- 연속 애니메이션의 중간 프레임·반복·재생 시간, 실제 전투 배경 위 가독성과 Windows 실행은 확인하지 않았다. 기존 리소스 계획서의 게임용 자산 확보 상태는 변경하지 않았다.
+
+| 캐릭터 | 표정 생성 요청문 | 픽셀 동작 생성 요청문 |
+|---|---|---|
+| 릴리안 | [lillian_angry_v01.prompt.txt](samples/lillian_v01/lillian_angry_v01.prompt.txt) | [lillian_pixel_motion_concept_v01.prompt.txt](samples/lillian_v01/lillian_pixel_motion_concept_v01.prompt.txt) |
+| 비비안 | [vivian_surprised_v01.prompt.txt](samples/vivian_v01/vivian_surprised_v01.prompt.txt) | [vivian_pixel_motion_concept_v01.prompt.txt](samples/vivian_v01/vivian_pixel_motion_concept_v01.prompt.txt) |
+| 엘레노어 | [eleanor_gentle_smile_v01.prompt.txt](samples/eleanor_v01/eleanor_gentle_smile_v01.prompt.txt) | [eleanor_pixel_motion_concept_v01.prompt.txt](samples/eleanor_v01/eleanor_pixel_motion_concept_v01.prompt.txt) |
 

@@ -1,0 +1,11 @@
+{
+  "tool": "OpenAI built-in image_gen",
+  "date": "2026-10-25",
+  "generated_original": "/home/munsy0227/.codex/generated_images/01a16171-1b73-7f22-9096-3bb5b9f9baeb/exec-5c562029-00b7-4db0-8522-626a0c79d474.png",
+  "saved_source": "art_sources/characters/lillian/combat_source_v1.png",
+  "references": [
+    "docs/character-design/samples/lillian_v01/lillian_angry_v01.png",
+    "docs/character-design/samples/lillian_v01/lillian_pixel_motion_concept_v01.png"
+  ],
+  "prompt": "combat_v1.prompt.txt"
+}

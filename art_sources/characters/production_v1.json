@@ -1,0 +1,253 @@
+{
+  "version": 1,
+  "date": "2026-10-25",
+  "generator": "OpenAI built-in image_gen",
+  "python_postprocessing_authorized": true,
+  "expressions": [
+    "neutral",
+    "happy",
+    "angry",
+    "surprised",
+    "determined",
+    "hurt"
+  ],
+  "poses": [
+    "idle",
+    "move_left",
+    "move_right",
+    "cast",
+    "hit",
+    "appear",
+    "victory",
+    "defeat"
+  ],
+  "combat_source_states": [
+    "idle",
+    "move_left",
+    "move_right",
+    "cast",
+    "hit",
+    "victory",
+    "defeat"
+  ],
+  "cast": [
+    {
+      "id": "leon",
+      "name": "레온 애쉬포드",
+      "english_name": "Leon Ashford",
+      "cell": [
+        32,
+        48
+      ],
+      "reference": "docs/character-design/anima/ComfyUI_02677_.png",
+      "clean_reference": "docs/character-design/samples/leon_v01/leon_flustered_v01.png",
+      "pixel_reference": "docs/character-design/samples/leon_v01/leon_pixel_motion_concept_v01.png"
+    },
+    {
+      "id": "lillian",
+      "name": "릴리안 블룸",
+      "english_name": "Lillian Bloom",
+      "cell": [
+        64,
+        64
+      ],
+      "reference": "docs/character-design/anima/ComfyUI_02676_.png",
+      "clean_reference": "docs/character-design/samples/lillian_v01/lillian_angry_v01.png",
+      "pixel_reference": "docs/character-design/samples/lillian_v01/lillian_pixel_motion_concept_v01.png"
+    },
+    {
+      "id": "vivian",
+      "name": "비비안 미스트우드",
+      "english_name": "Vivian Mistwood",
+      "cell": [
+        64,
+        64
+      ],
+      "reference": "docs/character-design/anima/ComfyUI_02681_.png",
+      "clean_reference": "docs/character-design/samples/vivian_v01/vivian_surprised_v01.png",
+      "pixel_reference": "docs/character-design/samples/vivian_v01/vivian_pixel_motion_concept_v01.png"
+    },
+    {
+      "id": "eleanor",
+      "name": "엘레노어 나이트베일",
+      "english_name": "Eleanor Nightvale",
+      "cell": [
+        64,
+        64
+      ],
+      "reference": "docs/character-design/anima/ComfyUI_02685_.png",
+      "clean_reference": "docs/character-design/samples/eleanor_v01/eleanor_gentle_smile_v01.png",
+      "pixel_reference": "docs/character-design/samples/eleanor_v01/eleanor_pixel_motion_concept_v01.png"
+    }
+  ],
+  "jobs": [
+    {
+      "character": "leon",
+      "kind": "expressions",
+      "grid": [
+        3,
+        2
+      ],
+      "source": "art_sources/characters/leon/expressions_source_v1.png",
+      "prompt": "art_sources/characters/leon/expressions_v1.prompt.txt",
+      "references": [
+        "docs/character-design/samples/leon_v01/leon_flustered_v01.png",
+        "docs/character-design/anima/ComfyUI_02677_.png"
+      ]
+    },
+    {
+      "character": "leon",
+      "kind": "poses",
+      "grid": [
+        4,
+        2
+      ],
+      "source": "art_sources/characters/leon/poses_source_v1.png",
+      "prompt": "art_sources/characters/leon/poses_v1.prompt.txt",
+      "references": [
+        "docs/character-design/samples/leon_v01/leon_flustered_v01.png",
+        "docs/character-design/anima/ComfyUI_02677_.png"
+      ]
+    },
+    {
+      "character": "leon",
+      "kind": "combat",
+      "grid": [
+        4,
+        7
+      ],
+      "source": "art_sources/characters/leon/combat_source_v1.png",
+      "prompt": "art_sources/characters/leon/combat_v1.prompt.txt",
+      "references": [
+        "docs/character-design/samples/leon_v01/leon_flustered_v01.png",
+        "docs/character-design/samples/leon_v01/leon_pixel_motion_concept_v01.png"
+      ]
+    },
+    {
+      "character": "lillian",
+      "kind": "expressions",
+      "grid": [
+        3,
+        2
+      ],
+      "source": "art_sources/characters/lillian/expressions_source_v1.png",
+      "prompt": "art_sources/characters/lillian/expressions_v1.prompt.txt",
+      "references": [
+        "docs/character-design/samples/lillian_v01/lillian_angry_v01.png",
+        "docs/character-design/anima/ComfyUI_02676_.png"
+      ]
+    },
+    {
+      "character": "lillian",
+      "kind": "poses",
+      "grid": [
+        4,
+        2
+      ],
+      "source": "art_sources/characters/lillian/poses_source_v1.png",
+      "prompt": "art_sources/characters/lillian/poses_v1.prompt.txt",
+      "references": [
+        "docs/character-design/samples/lillian_v01/lillian_angry_v01.png",
+        "docs/character-design/anima/ComfyUI_02676_.png"
+      ]
+    },
+    {
+      "character": "lillian",
+      "kind": "combat",
+      "grid": [
+        4,
+        7
+      ],
+      "source": "art_sources/characters/lillian/combat_source_v1.png",
+      "prompt": "art_sources/characters/lillian/combat_v1.prompt.txt",
+      "references": [
+        "docs/character-design/samples/lillian_v01/lillian_angry_v01.png",
+        "docs/character-design/samples/lillian_v01/lillian_pixel_motion_concept_v01.png"
+      ]
+    },
+    {
+      "character": "vivian",
+      "kind": "expressions",
+      "grid": [
+        3,
+        2
+      ],
+      "source": "art_sources/characters/vivian/expressions_source_v1.png",
+      "prompt": "art_sources/characters/vivian/expressions_v1.prompt.txt",
+      "references": [
+        "docs/character-design/samples/vivian_v01/vivian_surprised_v01.png",
+        "docs/character-design/anima/ComfyUI_02681_.png"
+      ]
+    },
+    {
+      "character": "vivian",
+      "kind": "poses",
+      "grid": [
+        4,
+        2
+      ],
+      "source": "art_sources/characters/vivian/poses_source_v1.png",
+      "prompt": "art_sources/characters/vivian/poses_v1.prompt.txt",
+      "references": [
+        "docs/character-design/samples/vivian_v01/vivian_surprised_v01.png",
+        "docs/character-design/anima/ComfyUI_02681_.png"
+      ]
+    },
+    {
+      "character": "vivian",
+      "kind": "combat",
+      "grid": [
+        4,
+        7
+      ],
+      "source": "art_sources/characters/vivian/combat_source_v1.png",
+      "prompt": "art_sources/characters/vivian/combat_v1.prompt.txt",
+      "references": [
+        "docs/character-design/samples/vivian_v01/vivian_surprised_v01.png",
+        "docs/character-design/samples/vivian_v01/vivian_pixel_motion_concept_v01.png"
+      ]
+    },
+    {
+      "character": "eleanor",
+      "kind": "expressions",
+      "grid": [
+        3,
+        2
+      ],
+      "source": "art_sources/characters/eleanor/expressions_source_v1.png",
+      "prompt": "art_sources/characters/eleanor/expressions_v1.prompt.txt",
+      "references": [
+        "docs/character-design/samples/eleanor_v01/eleanor_gentle_smile_v01.png",
+        "docs/character-design/anima/ComfyUI_02685_.png"
+      ]
+    },
+    {
+      "character": "eleanor",
+      "kind": "poses",
+      "grid": [
+        4,
+        2
+      ],
+      "source": "art_sources/characters/eleanor/poses_source_v1.png",
+      "prompt": "art_sources/characters/eleanor/poses_v1.prompt.txt",
+      "references": [
+        "docs/character-design/samples/eleanor_v01/eleanor_gentle_smile_v01.png",
+        "docs/character-design/anima/ComfyUI_02685_.png"
+      ]
+    },
+    {
+      "character": "eleanor",
+      "kind": "combat",
+      "grid": [
+        4,
+        7
+      ],
+      "source": "art_sources/characters/eleanor/combat_source_v1.png",
+      "prompt": "art_sources/characters/eleanor/combat_v1.prompt.txt",
+      "references": [
+        "docs/character-design/samples/eleanor_v01/eleanor_gentle_smile_v01.png",
+        "docs/character-design/samples/eleanor_v01/eleanor_pixel_motion_concept_v01.png"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,161 @@
+{
+  "id": "leon",
+  "name": "레온 애쉬포드",
+  "cell": [
+    32,
+    48
+  ],
+  "pivot": [
+    16,
+    24
+  ],
+  "atlas": "images/characters/leon_animations.png",
+  "basic_sheet": "images/characters/leon_sheet.png",
+  "metadata": "images/characters/leon_animations.json",
+  "portraits": {
+    "neutral": "images/portraits/leon_portrait_neutral.png",
+    "happy": "images/portraits/leon_portrait_happy.png",
+    "angry": "images/portraits/leon_portrait_angry.png",
+    "surprised": "images/portraits/leon_portrait_surprised.png",
+    "determined": "images/portraits/leon_portrait_determined.png",
+    "hurt": "images/portraits/leon_portrait_hurt.png"
+  },
+  "poses": {
+    "idle": "images/poses/leon/leon_idle.png",
+    "move_left": "images/poses/leon/leon_move_left.png",
+    "move_right": "images/poses/leon/leon_move_right.png",
+    "cast": "images/poses/leon/leon_cast.png",
+    "hit": "images/poses/leon/leon_hit.png",
+    "appear": "images/poses/leon/leon_appear.png",
+    "victory": "images/poses/leon/leon_victory.png",
+    "defeat": "images/poses/leon/leon_defeat.png"
+  },
+  "animations": {
+    "idle": {
+      "row": 0,
+      "frame_count": 4,
+      "frame_ms": 120,
+      "loop": true,
+      "hold_last": false,
+      "sheet": "images/characters/leon/idle_sheet.png",
+      "frames": [
+        "images/characters/leon/idle_00.png",
+        "images/characters/leon/idle_01.png",
+        "images/characters/leon/idle_02.png",
+        "images/characters/leon/idle_03.png"
+      ]
+    },
+    "move_left": {
+      "row": 1,
+      "frame_count": 4,
+      "frame_ms": 100,
+      "loop": true,
+      "hold_last": false,
+      "sheet": "images/characters/leon/move_left_sheet.png",
+      "frames": [
+        "images/characters/leon/move_left_00.png",
+        "images/characters/leon/move_left_01.png",
+        "images/characters/leon/move_left_02.png",
+        "images/characters/leon/move_left_03.png"
+      ]
+    },
+    "move_right": {
+      "row": 2,
+      "frame_count": 4,
+      "frame_ms": 100,
+      "loop": true,
+      "hold_last": false,
+      "sheet": "images/characters/leon/move_right_sheet.png",
+      "frames": [
+        "images/characters/leon/move_right_00.png",
+        "images/characters/leon/move_right_01.png",
+        "images/characters/leon/move_right_02.png",
+        "images/characters/leon/move_right_03.png"
+      ]
+    },
+    "cast": {
+      "row": 3,
+      "frame_count": 4,
+      "frame_ms": 90,
+      "loop": false,
+      "hold_last": true,
+      "sheet": "images/characters/leon/cast_sheet.png",
+      "frames": [
+        "images/characters/leon/cast_00.png",
+        "images/characters/leon/cast_01.png",
+        "images/characters/leon/cast_02.png",
+        "images/characters/leon/cast_03.png"
+      ]
+    },
+    "hit": {
+      "row": 4,
+      "frame_count": 4,
+      "frame_ms": 80,
+      "loop": false,
+      "hold_last": true,
+      "sheet": "images/characters/leon/hit_sheet.png",
+      "frames": [
+        "images/characters/leon/hit_00.png",
+        "images/characters/leon/hit_01.png",
+        "images/characters/leon/hit_02.png",
+        "images/characters/leon/hit_03.png"
+      ]
+    },
+    "victory": {
+      "row": 5,
+      "frame_count": 4,
+      "frame_ms": 140,
+      "loop": true,
+      "hold_last": false,
+      "sheet": "images/characters/leon/victory_sheet.png",
+      "frames": [
+        "images/characters/leon/victory_00.png",
+        "images/characters/leon/victory_01.png",
+        "images/characters/leon/victory_02.png",
+        "images/characters/leon/victory_03.png"
+      ]
+    },
+    "defeat": {
+      "row": 6,
+      "frame_count": 4,
+      "frame_ms": 160,
+      "loop": false,
+      "hold_last": true,
+      "sheet": "images/characters/leon/defeat_sheet.png",
+      "frames": [
+        "images/characters/leon/defeat_00.png",
+        "images/characters/leon/defeat_01.png",
+        "images/characters/leon/defeat_02.png",
+        "images/characters/leon/defeat_03.png"
+      ]
+    },
+    "appear": {
+      "row": 7,
+      "frame_count": 4,
+      "frame_ms": 120,
+      "loop": false,
+      "hold_last": true,
+      "sheet": "images/characters/leon/appear_sheet.png",
+      "frames": [
+        "images/characters/leon/appear_00.png",
+        "images/characters/leon/appear_01.png",
+        "images/characters/leon/appear_02.png",
+        "images/characters/leon/appear_03.png"
+      ]
+    },
+    "exit": {
+      "row": 8,
+      "frame_count": 4,
+      "frame_ms": 120,
+      "loop": false,
+      "hold_last": true,
+      "sheet": "images/characters/leon/exit_sheet.png",
+      "frames": [
+        "images/characters/leon/exit_00.png",
+        "images/characters/leon/exit_01.png",
+        "images/characters/leon/exit_02.png",
+        "images/characters/leon/exit_03.png"
+      ]
+    }
+  }
+}

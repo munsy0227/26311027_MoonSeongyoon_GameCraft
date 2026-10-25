@@ -1,0 +1,161 @@
+{
+  "id": "lillian",
+  "name": "릴리안 블룸",
+  "cell": [
+    64,
+    64
+  ],
+  "pivot": [
+    32,
+    32
+  ],
+  "atlas": "images/characters/lillian_animations.png",
+  "basic_sheet": "images/characters/lillian_sheet.png",
+  "metadata": "images/characters/lillian_animations.json",
+  "portraits": {
+    "neutral": "images/portraits/lillian_portrait_neutral.png",
+    "happy": "images/portraits/lillian_portrait_happy.png",
+    "angry": "images/portraits/lillian_portrait_angry.png",
+    "surprised": "images/portraits/lillian_portrait_surprised.png",
+    "determined": "images/portraits/lillian_portrait_determined.png",
+    "hurt": "images/portraits/lillian_portrait_hurt.png"
+  },
+  "poses": {
+    "idle": "images/poses/lillian/lillian_idle.png",
+    "move_left": "images/poses/lillian/lillian_move_left.png",
+    "move_right": "images/poses/lillian/lillian_move_right.png",
+    "cast": "images/poses/lillian/lillian_cast.png",
+    "hit": "images/poses/lillian/lillian_hit.png",
+    "appear": "images/poses/lillian/lillian_appear.png",
+    "victory": "images/poses/lillian/lillian_victory.png",
+    "defeat": "images/poses/lillian/lillian_defeat.png"
+  },
+  "animations": {
+    "idle": {
+      "row": 0,
+      "frame_count": 4,
+      "frame_ms": 120,
+      "loop": true,
+      "hold_last": false,
+      "sheet": "images/characters/lillian/idle_sheet.png",
+      "frames": [
+        "images/characters/lillian/idle_00.png",
+        "images/characters/lillian/idle_01.png",
+        "images/characters/lillian/idle_02.png",
+        "images/characters/lillian/idle_03.png"
+      ]
+    },
+    "move_left": {
+      "row": 1,
+      "frame_count": 4,
+      "frame_ms": 100,
+      "loop": true,
+      "hold_last": false,
+      "sheet": "images/characters/lillian/move_left_sheet.png",
+      "frames": [
+        "images/characters/lillian/move_left_00.png",
+        "images/characters/lillian/move_left_01.png",
+        "images/characters/lillian/move_left_02.png",
+        "images/characters/lillian/move_left_03.png"
+      ]
+    },
+    "move_right": {
+      "row": 2,
+      "frame_count": 4,
+      "frame_ms": 100,
+      "loop": true,
+      "hold_last": false,
+      "sheet": "images/characters/lillian/move_right_sheet.png",
+      "frames": [
+        "images/characters/lillian/move_right_00.png",
+        "images/characters/lillian/move_right_01.png",
+        "images/characters/lillian/move_right_02.png",
+        "images/characters/lillian/move_right_03.png"
+      ]
+    },
+    "cast": {
+      "row": 3,
+      "frame_count": 4,
+      "frame_ms": 90,
+      "loop": false,
+      "hold_last": true,
+      "sheet": "images/characters/lillian/cast_sheet.png",
+      "frames": [
+        "images/characters/lillian/cast_00.png",
+        "images/characters/lillian/cast_01.png",
+        "images/characters/lillian/cast_02.png",
+        "images/characters/lillian/cast_03.png"
+      ]
+    },
+    "hit": {
+      "row": 4,
+      "frame_count": 4,
+      "frame_ms": 80,
+      "loop": false,
+      "hold_last": true,
+      "sheet": "images/characters/lillian/hit_sheet.png",
+      "frames": [
+        "images/characters/lillian/hit_00.png",
+        "images/characters/lillian/hit_01.png",
+        "images/characters/lillian/hit_02.png",
+        "images/characters/lillian/hit_03.png"
+      ]
+    },
+    "victory": {
+      "row": 5,
+      "frame_count": 4,
+      "frame_ms": 140,
+      "loop": true,
+      "hold_last": false,
+      "sheet": "images/characters/lillian/victory_sheet.png",
+      "frames": [
+        "images/characters/lillian/victory_00.png",
+        "images/characters/lillian/victory_01.png",
+        "images/characters/lillian/victory_02.png",
+        "images/characters/lillian/victory_03.png"
+      ]
+    },
+    "defeat": {
+      "row": 6,
+      "frame_count": 4,
+      "frame_ms": 160,
+      "loop": false,
+      "hold_last": true,
+      "sheet": "images/characters/lillian/defeat_sheet.png",
+      "frames": [
+        "images/characters/lillian/defeat_00.png",
+        "images/characters/lillian/defeat_01.png",
+        "images/characters/lillian/defeat_02.png",
+        "images/characters/lillian/defeat_03.png"
+      ]
+    },
+    "appear": {
+      "row": 7,
+      "frame_count": 4,
+      "frame_ms": 120,
+      "loop": false,
+      "hold_last": true,
+      "sheet": "images/characters/lillian/appear_sheet.png",
+      "frames": [
+        "images/characters/lillian/appear_00.png",
+        "images/characters/lillian/appear_01.png",
+        "images/characters/lillian/appear_02.png",
+        "images/characters/lillian/appear_03.png"
+      ]
+    },
+    "exit": {
+      "row": 8,
+      "frame_count": 4,
+      "frame_ms": 120,
+      "loop": false,
+      "hold_last": true,
+      "sheet": "images/characters/lillian/exit_sheet.png",
+      "frames": [
+        "images/characters/lillian/exit_00.png",
+        "images/characters/lillian/exit_01.png",
+        "images/characters/lillian/exit_02.png",
+        "images/characters/lillian/exit_03.png"
+      ]
+    }
+  }
+}
