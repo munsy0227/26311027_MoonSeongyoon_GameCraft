@@ -2,12 +2,20 @@
 #include "GameInput.h"
 #include "App.h"
 
-void GameScene::Text(int x, int y, const char* text, DWORD color, bool title) const
+void GameScene::Text(int x, int y, const char* text, DWORD color, FontStyle style) const
+{
+    const int font = g_pApp->Resources().Font(style);
+    g2_FontDrawText(font, VEC2i{x, y}, color, "%s", text);
+}
+
+void GameScene::MenuItem(int x, int y, const char* label, bool selected, float width) const
 {
     const auto& resources = g_pApp->Resources();
-    const int font = title ? resources.TitleFont() : resources.Font();
-    g2_FontDrawText(font, VEC2i{x + 2, y + 2}, 0xE0000000, "%s", text);
-    g2_FontDrawText(font, VEC2i{x, y}, color, "%s", text);
+    resources.Surface(static_cast<float>(x), static_cast<float>(y), width, 48.0F,
+                      selected ? UIColor::Accent : UIColor::Border);
+    resources.Surface(x + 1.0F, y + 1.0F, width - 2.0F, 46.0F,
+                      selected ? 0xFF302B47 : UIColor::Surface);
+    Text(x + 24, y + 11, label, selected ? UIColor::Text : UIColor::Muted);
 }
 
 bool GameScene::MoveSelection(int& selected, int count) const

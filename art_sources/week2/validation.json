@@ -1,8 +1,8 @@
 {
-  "images": 30,
+  "images": 32,
   "sounds": 15,
-  "new_images": 22,
-  "applied": 17,
+  "new_images": 24,
+  "applied": 33,
   "audio": {
     "BGM_MENU": {
       "seconds": 32.0,

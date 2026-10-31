@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-26",
+  "date": "2026-10-31",
   "windows_verified": false,
   "catalog": [
     {
@@ -36,8 +36,8 @@
       ],
       "origin": "character_assets_v1",
       "runtime_variant": "images/characters/lillian_animations.png",
-      "applied": false,
-      "status": "편집 완료",
+      "applied": true,
+      "status": "적용",
       "sha256": "6b861652543514cd7ee51b9b6d852e601da54ba3c99e1996be99c82c3a139326"
     },
     {
@@ -276,8 +276,8 @@
       "transparent": true,
       "origin": "OpenAI built-in image_gen",
       "source": "art_sources/week2/generated/enemy_petal.png",
-      "applied": false,
-      "status": "편집 완료",
+      "applied": true,
+      "status": "적용",
       "sha256": "83bfe3899d3fbe031119080dbc3d09827db3132211b5d3e4154322292abe3626",
       "source_sha256": "26aee1477dd88a4c0fb51bfcec046cd1ab0ec5ead160246695e7f6a6b1353745"
     },
@@ -293,8 +293,8 @@
       "transparent": true,
       "origin": "OpenAI built-in image_gen",
       "source": "art_sources/week2/generated/enemy_orb.png",
-      "applied": false,
-      "status": "편집 완료",
+      "applied": true,
+      "status": "적용",
       "sha256": "ba928b4fe2d9ba85a27ff78261bf1eb9548cc12c96dc9bf51feb5ea1ac712c62",
       "source_sha256": "8075ed65873f4980e1f09c43c56e27c142fd63b05b19581c3cb9892bd6ce0adb"
     },
@@ -330,8 +330,8 @@
       "transparent": true,
       "origin": "OpenAI built-in image_gen",
       "source": "art_sources/week2/generated/hit_sheet.png",
-      "applied": false,
-      "status": "편집 완료",
+      "applied": true,
+      "status": "적용",
       "sha256": "16f98f766f27f014dd2869186715901498deb6394ac69ffca8645e145068bed3",
       "source_sha256": "e19146672c490988537ac2369fc59a0e2aeeb33b866a56f3a5773280575100db"
     },
@@ -350,8 +350,8 @@
       "transparent": true,
       "origin": "OpenAI built-in image_gen",
       "source": "art_sources/week2/generated/explosion_sheet.png",
-      "applied": false,
-      "status": "편집 완료",
+      "applied": true,
+      "status": "적용",
       "sha256": "f267740f8c0ecc9bdac56da42a96e52befc751a40bee585a98d4fa3e94619cde",
       "source_sha256": "c8a52f4181ae5d78eca4e7caeec87bcd7afc362957104ff2cfe8621ffebb4bb5"
     },
@@ -370,8 +370,8 @@
       "transparent": true,
       "origin": "OpenAI built-in image_gen",
       "source": "art_sources/week2/generated/bomb_sheet.png",
-      "applied": false,
-      "status": "편집 완료",
+      "applied": true,
+      "status": "적용",
       "sha256": "4020a504bae48c4c90e9ced816c9e7c2b981cb9e43713d449bce791314fee5c2",
       "source_sha256": "1e0edab6f193231ef3c140b57f3e35c3610f6bb0729fad07641605ca71ad7a8f"
     },
@@ -405,12 +405,12 @@
       "columns": 1,
       "cell": null,
       "transparent": false,
-      "origin": "OpenAI built-in image_gen",
+      "origin": "Original procedural UI in tools/build_week2_assets.py",
       "source": "art_sources/week2/generated/info_panel.png",
       "applied": true,
       "status": "적용",
-      "sha256": "3e4a918bfe54e81f4fdba4312a66873049a355c56881436ee1dc26d63c477a37",
-      "source_sha256": "322d30c131e7b5cf8951376ad43f8801a633dcc2889b03aee988debcaf9a3121"
+      "sha256": "c8662a0bbde6c7969f3ec8376551ed7ec6d38a923b6a912e8ab30a2d36a19d52",
+      "source_sha256": "c8662a0bbde6c7969f3ec8376551ed7ec6d38a923b6a912e8ab30a2d36a19d52"
     },
     {
       "id": "UI_DIALOGUE",
@@ -422,12 +422,12 @@
       "columns": 1,
       "cell": null,
       "transparent": true,
-      "origin": "OpenAI built-in image_gen",
+      "origin": "Original procedural UI in tools/build_week2_assets.py",
       "source": "art_sources/week2/generated/dialogue_box.png",
       "applied": false,
       "status": "편집 완료",
-      "sha256": "0f7d2165ce8dc03235e9db4be9e0e5dbcdaf1ad983136716a1cdf09d91ed48a0",
-      "source_sha256": "b1569720b9c8c6dd84f8ca4ed0d5e1a8c02a711218ad3134c1c89a1ddebd3a5a"
+      "sha256": "2d8b3ff55afa0b68866a4761d7d4d24621973de190337e3cec7daac27dc801dc",
+      "source_sha256": "2d8b3ff55afa0b68866a4761d7d4d24621973de190337e3cec7daac27dc801dc"
     },
     {
       "id": "UI_LIFE",
@@ -441,8 +441,8 @@
       "transparent": true,
       "origin": "OpenAI built-in image_gen",
       "source": "art_sources/week2/generated/life_icon.png",
-      "applied": false,
-      "status": "편집 완료",
+      "applied": true,
+      "status": "적용",
       "sha256": "2a7c626266b225f3aa334fb19b2c0c948619a830a32e30fe6614a131b95d2bb6",
       "source_sha256": "ae9808f10ca27771eddc3ef4956ba665db24b0fb3294b888a321f7feacbec87c"
     },
@@ -458,8 +458,8 @@
       "transparent": true,
       "origin": "OpenAI built-in image_gen",
       "source": "art_sources/week2/generated/bomb_icon.png",
-      "applied": false,
-      "status": "편집 완료",
+      "applied": true,
+      "status": "적용",
       "sha256": "b1aad4a89dc480394ef40b55168b1d43388fbb52fa6d461274ca53d830c1b162",
       "source_sha256": "65d8c5b872a0c490a41e42873b8afcef30648d57f86a5aea9b2b6044cba0230e"
     },
@@ -473,12 +473,12 @@
       "columns": 1,
       "cell": null,
       "transparent": true,
-      "origin": "OpenAI built-in image_gen",
+      "origin": "Original procedural UI in tools/build_week2_assets.py",
       "source": "art_sources/week2/generated/lock_icon.png",
       "applied": true,
       "status": "적용",
-      "sha256": "40aee04cc44760263e3ee45d5d12c8fd0dfd6d3ef41b6321b934af7078fbecfd",
-      "source_sha256": "d739c7b1db89d3d6e3f0a5ecb0a0ede13962ad962573a0af37538a5663d1c1e6"
+      "sha256": "8562444705e776d1a6a29692480d08d63a724ec630e34d588ceefdf3bef90267",
+      "source_sha256": "8562444705e776d1a6a29692480d08d63a724ec630e34d588ceefdf3bef90267"
     },
     {
       "id": "UI_HITBOX",
@@ -496,6 +496,40 @@
       "status": "적용",
       "sha256": "206ad81912e96d4f8ee5cd4c67e396b2445d1145510dd144a974ab73fd8ec8ac",
       "source_sha256": "0d6c2287ee68637bf321205c0b9664afc3f01f741e2825f287934edcfa2348e6"
+    },
+    {
+      "id": "UI_WHITE",
+      "path": "images/ui/white_pixel.png",
+      "size": [
+        1,
+        1
+      ],
+      "columns": 1,
+      "cell": null,
+      "transparent": false,
+      "origin": "Original procedural UI in tools/build_week2_assets.py",
+      "source": "art_sources/week2/generated/white_pixel.png",
+      "applied": true,
+      "status": "적용",
+      "sha256": "0cc4acc2e9abb600ff3fa032daa5e68cd6a0be87ec7c9de61dbf366fc87de0fc",
+      "source_sha256": "0cc4acc2e9abb600ff3fa032daa5e68cd6a0be87ec7c9de61dbf366fc87de0fc"
+    },
+    {
+      "id": "UI_SURFACE",
+      "path": "images/ui/surface.png",
+      "size": [
+        32,
+        32
+      ],
+      "columns": 1,
+      "cell": null,
+      "transparent": true,
+      "origin": "Original procedural UI in tools/build_week2_assets.py",
+      "source": "art_sources/week2/generated/surface.png",
+      "applied": true,
+      "status": "적용",
+      "sha256": "4eca3d7f0087e592ce9ace1466a25eca9c3a591930759086503dd3a7c35b2626",
+      "source_sha256": "4eca3d7f0087e592ce9ace1466a25eca9c3a591930759086503dd3a7c35b2626"
     },
     {
       "id": "BGM_MENU",
@@ -538,8 +572,8 @@
       "path": "audio/bgm/boss.wav",
       "seconds": 64,
       "origin": "Original procedural composition in tools/build_week2_assets.py",
-      "applied": false,
-      "status": "편집 완료",
+      "applied": true,
+      "status": "적용",
       "sha256": "0ec7f65961ab0d8743d41ea469d71be69c0f8ae47ad0fa3a72bf940b27be7e99"
     },
     {
@@ -574,8 +608,8 @@
       "path": "audio/sfx/player_hit.wav",
       "seconds": 0.32,
       "origin": "Original procedural composition in tools/build_week2_assets.py",
-      "applied": false,
-      "status": "편집 완료",
+      "applied": true,
+      "status": "적용",
       "sha256": "933a1426a2243e18cd2bbe91dc2a8f4bc8f9e397be878e1eee663ab7ec0a0ca2"
     },
     {
@@ -583,8 +617,8 @@
       "path": "audio/sfx/explosion.wav",
       "seconds": 0.45,
       "origin": "Original procedural composition in tools/build_week2_assets.py",
-      "applied": false,
-      "status": "편집 완료",
+      "applied": true,
+      "status": "적용",
       "sha256": "8d1b579562e6a0be45b9b126aebf20836fa72d8e92c20ecdd6cc84609892253e"
     },
     {
@@ -592,8 +626,8 @@
       "path": "audio/sfx/bomb.wav",
       "seconds": 0.7,
       "origin": "Original procedural composition in tools/build_week2_assets.py",
-      "applied": false,
-      "status": "편집 완료",
+      "applied": true,
+      "status": "적용",
       "sha256": "3db52d15757040fb6dd2ddc7b015d41f09ae63b2c443bf0f57173351c111806e"
     },
     {
@@ -619,8 +653,8 @@
       "path": "audio/sfx/stage_clear.wav",
       "seconds": 2.0,
       "origin": "Original procedural composition in tools/build_week2_assets.py",
-      "applied": false,
-      "status": "편집 완료",
+      "applied": true,
+      "status": "적용",
       "sha256": "c6b8508cdc77b252aa7516a9c208b66ef78c52005add0a3d896c6526f7aec0fc"
     },
     {
@@ -628,8 +662,8 @@
       "path": "audio/sfx/game_over.wav",
       "seconds": 2.0,
       "origin": "Original procedural composition in tools/build_week2_assets.py",
-      "applied": false,
-      "status": "편집 완료",
+      "applied": true,
+      "status": "적용",
       "sha256": "3b43611cfd351b6bf43864391652ae16c3f3809df609934233ef099c17a970be"
     }
   ]

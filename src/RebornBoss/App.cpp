@@ -9,7 +9,7 @@
 #include <windows.h>
 
 #ifndef NDEBUG
-void CheckWeek2Gameplay();
+void CheckGameplay();
 #endif
 
 App* g_pApp{};
@@ -47,13 +47,13 @@ int App::Init()
         return -1;
     }
 #ifndef NDEBUG
-    CheckWeek2Gameplay();
-    std::puts("Week2 gameplay checks passed.");
+    CheckGameplay();
+    std::puts("Gameplay checks passed.");
 #endif
     if (m_graphicEngine.Init(m_gameWin) < 0)
         return -1;
     m_graphicsReady = true;
-    m_graphicEngine.SetColor(0xFF101223);
+    m_graphicEngine.SetColor(0xFF0E111A);
     if (m_gameInput.Init() < 0 || m_resources.Init() < 0)
         return -1;
     m_gameTime.Init();

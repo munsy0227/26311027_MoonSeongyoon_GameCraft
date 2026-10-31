@@ -10,18 +10,45 @@ import xml.etree.ElementTree as ET
 
 from PIL import Image
 from build_character_assets import check_border
-from build_week2_assets import centered, inspect_wav, make_sfx, pcm_bytes, RATE, ROOT
+from build_week2_assets import centered, export_image, inspect_wav, make_sfx, pcm_bytes, ui_source, RATE, ROOT
 
 
 class Week2AssetsTest(unittest.TestCase):
     def test_image_jobs_have_complete_sizes_and_sources(self):
         jobs = json.loads((ROOT / "art_sources/week2/asset_jobs.json").read_text())["jobs"]
-        self.assertEqual(len(jobs), 22)
-        self.assertEqual(len({j["path"] for j in jobs}), 22)
+        self.assertEqual(len(jobs), 24)
+        self.assertEqual(len({j["path"] for j in jobs}), 24)
         for job in jobs:
             self.assertTrue((ROOT / "art_sources/week2/generated" / (job["name"] + ".png")).is_file())
             if job["columns"] > 1:
                 self.assertEqual(job["size"], [job["cell"][0] * job["columns"], job["cell"][1]])
+
+    def test_procedural_surfaces_keep_corners_and_export_without_cropping(self):
+        jobs = json.loads((ROOT / "art_sources/week2/asset_jobs.json").read_text())["jobs"]
+        for job in jobs:
+            if not job.get("procedural"):
+                continue
+            image = ui_source(job)
+            self.assertEqual(image.mode, "RGBA")
+            self.assertEqual(image.size, tuple(job["size"]))
+            if job["procedural"] == "surface":
+                self.assertEqual(image.getpixel((0, 0))[3], 0)
+                self.assertEqual(image.getpixel((16, 16)), (255, 255, 255, 255))
+                self.assertEqual(image.getpixel((16, 0))[3], 255)
+            if job["procedural"] == "panel":
+                self.assertEqual(image.getextrema(), ((26, 26), (32, 32), (48, 48), (255, 255)))
+            if job["procedural"] == "lock":
+                self.assertEqual(image.size, (24, 24))
+                self.assertEqual(image.getpixel((0, 0))[3], 0)
+                self.assertEqual(image.getpixel((12, 11))[3], 255)
+                self.assertLess(image.getpixel((12, 16))[0], image.getpixel((7, 16))[0])
+            with tempfile.TemporaryDirectory() as folder:
+                temporary = Path(folder)
+                (temporary / "generated").mkdir()
+                image.save(temporary / "generated" / (job["name"] + ".png"))
+                with patch("build_week2_assets.ART", temporary), patch("build_week2_assets.RES", temporary):
+                    export_image(job)
+                self.assertEqual(Image.open(temporary / job["path"]).tobytes(), image.tobytes())
 
     def test_effect_frames_keep_relative_size_and_common_center(self):
         frames = centered([Image.new("RGBA", (20, 20), "white"),

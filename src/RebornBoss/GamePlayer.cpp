@@ -7,10 +7,12 @@ GamePlayer::GamePlayer()
 {
     m_x = 240.0F;
     m_y = 520.0F;
+    m_health = 3;
 }
 
 void GamePlayer::Update(float seconds, float directionX, float directionY, bool slow, bool shooting)
 {
+    m_invulnerabilitySeconds = std::max(0.0F, m_invulnerabilitySeconds - seconds);
     const float length = std::sqrt(directionX * directionX + directionY * directionY);
     if (length > 0.0F)
     {
@@ -28,11 +30,33 @@ void GamePlayer::Update(float seconds, float directionX, float directionY, bool 
     m_slow = slow;
 }
 
+int GamePlayer::Damage(int damage)
+{
+    if (m_invulnerabilitySeconds > 0.0F)
+        return 0;
+    const int applied = GameCharacter::Damage(damage);
+    if (applied > 0)
+        m_invulnerabilitySeconds = 1.5F;
+    return applied;
+}
+
+bool GamePlayer::UseBomb()
+{
+    if (m_bombs == 0 || Dead())
+        return false;
+    --m_bombs;
+    m_invulnerabilitySeconds = std::max(m_invulnerabilitySeconds, 1.0F);
+    return true;
+}
+
 void GamePlayer::Render(const GameResources& resources) const
 {
+    if (Dead())
+        return;
     const float frameSeconds = m_row == 0 ? 0.12F : m_row == 3 ? 0.09F : 0.10F;
     const int column = static_cast<int>(m_animationSeconds / frameSeconds) % 4;
-    resources.DrawFrame(ImageId::Leon, column, m_row, 32, 48, m_x - 16.0F, m_y - 24.0F);
+    if (m_invulnerabilitySeconds <= 0.0F || static_cast<int>(m_invulnerabilitySeconds * 12.0F) % 2 == 0)
+        resources.DrawFrame(ImageId::Leon, column, m_row, 32, 48, m_x - 16.0F, m_y - 24.0F);
     if (m_slow)
         resources.Draw(ImageId::Hitbox, m_x - 6.0F, m_y - 6.0F);
 }

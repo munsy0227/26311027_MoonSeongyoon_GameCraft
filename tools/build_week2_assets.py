@@ -58,7 +58,9 @@ def centered(cells, size, margin=2, pixel=False):
 
 def export_image(job):
     image = Image.open(ART / "generated" / (job["name"] + ".png")).convert("RGBA")
-    if job["columns"] > 1:
+    if job.get("procedural"):
+        assert image.size == tuple(job["size"]), job["id"]
+    elif job["columns"] > 1:
         pixel = job["id"].startswith("ENM_")
         cells = cut_grid(image, job["columns"], 1, pixel=pixel)
         if pixel:
@@ -81,6 +83,34 @@ def export_image(job):
         image = ImageOps.fit(image, tuple(job["size"]), method=Image.Resampling.LANCZOS)
         image.putalpha(255)
     save_png(image, RES / job["path"])
+
+
+def ui_source(job):
+    size = tuple(job["size"])
+    kind = job["procedural"]
+    if kind == "panel":
+        return Image.new("RGBA", size, "#1a2030")
+    if kind == "white":
+        return Image.new("RGBA", size, "white")
+    if kind == "lock":
+        image = Image.new("RGBA", (size[0] * 4, size[1] * 4))
+        draw = ImageDraw.Draw(image)
+        draw.arc((24, 8, 72, 72), 180, 360, fill="#bfc9d8", width=12)
+        draw.rounded_rectangle((12, 40, 84, 92), radius=12, fill="#d6dce5", outline="#9ba9be", width=4)
+        draw.ellipse((40, 52, 56, 68), fill="#1a2030")
+        draw.rectangle((44, 64, 52, 80), fill="#1a2030")
+        return image.resize(size, Image.Resampling.LANCZOS)
+    assert kind in {"surface", "dialogue"}, kind
+    image = Image.new("RGBA", (size[0] * 4, size[1] * 4))
+    fill = "white" if kind == "surface" else (26, 32, 48, 248)
+    ImageDraw.Draw(image).rounded_rectangle((0, 0, image.width - 1, image.height - 1), radius=48, fill=fill)
+    return image.resize(size, Image.Resampling.LANCZOS)
+
+
+def make_ui_sources(jobs):
+    for job in jobs:
+        if job.get("procedural"):
+            save_png(ui_source(job), ART / "generated" / (job["name"] + ".png"))
 
 
 def frequency(note):
@@ -204,7 +234,8 @@ def make_catalog(jobs):
     catalog = reused_images()
     for job in jobs:
         catalog.append({key: job[key] for key in ["id", "path", "size", "columns", "cell", "transparent"]})
-        catalog[-1].update(origin="OpenAI built-in image_gen", source=f"art_sources/week2/generated/{job['name']}.png")
+        origin = "Original procedural UI in tools/build_week2_assets.py" if job.get("procedural") else "OpenAI built-in image_gen"
+        catalog[-1].update(origin=origin, source=f"art_sources/week2/generated/{job['name']}.png")
     for asset_id, name, seconds, *_ in BGM + SFX:
         bgm = asset_id.startswith("BGM_")
         catalog.append({"id": asset_id, "path": f"audio/{'bgm' if bgm else 'sfx'}/{name}.wav",
@@ -217,12 +248,14 @@ def make_catalog(jobs):
         entry["sha256"] = digest(RES / entry["path"])
         if "source" in entry:
             entry["source_sha256"] = digest(ROOT / entry["source"])
-    return {"date": "2026-10-26", "windows_verified": False, "catalog": catalog}
+    return {"date": "2026-10-31", "windows_verified": False, "catalog": catalog}
 
 
 def validate(manifest):
     catalog = manifest["catalog"]
-    assert len(catalog) == 45 and len({e["id"] for e in catalog}) == 45
+    jobs = json.loads((ART / "asset_jobs.json").read_text())["jobs"]
+    expected = len(reused_images()) + len(jobs) + len(BGM) + len(SFX)
+    assert len(catalog) == expected and len({e["id"] for e in catalog}) == expected
     audio = {}
     png_count = 0
     for entry in catalog:
@@ -248,8 +281,8 @@ def validate(manifest):
                 assert frame.getchannel("A").getbbox() is not None, path
                 hashes.add(hashlib.sha256(frame.tobytes()).hexdigest())
             assert len(hashes) > 1, path
-    assert png_count == 30 and len(audio) == 15
-    return {"images": png_count, "sounds": len(audio), "new_images": 22,
+    assert png_count == len(reused_images()) + len(jobs) and len(audio) == len(BGM) + len(SFX)
+    return {"images": png_count, "sounds": len(audio), "new_images": len(jobs),
             "applied": sum(e["applied"] for e in catalog), "audio": audio, "windows_verified": False}
 
 
@@ -272,6 +305,7 @@ def preview(jobs):
 
 def build():
     jobs = json.loads((ART / "asset_jobs.json").read_text())["jobs"]
+    make_ui_sources(jobs)
     for job in jobs:
         export_image(job)
     for spec in BGM:

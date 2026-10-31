@@ -7,6 +7,13 @@
 #include "GameScene.h"
 #include "GameResources.h"
 
+struct StageResult
+{
+    bool cleared{};
+    int score{};
+    float elapsedSeconds{};
+};
+
 class App
 {
 public:
@@ -20,6 +27,8 @@ public:
     void ChangeScene(GAME_PHASE nextScene);
     float DeltaSeconds() const;
     GameResources& Resources() { return m_resources; }
+    const StageResult& Result() const { return m_result; }
+    void SetResult(StageResult result) { m_result = result; }
 
 private:
     GraphicEngine::GAME_WINDOW m_gameWin{120, 50, 960, 600, "RebornBoss", true, 1.0F};
@@ -29,6 +38,7 @@ private:
     GameResources m_resources{};
     std::vector<std::unique_ptr<GameScene>> m_sceneList;
     GameScene* m_pGameScene{};
+    StageResult m_result{};
     int m_loopError{};
     bool m_graphicsReady{};
     bool m_sceneChanged{};

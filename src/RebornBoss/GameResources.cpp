@@ -16,14 +16,30 @@ namespace
         "resources/images/enemies/patrol_fairy_sheet.png",
         "resources/images/bullets/player_shot.png",
         "resources/images/ui/lock_icon.png",
-        "resources/images/ui/hitbox_marker.png"
+        "resources/images/ui/hitbox_marker.png",
+        "resources/images/characters/lillian_animations.png",
+        "resources/images/bullets/enemy_petal.png",
+        "resources/images/bullets/enemy_orb.png",
+        "resources/images/ui/life_icon.png",
+        "resources/images/ui/bomb_icon.png",
+        "resources/images/effects/explosion_sheet.png",
+        "resources/images/effects/hit_sheet.png",
+        "resources/images/effects/bomb_sheet.png",
+        "resources/images/ui/white_pixel.png",
+        "resources/images/ui/surface.png"
     };
     constexpr const char* soundPaths[] = {
         "resources/audio/bgm/menu.wav",
         "resources/audio/bgm/stage01_forest.wav",
         "resources/audio/sfx/player_shot.wav",
         "resources/audio/sfx/menu_move.wav",
-        "resources/audio/sfx/menu_confirm.wav"
+        "resources/audio/sfx/menu_confirm.wav",
+        "resources/audio/bgm/boss.wav",
+        "resources/audio/sfx/player_hit.wav",
+        "resources/audio/sfx/explosion.wav",
+        "resources/audio/sfx/bomb.wav",
+        "resources/audio/sfx/stage_clear.wav",
+        "resources/audio/sfx/game_over.wav"
     };
     static_assert(std::size(imagePaths) == static_cast<size_t>(ImageId::Count));
     static_assert(std::size(soundPaths) == static_cast<size_t>(SoundId::Count));
@@ -33,6 +49,7 @@ GameResources::GameResources()
 {
     m_images.fill(-1);
     m_sounds.fill(-1);
+    m_fonts.fill(-1);
 }
 
 int GameResources::Init()
@@ -57,12 +74,16 @@ int GameResources::Init()
         }
     }
     // glc2d의 일반 폰트 핸들은 g2_DestroyWin에서 함께 해제된다.
-    m_font = g2_FontCreate("Malgun Gothic", 24);
-    m_titleFont = g2_FontCreate("Malgun Gothic", 36);
-    if (m_font < 0 || m_titleFont < 0)
+    constexpr int sizes[] = {40, 28, 22, 18};
+    static_assert(std::size(sizes) == static_cast<size_t>(FontStyle::Count));
+    for (size_t i = 0; i < m_fonts.size(); ++i)
     {
-        std::fprintf(stderr, "System font creation failed: Malgun Gothic\n");
-        return -1;
+        m_fonts[i] = g2_FontCreate("Malgun Gothic", sizes[i]);
+        if (m_fonts[i] < 0)
+        {
+            std::fprintf(stderr, "System font creation failed: Malgun Gothic\n");
+            return -1;
+        }
     }
     return 0;
 }
@@ -86,7 +107,8 @@ void GameResources::Destroy()
             image = -1;
         }
     }
-    m_bgm = m_font = m_titleFont = -1;
+    m_bgm = -1;
+    m_fonts.fill(-1);
 }
 
 void GameResources::Draw(ImageId image, float x, float y, float scale, DWORD color) const
@@ -103,6 +125,39 @@ void GameResources::DrawFrame(ImageId image, int column, int row, int width, int
     const RECT source{column * width, row * height, (column + 1) * width, (row + 1) * height};
     const VEC2 position{x, y};
     g2_Draw2D(m_images[static_cast<size_t>(image)], &source, &position);
+}
+
+void GameResources::Rect(float x, float y, float width, float height, DWORD color) const
+{
+    if (width <= 0.0F || height <= 0.0F)
+        return;
+    const VEC2 position{x, y};
+    const VEC2 scaling{width, height};
+    g2_Draw2D(m_images[static_cast<size_t>(ImageId::White)], nullptr, &position, &scaling,
+              nullptr, 0.0F, color);
+}
+
+void GameResources::Surface(float x, float y, float width, float height, DWORD color) const
+{
+    if (width < 24.0F || height < 24.0F)
+    {
+        Rect(x, y, width, height, color);
+        return;
+    }
+    // Fixed-size corners keep the panel radius unchanged at every menu size.
+    constexpr LONG cuts[] = {0, 12, 20, 32};
+    const float xs[] = {x, x + 12.0F, x + width - 12.0F, x + width};
+    const float ys[] = {y, y + 12.0F, y + height - 12.0F, y + height};
+    for (int row = 0; row < 3; ++row)
+        for (int column = 0; column < 3; ++column)
+        {
+            const RECT source{cuts[column], cuts[row], cuts[column + 1], cuts[row + 1]};
+            const VEC2 position{xs[column], ys[row]};
+            const VEC2 scaling{(xs[column + 1] - xs[column]) / (cuts[column + 1] - cuts[column]),
+                               (ys[row + 1] - ys[row]) / (cuts[row + 1] - cuts[row])};
+            g2_Draw2D(m_images[static_cast<size_t>(ImageId::Surface)], &source, &position, &scaling,
+                      nullptr, 0.0F, color);
+        }
 }
 
 void GameResources::PlayBgm(SoundId sound)

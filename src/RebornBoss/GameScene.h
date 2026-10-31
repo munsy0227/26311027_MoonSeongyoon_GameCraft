@@ -1,5 +1,5 @@
 #pragma once
-#include <glc2d.h>
+#include "GameResources.h"
 
 enum GAME_PHASE : int { SCENE_BEGIN = 0, SCENE_LOBBY, SCENE_PLAY, SCENE_PLAYRESULT };
 
@@ -13,7 +13,8 @@ public:
     virtual int Render() { return 0; }
 
 protected:
-    void Text(int x, int y, const char* text, DWORD color = 0xFFF4EBD7,
-              bool title = false) const;
+    void Text(int x, int y, const char* text, DWORD color = UIColor::Text,
+              FontStyle style = FontStyle::Body) const;
+    void MenuItem(int x, int y, const char* label, bool selected, float width = 344.0F) const;
     bool MoveSelection(int& selected, int count) const;
 };

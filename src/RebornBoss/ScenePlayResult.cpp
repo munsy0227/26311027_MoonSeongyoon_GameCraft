@@ -1,11 +1,14 @@
 #include "ScenePlayResult.h"
 #include "GameInput.h"
 #include "App.h"
+#include <cstdio>
 
 int ScenePlayResult::Init()
 {
     m_selected = 0;
-    g_pApp->Resources().PlayBgm(SoundId::Menu);
+    auto& resources = g_pApp->Resources();
+    resources.PlayBgm(SoundId::Menu);
+    resources.PlaySound(g_pApp->Result().cleared ? SoundId::Clear : SoundId::Fail);
     return 0;
 }
 
@@ -26,15 +29,23 @@ int ScenePlayResult::Update()
 int ScenePlayResult::Render()
 {
     auto& resources = g_pApp->Resources();
-    resources.Draw(ImageId::Title, 0, 0, 1.0F, 0xFF707080);
-    Text(90, 80, "시연 종료", 0xFFFFD98D, true);
-    Text(90, 160, "꽃빛 요정의 숲");
-    Text(90, 210, "기본 동작 시연을 종료했습니다.");
-    Text(110, 330, m_selected == 0 ? "> 다시 시작" : "   다시 시작",
-         m_selected == 0 ? 0xFFFFD98D : 0xFFBCC4D4);
-    Text(110, 390, m_selected == 1 ? "> 스테이지 선택" : "   스테이지 선택",
-         m_selected == 1 ? 0xFFFFD98D : 0xFFBCC4D4);
-    resources.Draw(ImageId::LeonPortrait, 680, 210, 0.5F);
-    Text(90, 535, "방향키로 선택 · Enter로 결정", 0xFFCBD1E7);
+    const auto& result = g_pApp->Result();
+    resources.Draw(ImageId::Title, 0, 0);
+    resources.Rect(0, 0, 960, 600, 0xD90E111A);
+    resources.Surface(72, 48, 816, 504);
+    Text(104, 80, "꽃빛 요정의 숲", UIColor::Muted, FontStyle::Caption);
+    Text(104, 128, result.cleared ? "스테이지 클리어" : "다시 도전해 보세요",
+         result.cleared ? UIColor::Accent : UIColor::Text, FontStyle::Title);
+    Text(104, 208, "획득 점수", UIColor::Muted, FontStyle::Caption);
+    char score[64]{};
+    std::snprintf(score, sizeof(score), "%d", result.score);
+    Text(104, 240, score, UIColor::Text, FontStyle::Title);
+    char timer[80]{};
+    std::snprintf(timer, sizeof(timer), "전투 시간  %.1f초", static_cast<double>(result.elapsedSeconds));
+    Text(104, 304, timer, UIColor::Muted, FontStyle::Caption);
+    resources.Draw(ImageId::LeonPortrait, 624, 196, 0.46F);
+    MenuItem(104, 376, "재도전", m_selected == 0);
+    MenuItem(104, 440, "스테이지 선택", m_selected == 1);
+    Text(104, 512, "방향키로 선택 · Enter로 결정 · Esc로 스테이지 선택", UIColor::Muted, FontStyle::Caption);
     return 0;
 }
