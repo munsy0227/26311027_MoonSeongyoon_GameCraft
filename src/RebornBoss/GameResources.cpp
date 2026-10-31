@@ -73,15 +73,31 @@ int GameResources::Init()
             return -1;
         }
     }
-    // glc2d의 일반 폰트 핸들은 g2_DestroyWin에서 함께 해제된다.
+    // Private font files and handles are released together by g2_DestroyWin.
+    constexpr const char* fontPaths[] = {
+        "resources/fonts/Mona12TextKR.ttf",
+        "resources/fonts/Cafe24Classictype-v1.1.ttf"
+    };
+    for (const char* path : fontPaths)
+    {
+        if (g2_FontRegisterFile(path) <= 0)
+        {
+            std::fprintf(stderr, "Private font registration failed: %s\n", path);
+            return -1;
+        }
+    }
+    constexpr const char* families[] = {
+        "Cafe24 ClassicType", "Cafe24 ClassicType", "Mona12 Text KR", "Mona12 Text KR"
+    };
     constexpr int sizes[] = {40, 28, 22, 18};
     static_assert(std::size(sizes) == static_cast<size_t>(FontStyle::Count));
+    static_assert(std::size(families) == std::size(sizes));
     for (size_t i = 0; i < m_fonts.size(); ++i)
     {
-        m_fonts[i] = g2_FontCreate("Malgun Gothic", sizes[i]);
+        m_fonts[i] = g2_FontCreate(families[i], sizes[i]);
         if (m_fonts[i] < 0)
         {
-            std::fprintf(stderr, "System font creation failed: Malgun Gothic\n");
+            std::fprintf(stderr, "Private font creation failed: %s (%d px)\n", families[i], sizes[i]);
             return -1;
         }
     }

@@ -1,0 +1,49 @@
+{
+  "fonts": [
+    {
+      "file": "Mona12TextKR.ttf",
+      "family": "Mona12 Text KR",
+      "styles": [
+        "Body",
+        "Caption"
+      ],
+      "source_archive": "MonaFont-ttf.zip",
+      "source_archive_sha256": "5b2ba21a01b64b6bc37ae1f90297da324258e41d5613272d6b94a970ece29e30",
+      "archive_member": "Mona/02 Text Only/Mona12TextKR.ttf",
+      "sha256": "e7a830057980c29c15cf4af6dc5b54900ee848334501a884b00010520f7bc389",
+      "licenses": [
+        "licenses/mona/ark-pixel.txt",
+        "licenses/mona/k8x12.txt",
+        "licenses/mona/mona.txt",
+        "licenses/mona/mplus.txt",
+        "licenses/mona/noto-emoji.txt"
+      ]
+    },
+    {
+      "file": "Cafe24Classictype-v1.1.ttf",
+      "family": "Cafe24 ClassicType",
+      "styles": [
+        "Title",
+        "Heading"
+      ],
+      "source_archive": "Cafe24Classictype-v1.1.zip",
+      "source_archive_sha256": "91a3ad6ada98862683dba6ec7592558ed848b9bb7bf3a2f63a41e5382770e5c5",
+      "archive_member": "Cafe24Classictype-v1.1/Cafe24Classictype-v1.1.ttf",
+      "sha256": "5426948b60b7d1e68bc676065ab049ebbc20843e5bf0bc7b102247f9b8b95cfc",
+      "licenses": [
+        "licenses/cafe24/License-Classictype.pdf",
+        "licenses/cafe24/OFL.txt"
+      ]
+    }
+  ],
+  "license_sha256": {
+    "licenses/mona/ark-pixel.txt": "3ab41567e68e3988ba1ef16dd2644eca95ca5648ea12e7d46e6287fc0bbe5aee",
+    "licenses/mona/k8x12.txt": "44ab17cc690ef266237a656ebe9bfc6d42f2c9e6e7b93ec68e49b37fe54295ce",
+    "licenses/mona/mona.txt": "edc25f105101679128588ab4cde86871d21c882e0abef2a0d3f0143cf496e171",
+    "licenses/mona/mplus.txt": "907e9f5ac24cba6ce2523cd2a66d6ba143e082c685344dfa8d30ef12f67410a0",
+    "licenses/mona/noto-emoji.txt": "500bb1ccf43df7bbb522112f9133a52b16e1c35e809632f5d8609b179152de5b",
+    "licenses/cafe24/License-Classictype.pdf": "1d52750fbf047da21a0cf762c2e0c93c03e06f45395c2d4816b37a6be07b0ae9",
+    "licenses/cafe24/OFL.txt": "a65b16732f0035c9a9a568bf128712a9a6d07589f14b3295323084697cfcd0b6"
+  },
+  "registration": "Private application registration through g2_FontRegisterFile; glc2d removes registration on shutdown."
+}

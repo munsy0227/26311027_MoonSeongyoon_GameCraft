@@ -1,7 +1,11 @@
 import ast
 from array import array
+import hashlib
 import json
 from pathlib import Path
+import re
+import shutil
+import subprocess
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -88,6 +92,35 @@ class Week2AssetsTest(unittest.TestCase):
 
 
 class ProjectStructureTest(unittest.TestCase):
+    def test_bundled_fonts_and_licenses_match_manifest(self):
+        root = ROOT / "src/RebornBoss/resources/fonts"
+        manifest = json.loads((root / "fonts.json").read_text())
+        self.assertEqual({font["file"] for font in manifest["fonts"]}, {path.name for path in root.glob("*.ttf")})
+        self.assertEqual({style for font in manifest["fonts"] for style in font["styles"]},
+                         {"Title", "Heading", "Body", "Caption"})
+        for font in manifest["fonts"]:
+            self.assertEqual(hashlib.sha256((root / font["file"]).read_bytes()).hexdigest(), font["sha256"])
+            self.assertTrue(font["licenses"])
+            for name in font["licenses"]:
+                self.assertEqual(hashlib.sha256((root / name).read_bytes()).hexdigest(), manifest["license_sha256"][name])
+        self.assertNotIn("__MACOSX", {part for path in root.rglob("*") for part in path.parts})
+
+    @unittest.skipUnless(shutil.which("fc-scan"), "Fontconfig is required for font character coverage inspection")
+    def test_bundled_font_families_cover_game_strings(self):
+        root = ROOT / "src/RebornBoss/resources/fonts"
+        manifest = json.loads((root / "fonts.json").read_text())
+        characters = set()
+        for path in (ROOT / "src/RebornBoss").glob("*.cpp"):
+            for literal in re.findall(r'"((?:\\.|[^"\\])*)"', path.read_bytes().decode("cp949")):
+                characters.update(ord(char) for char in literal if ord(char) >= 32)
+        for font in manifest["fonts"]:
+            info = subprocess.check_output(["fc-scan", "--format", "%{family}\\n%{charset}", str(root / font["file"])], text=True)
+            family, charset = info.split("\n", 1)
+            self.assertIn(font["family"], family.split(","))
+            ranges = [tuple(int(value, 16) for value in token.split("-")) for token in charset.split()]
+            missing = {chr(char) for char in characters if not any(bounds[0] <= char <= bounds[-1] for bounds in ranges)}
+            self.assertFalse(missing, (font["file"], sorted(missing)))
+
     def test_all_sources_registered_once_in_project_and_filters(self):
         project = ROOT / "src/RebornBoss"
         ns = {"m": "http://schemas.microsoft.com/developer/msbuild/2003"}
