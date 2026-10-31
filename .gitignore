@@ -427,12 +427,14 @@ FodyWeavers.xsd
 # Official VS Code C# Dev Kit Extension exclusion
 #*.lscache
 
-# Font binaries are not bundled; use fonts installed on Windows.
+# Ignore unrelated fonts; the licensed game fonts below are bundled.
 *.[tT][tT][fF]
 *.[oO][tT][fF]
 *.[tT][tT][cC]
 *.[wW][oO][fF][fF]
 *.[wW][oO][fF][fF]2
+!/src/RebornBoss/resources/fonts/Mona12TextKR.ttf
+!/src/RebornBoss/resources/fonts/Cafe24Classictype-v1.1.ttf
 
 # Local Codex working notes and configuration.
 /.codex/

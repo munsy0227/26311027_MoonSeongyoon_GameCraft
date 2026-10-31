@@ -1,2 +1,4 @@
 # Keep CRLF compatible whitespace checks for the Windows project sources.
 src/RebornBoss/* whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+src/RebornBoss/resources/fonts/*.ttf binary
+src/RebornBoss/resources/fonts/licenses/cafe24/License-Classictype.pdf binary
