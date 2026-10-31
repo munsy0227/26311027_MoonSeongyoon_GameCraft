@@ -14,7 +14,7 @@ import xml.etree.ElementTree as ET
 
 from PIL import Image
 from build_character_assets import check_border
-from build_week2_assets import centered, export_image, inspect_wav, make_sfx, pcm_bytes, ui_source, RATE, ROOT
+from build_week2_assets import centered, export_image, inspect_wav, make_sfx, pcm_bytes, runtime_paths, ui_source, RATE, ROOT
 
 
 class Week2AssetsTest(unittest.TestCase):
@@ -92,6 +92,17 @@ class Week2AssetsTest(unittest.TestCase):
 
 
 class ProjectStructureTest(unittest.TestCase):
+    def test_runtime_resources_exist_and_are_tracked_in_git_checkouts(self):
+        paths = {"src/RebornBoss/resources/" + path for path in runtime_paths()}
+        self.assertTrue(paths)
+        for path in paths:
+            self.assertTrue((ROOT / path).is_file(), path)
+        if (ROOT / ".git").exists() and shutil.which("git"):
+            tracked = set(subprocess.check_output(
+                ["git", "ls-files", "-z", "--", "src/RebornBoss/resources"], cwd=ROOT
+            ).decode().split("\0"))
+            self.assertFalse(paths - tracked, sorted(paths - tracked))
+
     def test_bundled_fonts_and_licenses_match_manifest(self):
         root = ROOT / "src/RebornBoss/resources/fonts"
         manifest = json.loads((root / "fonts.json").read_text())

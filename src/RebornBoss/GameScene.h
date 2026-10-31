@@ -15,6 +15,7 @@ public:
 protected:
     void Text(int x, int y, const char* text, DWORD color = UIColor::Text,
               FontStyle style = FontStyle::Body) const;
+    void MenuBackground() const;
     void MenuItem(int x, int y, const char* label, bool selected, float width = 344.0F) const;
     bool MoveSelection(int& selected, int count) const;
 };

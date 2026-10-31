@@ -7,11 +7,8 @@ namespace
     constexpr const char* imagePaths[] = {
         "resources/images/backgrounds/title_background.png",
         "resources/images/backgrounds/stage01_forest.png",
-        "resources/images/ui/info_panel.png",
         "resources/images/portraits/leon_portrait.png",
         "resources/images/portraits/lillian_portrait.png",
-        "resources/images/portraits/vivian_portrait.png",
-        "resources/images/portraits/eleanor_portrait.png",
         "resources/images/characters/leon_animations.png",
         "resources/images/enemies/patrol_fairy_sheet.png",
         "resources/images/bullets/player_shot.png",
@@ -26,7 +23,10 @@ namespace
         "resources/images/effects/hit_sheet.png",
         "resources/images/effects/bomb_sheet.png",
         "resources/images/ui/white_pixel.png",
-        "resources/images/ui/surface.png"
+        "resources/images/poses/leon/leon_idle.png",
+        "resources/images/poses/lillian/lillian_idle.png",
+        "resources/images/poses/vivian/vivian_idle.png",
+        "resources/images/poses/eleanor/eleanor_idle.png"
     };
     constexpr const char* soundPaths[] = {
         "resources/audio/bgm/menu.wav",
@@ -151,29 +151,6 @@ void GameResources::Rect(float x, float y, float width, float height, DWORD colo
     const VEC2 scaling{width, height};
     g2_Draw2D(m_images[static_cast<size_t>(ImageId::White)], nullptr, &position, &scaling,
               nullptr, 0.0F, color);
-}
-
-void GameResources::Surface(float x, float y, float width, float height, DWORD color) const
-{
-    if (width < 24.0F || height < 24.0F)
-    {
-        Rect(x, y, width, height, color);
-        return;
-    }
-    // Fixed-size corners keep the panel radius unchanged at every menu size.
-    constexpr LONG cuts[] = {0, 12, 20, 32};
-    const float xs[] = {x, x + 12.0F, x + width - 12.0F, x + width};
-    const float ys[] = {y, y + 12.0F, y + height - 12.0F, y + height};
-    for (int row = 0; row < 3; ++row)
-        for (int column = 0; column < 3; ++column)
-        {
-            const RECT source{cuts[column], cuts[row], cuts[column + 1], cuts[row + 1]};
-            const VEC2 position{xs[column], ys[row]};
-            const VEC2 scaling{(xs[column + 1] - xs[column]) / (cuts[column + 1] - cuts[column]),
-                               (ys[row + 1] - ys[row]) / (cuts[row + 1] - cuts[row])};
-            g2_Draw2D(m_images[static_cast<size_t>(ImageId::Surface)], &source, &position, &scaling,
-                      nullptr, 0.0F, color);
-        }
 }
 
 void GameResources::PlayBgm(SoundId sound)

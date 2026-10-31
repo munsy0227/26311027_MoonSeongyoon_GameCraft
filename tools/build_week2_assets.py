@@ -230,6 +230,11 @@ def reused_images():
     return result
 
 
+def runtime_paths():
+    source = (ROOT / "src/RebornBoss/GameResources.cpp").read_bytes().decode("cp949")
+    return set(re.findall(r'"resources/([^"\n]+)"', source))
+
+
 def make_catalog(jobs):
     catalog = reused_images()
     for job in jobs:
@@ -240,8 +245,7 @@ def make_catalog(jobs):
         bgm = asset_id.startswith("BGM_")
         catalog.append({"id": asset_id, "path": f"audio/{'bgm' if bgm else 'sfx'}/{name}.wav",
                         "seconds": seconds, "origin": "Original procedural composition in tools/build_week2_assets.py"})
-    runtime = (ROOT / "src/RebornBoss/GameResources.cpp").read_bytes().decode("cp949")
-    active = set(re.findall(r'"resources/([^"\n]+)"', runtime))
+    active = runtime_paths()
     for entry in catalog:
         entry["applied"] = entry["path"] in active or entry.get("runtime_variant") in active
         entry["status"] = "적용" if entry["applied"] else "편집 완료"
@@ -252,6 +256,9 @@ def make_catalog(jobs):
 
 
 def validate(manifest):
+    active = runtime_paths()
+    for relative in active:
+        assert (RES / relative).is_file(), relative
     catalog = manifest["catalog"]
     jobs = json.loads((ART / "asset_jobs.json").read_text())["jobs"]
     expected = len(reused_images()) + len(jobs) + len(BGM) + len(SFX)
@@ -259,6 +266,9 @@ def validate(manifest):
     audio = {}
     png_count = 0
     for entry in catalog:
+        applied = entry["path"] in active or entry.get("runtime_variant") in active
+        assert entry["applied"] == applied, entry["id"]
+        assert entry["status"] == ("적용" if applied else "편집 완료"), entry["id"]
         path = RES / entry["path"]
         assert path.is_file() and digest(path) == entry["sha256"], path
         if "source" in entry:
@@ -283,7 +293,11 @@ def validate(manifest):
             assert len(hashes) > 1, path
     assert png_count == len(reused_images()) + len(jobs) and len(audio) == len(BGM) + len(SFX)
     return {"images": png_count, "sounds": len(audio), "new_images": len(jobs),
-            "applied": sum(e["applied"] for e in catalog), "audio": audio, "windows_verified": False}
+            "applied": sum(e["applied"] for e in catalog),
+            "runtime_images": sum(path.endswith(".png") for path in active),
+            "runtime_sounds": sum(path.endswith(".wav") for path in active),
+            "runtime_fonts": sum(path.endswith(".ttf") for path in active),
+            "audio": audio, "windows_verified": False}
 
 
 def preview(jobs):

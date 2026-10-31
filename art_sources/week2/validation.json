@@ -2,7 +2,10 @@
   "images": 32,
   "sounds": 15,
   "new_images": 24,
-  "applied": 33,
+  "applied": 29,
+  "runtime_images": 22,
+  "runtime_sounds": 11,
+  "runtime_fonts": 2,
   "audio": {
     "BGM_MENU": {
       "seconds": 32.0,

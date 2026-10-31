@@ -264,60 +264,82 @@ int ScenePlay::Render()
         resources.DrawFrame(ImageId::BombEffect, std::min(5, static_cast<int>((0.36F - m_bombEffectSeconds) / 0.06F)),
                             0, 128, 128, m_player.X() - 64.0F, m_player.Y() - 64.0F);
     }
-    resources.Draw(ImageId::Panel, 480, 0);
-    resources.Rect(480, 0, 1, 600, UIColor::Border);
-    Text(512, 28, "요정과 요괴들의 최종 보스", UIColor::Muted, FontStyle::Caption);
-    Text(512, 64, "꽃빛 요정의 숲", UIColor::Text, FontStyle::Heading);
-    Text(512, 124, "SCORE", UIColor::Muted, FontStyle::Caption);
+    // Draw the sidebar after combat effects so their sprites stay inside the playfield.
+    resources.DrawFrame(ImageId::Title, 1, 0, 480, 600, 480, 0);
+    resources.Rect(480, 0, 480, 600, 0xDC0E111A);
+    resources.Draw(ImageId::LeonArt, 688, 244, 0.35F, 0xB0FFFFFF);
+    resources.Rect(480, 0, 1, 600, 0x80454B69);
+    Text(520, 32, "REBORNBOSS", UIColor::Muted, FontStyle::Caption);
+    Text(520, 72, "꽃빛 요정의 숲", UIColor::Text, FontStyle::Heading);
+    Text(520, 115, "STAGE 01 / LILLIAN BLOOM", UIColor::Muted, FontStyle::Caption);
+    resources.Rect(520, 152, 392, 1, UIColor::Border);
+    Text(520, 176, "SCORE", UIColor::Muted, FontStyle::Caption);
     char number[64]{};
     std::snprintf(number, sizeof(number), "%07d", m_score);
-    Text(512, 148, number, UIColor::Text, FontStyle::Title);
-    resources.Surface(512, 216, 200, 100, 0xFF232A3B);
-    resources.Surface(728, 216, 200, 100, 0xFF232A3B);
-    Text(536, 232, "남은 생명", UIColor::Muted, FontStyle::Caption);
-    Text(752, 232, "남은 폭탄", UIColor::Muted, FontStyle::Caption);
+    Text(520, 204, number, UIColor::Text, FontStyle::Title);
+    Text(520, 280, "LIFE", UIColor::Muted, FontStyle::Caption);
+    Text(520, 326, "BOMB", UIColor::Muted, FontStyle::Caption);
     for (int i = 0; i < m_player.Health(); ++i)
-        resources.Draw(ImageId::Life, 536.0F + i * 32.0F, 272);
+        resources.Draw(ImageId::Life, 608.0F + i * 32.0F, 278);
     for (int i = 0; i < m_player.Bombs(); ++i)
-        resources.Draw(ImageId::Bomb, 752.0F + i * 32.0F, 272);
-    resources.Draw(ImageId::LeonPortrait, 516, 344, 0.20F);
-    Text(600, 352, "레온 애쉬포드", UIColor::Text, FontStyle::Body);
-    Text(600, 388, "이세계에서 온 마법사", UIColor::Muted, FontStyle::Caption);
-    resources.Rect(512, 456, 416, 1, UIColor::Border);
-    Text(512, 476, "방향키  이동       Z  연속 사격", UIColor::Muted, FontStyle::Caption);
-    Text(512, 506, "Shift  저속 이동   X  폭탄", UIColor::Muted, FontStyle::Caption);
-    Text(512, 546, "Esc  일시정지", UIColor::Muted, FontStyle::Caption);
-    std::snprintf(number, sizeof(number), "%.0f s", static_cast<double>(m_elapsedSeconds));
-    Text(848, 546, number, UIColor::Muted, FontStyle::Caption);
+        resources.Draw(ImageId::Bomb, 608.0F + i * 32.0F, 324);
+    if (m_player.Health() == 0)
+        Text(608, 280, "0", UIColor::Muted, FontStyle::Caption);
+    if (m_player.Bombs() == 0)
+        Text(608, 326, "0", UIColor::Muted, FontStyle::Caption);
+    resources.Rect(520, 372, 176, 1, UIColor::Border);
+    Text(520, 398, "TIME", UIColor::Muted, FontStyle::Caption);
+    const int elapsed = static_cast<int>(m_elapsedSeconds);
+    std::snprintf(number, sizeof(number), "%02d:%02d", elapsed / 60, elapsed % 60);
+    Text(520, 428, number, UIColor::Text, FontStyle::Body);
+    const bool boss = m_stagePhase == StagePhase::Boss || m_stagePhase == StagePhase::BossIntro;
+    Text(520, 488, boss ? "BOSS BATTLE" : "FOREST", UIColor::Muted, FontStyle::Caption);
+    if (!boss)
+    {
+        resources.Rect(520, 522, 176, 3, UIColor::Border);
+        resources.Rect(520, 522, 176.0F * std::clamp(m_waveSeconds / 90.0F, 0.0F, 1.0F), 3, UIColor::Accent);
+    }
+    Text(520, 560, "Esc  일시정지", UIColor::Muted, FontStyle::Caption);
     if (m_stagePhase == StagePhase::Boss)
     {
-        resources.Surface(16, 12, 448, 60, 0xE61A2030);
-        Text(28, 18, m_boss.PhaseTwo() ? "릴리안 블룸 · 만개" : "릴리안 블룸 · 꽃잎 부채",
+        resources.Rect(0, 0, 480, 64, 0xC0080D17);
+        Text(24, 14, m_boss.PhaseTwo() ? "릴리안 블룸 · 만개" : "릴리안 블룸 · 꽃잎 부채",
              UIColor::Text, FontStyle::Caption);
-        resources.Rect(28, 52, 424, 6, UIColor::Border);
-        resources.Rect(28, 52, 424.0F * m_boss.Health() / GameBossMob::MaxHealth, 6, UIColor::Accent);
+        resources.Rect(24, 46, 432, 4, UIColor::Border);
+        resources.Rect(24, 46, 432.0F * m_boss.Health() / GameBossMob::MaxHealth, 4, UIColor::Accent);
     }
     if (m_stagePhase == StagePhase::Intro || m_stagePhase == StagePhase::BossIntro)
     {
         const bool bossIntro = m_stagePhase == StagePhase::BossIntro;
         resources.Rect(0, 0, 960, 600, 0x40000000);
-        resources.Surface(24, 408, 912, 168, 0xFA1A2030);
-        resources.Draw(bossIntro ? ImageId::LillianPortrait : ImageId::LeonPortrait, 40, 424, 0.28F);
-        Text(152, 432, bossIntro ? "릴리안 블룸" : "레온 애쉬포드", UIColor::Accent, FontStyle::Body);
-        Text(152, 476, bossIntro ? "남의 집에 들어오자마자 무슨 소리예요?"
+        resources.Rect(0, 402, 960, 198, 0xF0080D17);
+        resources.Draw(bossIntro ? ImageId::LillianPortrait : ImageId::LeonPortrait, 32, 346, 0.5F);
+        Text(224, 419, bossIntro ? "릴리안 블룸" : "레온 애쉬포드", UIColor::Accent, FontStyle::Heading);
+        resources.Rect(224, 458, 672, 1, UIColor::Border);
+        Text(224, 480, bossIntro ? "남의 집에 들어오자마자 무슨 소리예요?"
                                    : "좋아, 오늘부터 이 세계의 최종 보스는 나다!",
              UIColor::Text, FontStyle::Body);
-        Text(152, 532, "Enter로 계속", UIColor::Muted, FontStyle::Caption);
+        Text(224, 550, "Enter로 계속", UIColor::Muted, FontStyle::Caption);
     }
     if (m_paused)
     {
-        resources.Rect(0, 0, 960, 600, 0xB3000000);
-        resources.Surface(208, 76, 544, 448);
-        Text(240, 108, "잠시 쉬어가세요", UIColor::Text, FontStyle::Heading);
+        resources.Rect(0, 0, 960, 600, 0xF0080D17);
+        Text(96, 100, "일시정지", UIColor::Text, FontStyle::Title);
+        resources.Rect(96, 166, 64, 2, UIColor::Accent);
         constexpr const char* labels[] = {"계속하기", "처음부터 다시", "스테이지 선택", "타이틀로"};
         for (int i = 0; i < 4; ++i)
-            MenuItem(240, 172 + i * 64, labels[i], m_selected == i, 480);
-        Text(240, 464, "Enter로 선택 · Esc로 계속", UIColor::Muted, FontStyle::Caption);
+            MenuItem(96, 210 + i * 68, labels[i], m_selected == i, 344);
+        Text(560, 140, "조작", UIColor::Text, FontStyle::Heading);
+        resources.Rect(560, 188, 304, 1, UIColor::Border);
+        constexpr const char* keys[] = {"방향키", "Z", "Shift", "X"};
+        constexpr const char* actions[] = {"이동", "연속 사격", "저속 / 중심점", "폭탄"};
+        for (int i = 0; i < 4; ++i)
+        {
+            Text(560, 224 + i * 44, keys[i], UIColor::Accent, FontStyle::Caption);
+            Text(650, 224 + i * 44, actions[i], UIColor::Text, FontStyle::Caption);
+        }
+        Text(560, 444, "작은 중심점으로 탄막을 피하세요.", UIColor::Muted, FontStyle::Caption);
+        Text(96, 536, "Enter로 선택 · Esc로 계속", UIColor::Muted, FontStyle::Caption);
     }
     return 0;
 }

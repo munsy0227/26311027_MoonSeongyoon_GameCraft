@@ -30,22 +30,21 @@ int ScenePlayResult::Render()
 {
     auto& resources = g_pApp->Resources();
     const auto& result = g_pApp->Result();
-    resources.Draw(ImageId::Title, 0, 0);
-    resources.Rect(0, 0, 960, 600, 0xD90E111A);
-    resources.Surface(72, 48, 816, 504);
-    Text(104, 80, "꽃빛 요정의 숲", UIColor::Muted, FontStyle::Caption);
-    Text(104, 128, result.cleared ? "스테이지 클리어" : "다시 도전해 보세요",
+    MenuBackground();
+    resources.Draw(ImageId::LeonArt, 550, 35, 0.56F);
+    Text(64, 64, "STAGE 01 · 꽃빛 요정의 숲", UIColor::Muted, FontStyle::Caption);
+    Text(64, 120, result.cleared ? "스테이지 클리어" : "다시 도전해 보세요",
          result.cleared ? UIColor::Accent : UIColor::Text, FontStyle::Title);
-    Text(104, 208, "획득 점수", UIColor::Muted, FontStyle::Caption);
+    resources.Rect(64, 188, 96, 1, 0x80A99CFF);
+    Text(64, 224, "획득 점수", UIColor::Muted, FontStyle::Caption);
     char score[64]{};
     std::snprintf(score, sizeof(score), "%d", result.score);
-    Text(104, 240, score, UIColor::Text, FontStyle::Title);
+    Text(64, 256, score, UIColor::Text, FontStyle::Title);
     char timer[80]{};
     std::snprintf(timer, sizeof(timer), "전투 시간  %.1f초", static_cast<double>(result.elapsedSeconds));
-    Text(104, 304, timer, UIColor::Muted, FontStyle::Caption);
-    resources.Draw(ImageId::LeonPortrait, 624, 196, 0.46F);
-    MenuItem(104, 376, "재도전", m_selected == 0);
-    MenuItem(104, 440, "스테이지 선택", m_selected == 1);
-    Text(104, 512, "방향키로 선택 · Enter로 결정 · Esc로 스테이지 선택", UIColor::Muted, FontStyle::Caption);
+    Text(64, 326, timer, UIColor::Muted, FontStyle::Caption);
+    MenuItem(90, 390, "재도전", m_selected == 0);
+    MenuItem(90, 452, "스테이지 선택", m_selected == 1);
+    Text(64, 552, "Enter로 결정 · Esc로 스테이지 선택", UIColor::Muted, FontStyle::Caption);
     return 0;
 }

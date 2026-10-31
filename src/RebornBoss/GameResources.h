@@ -4,9 +4,9 @@
 
 enum class ImageId
 {
-    Title, Forest, Panel, LeonPortrait, LillianPortrait, VivianPortrait, EleanorPortrait,
+    Title, Forest, LeonPortrait, LillianPortrait,
     Leon, PatrolFairy, PlayerShot, Lock, Hitbox, Lillian, EnemyPetal, EnemyOrb,
-    Life, Bomb, Explosion, PlayerHit, BombEffect, White, Surface, Count
+    Life, Bomb, Explosion, PlayerHit, BombEffect, White, LeonArt, LillianArt, VivianArt, EleanorArt, Count
 };
 
 enum class SoundId { Menu, Forest, Shot, MenuMove, MenuConfirm, Boss, Hit, EnemyDown, Bomb, Clear, Fail, Count };
@@ -15,7 +15,6 @@ enum class FontStyle { Title, Heading, Body, Caption, Count };
 namespace UIColor
 {
     constexpr DWORD Background = 0xFF0E111A;
-    constexpr DWORD Surface = 0xFF1A2030;
     constexpr DWORD Text = 0xFFF5F7FA;
     constexpr DWORD Muted = 0xFFAAB3C5;
     constexpr DWORD Accent = 0xFFA99CFF;
@@ -34,8 +33,6 @@ public:
     void DrawFrame(ImageId image, int column, int row, int width, int height,
                    float x, float y) const;
     void Rect(float x, float y, float width, float height, DWORD color) const;
-    void Surface(float x, float y, float width, float height,
-                 DWORD color = UIColor::Surface) const;
     void PlayBgm(SoundId sound);
     void PlaySound(SoundId sound) const;
     int Font(FontStyle style = FontStyle::Body) const { return m_fonts[static_cast<size_t>(style)]; }

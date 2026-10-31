@@ -73,8 +73,8 @@
         480
       ],
       "origin": "character_assets_v1",
-      "applied": true,
-      "status": "적용",
+      "applied": false,
+      "status": "편집 완료",
       "sha256": "ca5a3f402744d652bb6cd140cbb8d736de1ecbbfd9704180baf0b7d9d90da15d"
     },
     {
@@ -98,8 +98,8 @@
         480
       ],
       "origin": "character_assets_v1",
-      "applied": true,
-      "status": "적용",
+      "applied": false,
+      "status": "편집 완료",
       "sha256": "25ea39aa04a61b7f536d786128860a922d049fabcc40a0edee4737c5a450be82"
     },
     {
@@ -407,8 +407,8 @@
       "transparent": false,
       "origin": "Original procedural UI in tools/build_week2_assets.py",
       "source": "art_sources/week2/generated/info_panel.png",
-      "applied": true,
-      "status": "적용",
+      "applied": false,
+      "status": "편집 완료",
       "sha256": "c8662a0bbde6c7969f3ec8376551ed7ec6d38a923b6a912e8ab30a2d36a19d52",
       "source_sha256": "c8662a0bbde6c7969f3ec8376551ed7ec6d38a923b6a912e8ab30a2d36a19d52"
     },
@@ -526,8 +526,8 @@
       "transparent": true,
       "origin": "Original procedural UI in tools/build_week2_assets.py",
       "source": "art_sources/week2/generated/surface.png",
-      "applied": true,
-      "status": "적용",
+      "applied": false,
+      "status": "편집 완료",
       "sha256": "4eca3d7f0087e592ce9ace1466a25eca9c3a591930759086503dd3a7c35b2626",
       "source_sha256": "4eca3d7f0087e592ce9ace1466a25eca9c3a591930759086503dd3a7c35b2626"
     },
