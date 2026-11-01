@@ -66,15 +66,15 @@ int SceneBegin::Render()
         resources.Rect(0, 0, 960, 600, 0x98080B13);
         Text(64, 48, "조작법", UIColor::Text, FontStyle::Title);
         const bool remake = GetGameInput()->IsNewClassic();
-        constexpr const char* presets[] = {"기본 동방", "홍마향 리메이크"};
-        constexpr float tabX[] = {64, 264};
-        constexpr float tabWidth[] = {184, 244};
+        constexpr const char* presets[] = {"조작법 1", "조작법 2"};
+        constexpr float tabWidth = 128.0F;
         for (int i = 0; i < 2; ++i)
         {
             const bool selected = remake == (i == 1);
-            resources.Rect(tabX[i], 110, tabWidth[i], 36, selected ? UIColor::Accent : UIColor::Border);
-            resources.Rect(tabX[i] + 1, 111, tabWidth[i] - 2, 34, selected ? 0xFF302B47 : 0xFF121722);
-            Text(static_cast<int>(tabX[i]) + 18, 117, presets[i], selected ? UIColor::Text : UIColor::Muted);
+            const float x = 64.0F + i * (tabWidth + 16.0F);
+            resources.Rect(x, 110, tabWidth, 36, selected ? UIColor::Accent : UIColor::Border);
+            resources.Rect(x + 1, 111, tabWidth - 2, 34, selected ? 0xFF302B47 : 0xFF121722);
+            Text(static_cast<int>(x) + 18, 117, presets[i], selected ? UIColor::Text : UIColor::Muted);
         }
         Text(64, 156, "좌우로 변경 · 선택은 이번 실행 동안 유지", UIColor::Muted, FontStyle::Caption);
         resources.Rect(64, 188, 832, 1, UIColor::Border);
@@ -95,7 +95,7 @@ int SceneBegin::Render()
         Text(64, 484, remake ? "일시정지 중 R 재도전 · Q 타이틀" : "생명 3개 · 폭탄 3개로 시작합니다.",
              UIColor::Muted, FontStyle::Caption);
         if (remake)
-            Text(64, 514, "기본 동방 키와 숫자패드도 함께 사용할 수 있습니다.", UIColor::Muted, FontStyle::Caption);
+            Text(64, 514, "조작법 1의 키와 숫자패드도 함께 사용할 수 있습니다.", UIColor::Muted, FontStyle::Caption);
         Text(64, 556, remake ? "Z / J / Enter 결정 · X / K / Esc 돌아가기" : "Z로 결정 · X / Esc로 돌아가기",
              UIColor::Muted, FontStyle::Caption);
     }
