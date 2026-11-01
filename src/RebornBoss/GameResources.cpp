@@ -1,9 +1,14 @@
 #include "GameResources.h"
 #include <cstdio>
 #include <iterator>
+#include <cmath>
 
 namespace
 {
+    constexpr int ForestHeight = 600;
+    constexpr int ForestOverlap = 96;
+    constexpr int ForestPeriod = ForestHeight - ForestOverlap;
+
     constexpr const char* imagePaths[] = {
         "resources/images/backgrounds/title_background.png",
         "resources/images/backgrounds/stage01_forest.png",
@@ -144,6 +149,41 @@ void GameResources::DrawFrame(ImageId image, int column, int row, int width, int
     const RECT source{column * width, row * height, (column + 1) * width, (row + 1) * height};
     const VEC2 position{x, y};
     g2_Draw2D(m_images[static_cast<size_t>(image)], &source, &position);
+}
+
+float GameResources::ForestScrollOffset(float combatSeconds)
+{
+    return std::fmod(combatSeconds * 24.0F, static_cast<float>(ForestPeriod));
+}
+
+void GameResources::DrawScrollingForest(float combatSeconds) const
+{
+    const float offset = ForestScrollOffset(combatSeconds);
+    const int texture = m_images[static_cast<size_t>(ImageId::Forest)];
+    // Overlap the painted edges so the original forest loops without a hard seam.
+    for (int tile = -2; tile <= 1; ++tile)
+    {
+        const float top = offset + tile * ForestPeriod;
+        if (top >= ForestHeight || top + ForestHeight <= 0.0F)
+            continue;
+        if (top + ForestOverlap < ForestHeight)
+        {
+            const RECT source{0, ForestOverlap, 480, ForestHeight};
+            const VEC2 position{0.0F, top + ForestOverlap};
+            g2_Draw2D(texture, &source, &position, nullptr, nullptr, 0.0F, 0xFFB8B8B8);
+        }
+        for (int row = 0; row < ForestOverlap; row += 4)
+        {
+            const float y = top + row;
+            if (y >= ForestHeight || y + 4.0F <= 0.0F)
+                continue;
+            const RECT source{0, row, 480, row + 4};
+            const VEC2 position{0.0F, y};
+            const DWORD alpha = static_cast<DWORD>((row + 2) * 255 / ForestOverlap);
+            g2_Draw2D(texture, &source, &position, nullptr, nullptr, 0.0F,
+                      (alpha << 24) | 0x00B8B8B8);
+        }
+    }
 }
 
 void GameResources::Rect(float x, float y, float width, float height, DWORD color) const

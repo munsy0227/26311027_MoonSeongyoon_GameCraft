@@ -405,7 +405,7 @@ int ScenePlay::Render()
 {
     const bool newClassic = GetGameInput()->IsNewClassic();
     auto& resources = g_pApp->Resources();
-    resources.Draw(ImageId::Forest, 0, 0, 1.0F, 0xFFB8B8B8);
+    resources.DrawScrollingForest(m_elapsedSeconds);
     for (const auto& mob : m_mobs)
         mob.Render(resources);
     if (m_stagePhase == StagePhase::Boss || m_stagePhase == StagePhase::BossIntro)

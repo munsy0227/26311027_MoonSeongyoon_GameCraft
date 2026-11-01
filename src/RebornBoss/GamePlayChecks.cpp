@@ -1,6 +1,7 @@
 #ifndef NDEBUG
 #include "ScenePlay.h"
 #include "GameInput.h"
+#include "GameResources.h"
 #include <algorithm>
 #include <cassert>
 #include <cmath>
@@ -40,6 +41,13 @@ void CheckGameplay()
         return almostEqual(bullet.velocityX, dx * speed / distance)
             && almostEqual(bullet.velocityY, dy * speed / distance);
     };
+    assert(almostEqual(GameResources::ForestScrollOffset(0), 0));
+    assert(almostEqual(GameResources::ForestScrollOffset(0.5F), 12));
+    assert(almostEqual(GameResources::ForestScrollOffset(21), 0));
+    assert(almostEqual(GameResources::ForestScrollOffset(42.5F), 12));
+    assert(almostEqual(GameResources::ForestScrollOffset(20.99F), 503.76F));
+    assert(almostEqual(GameResources::ForestScrollOffset(21.01F), 0.24F));
+
     GamePlayer normal;
     normal.Update(0.1F, 1, 0, false, false);
     assert(almostEqual(normal.X(), 254.37037F));
@@ -291,6 +299,7 @@ void CheckGameplay()
     scene.Tick(0.8F, 0, 0, false, false);
     assert(scene.m_mobs.size() == 1);
     const float elapsed = scene.m_elapsedSeconds;
+    const float forestOffset = GameResources::ForestScrollOffset(elapsed);
     const float spawnTimer = scene.m_spawnTimer;
     const float mobY = scene.m_mobs.front().Y();
     const float playerX = scene.m_player.X();
@@ -300,6 +309,7 @@ void CheckGameplay()
     scene.m_paused = true;
     scene.Tick(30, 1, 0, true, true, true);
     assert(almostEqual(scene.m_elapsedSeconds, elapsed));
+    assert(almostEqual(GameResources::ForestScrollOffset(scene.m_elapsedSeconds), forestOffset));
     assert(almostEqual(scene.m_spawnTimer, spawnTimer));
     assert(almostEqual(scene.m_mobs.front().Y(), mobY));
     assert(almostEqual(scene.m_player.X(), playerX) && scene.m_bullets.Count() == 0);
@@ -310,6 +320,7 @@ void CheckGameplay()
     scene.m_paused = false;
     scene.Tick(0.05F, 0, 0, false, true);
     assert(almostEqual(scene.m_elapsedSeconds, elapsed + 0.05F));
+    assert(almostEqual(GameResources::ForestScrollOffset(scene.m_elapsedSeconds), forestOffset + 1.2F));
     assert(scene.m_bullets.Count() == 1);
 
     waves(scene);
@@ -482,6 +493,8 @@ void CheckGameplay()
     scene.m_player.Damage(1);
     scene.Tick(30, 1, 0, false, true, true);
     assert(almostEqual(scene.m_elapsedSeconds, dialogueTime));
+    assert(almostEqual(GameResources::ForestScrollOffset(scene.m_elapsedSeconds),
+                       GameResources::ForestScrollOffset(dialogueTime)));
     assert(almostEqual(scene.m_pickups.front().age, dialogueItemAge));
     assert(almostEqual(scene.m_pickups.front().y, dialogueItemY));
     assert(almostEqual(scene.m_boss.X(), dialogueBossX) && almostEqual(scene.m_boss.Y(), dialogueBossY));
@@ -593,6 +606,7 @@ void CheckGameplay()
     assert(scene.m_player.Health() == 3 && scene.m_player.Bombs() == 3 && scene.m_player.Power() == 0 && scene.m_player.PowerPoints() == 0);
     assert(almostEqual(scene.m_player.InvulnerabilitySeconds(), 0));
     assert(scene.m_score == 0 && scene.m_elapsedSeconds == 0 && scene.m_waveSeconds == 0);
+    assert(GameResources::ForestScrollOffset(scene.m_elapsedSeconds) == 0);
     assert(scene.m_bullets.Count() == 0 && scene.m_mobs.empty() && scene.m_effects.empty());
     assert(scene.m_pickups.empty() && scene.m_scorePopups.empty());
     assert(scene.m_dialogueIndex == 0 && !scene.m_dialogueReady && scene.m_fastDialogueSeconds == 0);

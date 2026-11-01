@@ -32,6 +32,8 @@ public:
               DWORD color = 0xFFFFFFFF) const;
     void DrawFrame(ImageId image, int column, int row, int width, int height,
                    float x, float y) const;
+    static float ForestScrollOffset(float combatSeconds);
+    void DrawScrollingForest(float combatSeconds) const;
     void Rect(float x, float y, float width, float height, DWORD color) const;
     void PlayBgm(SoundId sound);
     void PlaySound(SoundId sound) const;
