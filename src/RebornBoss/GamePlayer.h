@@ -6,18 +6,28 @@ class GamePlayer : public GameCharacter
 {
 public:
     static constexpr float Radius = 4.0F;
+    static constexpr int MaxHealth = 5;
+    static constexpr int MaxBombs = 5;
+    static constexpr int MaxPower = 4;
     GamePlayer();
     void Update(float seconds, float directionX, float directionY, bool slow, bool shooting);
     void Render(const GameResources& resources) const;
     int Damage(int damage) override;
     bool UseBomb();
+    bool Heal();
+    bool AddBomb();
+    bool AddPower();
+    int Power() const { return m_power; }
     int Bombs() const { return m_bombs; }
     float InvulnerabilitySeconds() const { return m_invulnerabilitySeconds; }
 
 private:
     float m_animationSeconds{};
+    float m_velocityX{};
+    float m_velocityY{};
     float m_invulnerabilitySeconds{};
     int m_bombs{3};
+    int m_power{};
     int m_row{};
     bool m_slow{};
 };

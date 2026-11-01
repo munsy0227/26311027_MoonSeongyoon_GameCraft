@@ -7,7 +7,7 @@ class GameResources;
 class BulletManager
 {
 public:
-    bool Update(float seconds, bool shooting, float playerX, float playerY);
+    bool Update(float seconds, bool shooting, float playerX, float playerY, int power = 0);
     void Render(const GameResources& resources) const;
     void Add(GameBullet bullet);
     void AddAimedFan(float x, float y, float targetX, float targetY,

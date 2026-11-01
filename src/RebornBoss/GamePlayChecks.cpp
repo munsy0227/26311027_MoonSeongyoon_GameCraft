@@ -42,22 +42,78 @@ void CheckGameplay()
     };
     GamePlayer normal;
     normal.Update(0.1F, 1, 0, false, false);
-    assert(almostEqual(normal.X(), 264));
+    assert(almostEqual(normal.X(), 254.37037F));
     GamePlayer diagonal;
     diagonal.Update(0.1F, 1, -1, false, false);
-    assert(almostEqual(std::hypot(diagonal.X() - 240, diagonal.Y() - 520), 24));
+    assert(almostEqual(std::hypot(diagonal.X() - 240, diagonal.Y() - 520), 14.37037F));
     GamePlayer slow;
     slow.Update(0.1F, 1, 0, true, false);
-    assert(almostEqual(slow.X(), 250));
+    assert(almostEqual(slow.X(), 245.98766F));
+    const float releasedX = normal.X();
+    normal.Update(0.5F, 0, 0, false, false);
+    assert(almostEqual(normal.X(), releasedX));
+    normal.Update(0.1F, 1, 0, false, false);
+    assert(almostEqual(normal.X() - releasedX, 14.37037F));
+    GamePlayer focus;
+    focus.Update(0.2F, 1, 0, false, false);
+    const float focusX = focus.X();
+    focus.Update(0.05F, 1, 0, true, false);
+    assert(almostEqual(focus.X() - focusX, 5.0F));
+    GamePlayer reverse;
+    reverse.Update(0.1F, 1, 0, false, false);
+    const float reverseX = reverse.X();
+    reverse.Update(0.01F, -1, 0, false, false);
+    assert(reverse.X() > reverseX);
+    reverse.Update(0.1F, -1, 0, false, false);
+    assert(reverse.X() < reverseX);
     slow.Update(1000, -1, -1, false, false);
     assert(almostEqual(slow.X(), 16) && almostEqual(slow.Y(), 24));
     slow.Update(1000, 1, 1, false, false);
     assert(almostEqual(slow.X(), 464) && almostEqual(slow.Y(), 576));
+    slow.Update(0.01F, -1, 0, false, false);
+    assert(slow.X() < 464.0F);
+    GamePlayer stocked;
+    assert(stocked.Health() == 3 && stocked.Bombs() == 3 && stocked.Power() == 0);
+    assert(stocked.Heal() && stocked.Heal() && !stocked.Heal());
+    assert(stocked.AddBomb() && stocked.AddBomb() && !stocked.AddBomb());
+    assert(stocked.Health() == 5 && stocked.Bombs() == 5);
+    for (int i = 0; i < GamePlayer::MaxPower; ++i) assert(stocked.AddPower());
+    assert(stocked.Power() == 4 && !stocked.AddPower());
+    assert(stocked.UseBomb() && stocked.Bombs() == 4);
+    GamePlayer defeated;
+    assert(defeated.Damage(3) == 3 && defeated.Dead());
+    assert(!defeated.Heal() && !defeated.AddBomb() && !defeated.AddPower());
+    assert(defeated.Health() == 0 && defeated.Bombs() == 3 && defeated.Power() == 0);
     GamePlayer thirty;
     GamePlayer sixty;
     for (int i = 0; i < 3; ++i) thirty.Update(1.0F / 30, 1, 0, false, false);
     for (int i = 0; i < 6; ++i) sixty.Update(1.0F / 60, 1, 0, false, false);
     assert(almostEqual(thirty.X(), sixty.X()));
+
+    for (int power = -1; power <= GamePlayer::MaxPower + 1; ++power)
+    {
+        BulletManager spread;
+        assert(spread.Update(0, true, 240, 520, power));
+        const int level = std::clamp(power, 0, GamePlayer::MaxPower);
+        const auto count = static_cast<std::size_t>(2 * level + 1);
+        assert(spread.Count() == count);
+        for (const auto& bullet : spread.Bullets())
+        {
+            assert(hasSpeed(bullet, 600) && bullet.team == BulletTeam::Player && bullet.damage == 1);
+            assert(bullet.velocityY < 0);
+        }
+        assert(almostEqual(spread.Bullets()[level].velocityX, 0));
+        assert(almostEqual(spread.Bullets()[level].velocityY, -600));
+        assert(almostEqual(spread.Bullets().front().velocityX, -spread.Bullets().back().velocityX));
+        assert(almostEqual(spread.Bullets().front().velocityY, spread.Bullets().back().velocityY));
+        assert(!spread.Update(0.05F, true, 240, 520, power));
+        assert(spread.Update(0.07F, true, 240, 520, power));
+        assert(spread.Count() == count * 2);
+    }
+    BulletManager growing;
+    growing.Update(0, true, 240, 520, 0);
+    growing.Update(0.12F, true, 240, 520, 4);
+    assert(growing.Count() == 10 && almostEqual(growing.Bullets().front().velocityX, 0));
 
     BulletManager fine;
     BulletManager coarse;
@@ -194,6 +250,8 @@ void CheckGameplay()
     const float mobY = scene.m_mobs.front().Y();
     const float playerX = scene.m_player.X();
     scene.m_player.Damage(1);
+    scene.m_pickups.push_back({400, 200, ScenePlay::PickupType::Score});
+    scene.m_scorePopups.push_back({240, 400});
     scene.m_paused = true;
     scene.Tick(30, 1, 0, true, true, true);
     assert(almostEqual(scene.m_elapsedSeconds, elapsed));
@@ -202,6 +260,8 @@ void CheckGameplay()
     assert(almostEqual(scene.m_player.X(), playerX) && scene.m_bullets.Count() == 0);
     assert(almostEqual(scene.m_player.InvulnerabilitySeconds(), 1.5F));
     assert(scene.m_player.Bombs() == 3);
+    assert(scene.m_pickups.front().age == 0 && scene.m_pickups.front().y == 200);
+    assert(scene.m_scorePopups.front().age == 0);
     scene.m_paused = false;
     scene.Tick(0.05F, 0, 0, false, true);
     assert(almostEqual(scene.m_elapsedSeconds, elapsed + 0.05F));
@@ -237,13 +297,21 @@ void CheckGameplay()
     scene.m_mobs.push_back(target);
     scene.m_bullets.Add({240, target.Y(), 0});
     scene.Collide();
-    assert(scene.m_score == 100 && scene.m_mobs.size() == 1);
+    assert(scene.m_score == 0 && scene.m_mobs.size() == 1);
+    const auto dropCount = scene.m_pickups.size();
+    assert(dropCount >= 2 && dropCount <= 3);
     assert(scene.m_mobs.front().Health() == 1 && scene.m_bullets.Count() == 0);
     scene.Collide();
-    assert(scene.m_score == 100);
+    assert(scene.m_score == 0 && scene.m_pickups.size() == dropCount);
     scene.m_mobs.front().Update(11);
     scene.Collide();
-    assert(scene.m_mobs.empty() && scene.m_score == 100);
+    assert(scene.m_mobs.empty() && scene.m_score == 0 && scene.m_pickups.size() == dropCount);
+    for (auto& item : scene.m_pickups) { item.x = scene.m_player.X(); item.y = scene.m_player.Y(); }
+    scene.UpdatePickups(0);
+    assert(scene.m_score == 100 && scene.m_player.Power() == 1 && scene.m_pickups.empty());
+    assert(scene.m_scorePopups.size() == 1);
+    scene.UpdatePickups(0);
+    assert(scene.m_score == 100 && scene.m_player.Power() == 1);
 
     waves(scene);
     GameMob fastTarget(240);
@@ -252,7 +320,62 @@ void CheckGameplay()
     scene.m_mobs.push_back(fastTarget);
     scene.m_bullets.Add({240, 300, -600});
     scene.Tick(0.2F, 0, 0, false, false);
-    assert(scene.m_score == 100 && scene.m_mobs.empty());
+    assert(scene.m_score == 0 && scene.m_mobs.empty() && scene.m_pickups.size() >= 2);
+
+    // Drop thresholds are deterministic in checks; gameplay rolls uniformly from 0 to 99.
+    for (const int roll : {0, 4, 5, 9, 10, 99})
+    {
+        waves(scene);
+        scene.DropLoot(-1000, -1000, roll);
+        assert(scene.m_pickups.size() == static_cast<std::size_t>(roll < 10 ? 3 : 2));
+        assert(scene.m_pickups[0].type == ScenePlay::PickupType::Score);
+        assert(scene.m_pickups[1].type == ScenePlay::PickupType::Power);
+        if (roll < 10)
+            assert(scene.m_pickups[2].type == (roll < 5 ? ScenePlay::PickupType::Health : ScenePlay::PickupType::Bomb));
+        for (const auto& item : scene.m_pickups)
+            assert(item.x >= 14 && item.x <= 466 && item.y >= 14 && item.y <= 586);
+        scene.m_pickups.clear();
+        scene.DropLoot(1000, 1000, roll);
+        for (const auto& item : scene.m_pickups)
+            assert(item.x >= 14 && item.x <= 466 && item.y >= 14 && item.y <= 586);
+    }
+    waves(scene);
+    scene.m_pickups.push_back({scene.m_player.X() + 22.01F, scene.m_player.Y(), ScenePlay::PickupType::Score});
+    scene.UpdatePickups(0);
+    assert(scene.m_score == 0 && scene.m_pickups.size() == 1);
+    scene.m_pickups.front().x = scene.m_player.X() + 22.0F;
+    scene.UpdatePickups(0);
+    assert(scene.m_score == 100 && scene.m_pickups.empty());
+    waves(scene);
+    scene.m_pickups.push_back({scene.m_player.X() + 80, scene.m_player.Y(), ScenePlay::PickupType::Score});
+    scene.UpdatePickups(0.05F);
+    assert(scene.m_pickups.front().attracted && almostEqual(scene.m_pickups.front().x, scene.m_player.X() + 66));
+    scene.UpdatePickups(0.2F);
+    assert(scene.m_score == 100 && scene.m_pickups.empty());
+    waves(scene);
+    scene.m_pickups.push_back({scene.m_player.X() + 80.01F, scene.m_player.Y(), ScenePlay::PickupType::Score});
+    scene.UpdatePickups(0.1F);
+    assert(!scene.m_pickups.front().attracted && almostEqual(scene.m_pickups.front().y, 516));
+    scene.UpdatePickups(11.9F);
+    assert(scene.m_pickups.empty() && scene.m_score == 0);
+    waves(scene);
+    for (int i = 0; i < 3; ++i)
+    {
+        scene.m_pickups.push_back({240, 520, ScenePlay::PickupType::Health});
+        scene.m_pickups.push_back({240, 520, ScenePlay::PickupType::Bomb});
+    }
+    for (int i = 0; i < 6; ++i) scene.m_pickups.push_back({240, 520, ScenePlay::PickupType::Power});
+    scene.UpdatePickups(0);
+    assert(scene.m_player.Health() == 5 && scene.m_player.Bombs() == 5 && scene.m_player.Power() == 4);
+    assert(scene.m_pickups.empty() && scene.m_score == 0);
+    waves(scene);
+    scene.m_player.Damage(2);
+    scene.m_player.Update(2, 0, 0, false, false);
+    scene.m_pickups.push_back({240, 520, ScenePlay::PickupType::Health});
+    scene.m_bullets.Add(enemyBullet(240, 520));
+    scene.Tick(0.01F, 0, 0, false, false);
+    assert(scene.m_player.Dead() && scene.m_stagePhase == ScenePlay::StagePhase::Finished);
+    assert(scene.m_pickups.size() == 1 && scene.m_player.Health() == 0);
 
     waves(scene);
     scene.m_bullets.Add(enemyBullet(240, 200));
@@ -270,24 +393,30 @@ void CheckGameplay()
 
     waves(scene);
     scene.m_waveSeconds = 89.99F;
+    scene.m_pickups.push_back({400, 200, ScenePlay::PickupType::Power});
     scene.m_mobs.emplace_back(96);
     scene.m_bullets.Add(enemyBullet(400, 200));
     scene.Tick(0.02F, 0, 0, false, false);
     assert(scene.m_stagePhase == ScenePlay::StagePhase::BossIntro);
     assert(scene.m_mobs.empty() && scene.m_bullets.Count() == 0);
+    assert(scene.m_pickups.size() == 1);
+    const float dialogueItemAge = scene.m_pickups.front().age;
+    const float dialogueItemY = scene.m_pickups.front().y;
     const float dialogueTime = scene.m_elapsedSeconds;
     const float dialogueBossX = scene.m_boss.X();
     const float dialogueBossY = scene.m_boss.Y();
     scene.m_player.Damage(1);
     scene.Tick(30, 1, 0, false, true, true);
     assert(almostEqual(scene.m_elapsedSeconds, dialogueTime));
+    assert(almostEqual(scene.m_pickups.front().age, dialogueItemAge));
+    assert(almostEqual(scene.m_pickups.front().y, dialogueItemY));
     assert(almostEqual(scene.m_boss.X(), dialogueBossX) && almostEqual(scene.m_boss.Y(), dialogueBossY));
     assert(almostEqual(scene.m_player.InvulnerabilitySeconds(), 1.5F));
     assert(scene.m_player.Bombs() == 3);
 
     GameBossMob moving;
     BulletManager movingShots;
-    moving.Update(1.75F, movingShots, 240, 520);
+    moving.Update(2.625F, movingShots, 240, 520);
     assert(almostEqual(moving.X(), 340) && !almostEqual(moving.Y(), 120));
     for (int i = 0; i < 28; ++i)
     {
@@ -377,14 +506,21 @@ void CheckGameplay()
     scene.m_bullets.Add(enemyBullet(scene.m_player.X(), scene.m_player.Y()));
     scene.Collide();
     assert(scene.m_stagePhase == ScenePlay::StagePhase::Finished && !scene.m_cleared);
+    scene.m_player = GamePlayer{};
+    scene.m_player.Heal(); scene.m_player.Heal();
+    scene.m_player.AddBomb(); scene.m_player.AddBomb();
+    scene.m_player.AddPower();
+    scene.m_pickups.push_back({240, 200, ScenePlay::PickupType::Score});
+    scene.m_scorePopups.push_back({240, 400});
     scene.m_score = 1234;
     scene.m_paused = true;
     scene.Reset();
     assert(scene.m_stagePhase == ScenePlay::StagePhase::Intro);
-    assert(scene.m_player.Health() == 3 && scene.m_player.Bombs() == 3);
+    assert(scene.m_player.Health() == 3 && scene.m_player.Bombs() == 3 && scene.m_player.Power() == 0);
     assert(almostEqual(scene.m_player.InvulnerabilitySeconds(), 0));
     assert(scene.m_score == 0 && scene.m_elapsedSeconds == 0 && scene.m_waveSeconds == 0);
     assert(scene.m_bullets.Count() == 0 && scene.m_mobs.empty() && scene.m_effects.empty());
+    assert(scene.m_pickups.empty() && scene.m_scorePopups.empty());
     assert(scene.m_boss.Health() == 500 && !scene.m_boss.PhaseTwo());
     assert(almostEqual(scene.m_boss.X(), 240) && almostEqual(scene.m_boss.Y(), 120));
     assert(!scene.m_paused && !scene.m_cleared);

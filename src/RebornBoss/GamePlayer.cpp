@@ -13,16 +13,35 @@ GamePlayer::GamePlayer()
 void GamePlayer::Update(float seconds, float directionX, float directionY, bool slow, bool shooting)
 {
     m_invulnerabilitySeconds = std::max(0.0F, m_invulnerabilitySeconds - seconds);
-    const float length = std::sqrt(directionX * directionX + directionY * directionY);
+    const float length = std::hypot(directionX, directionY);
+    const float speed = slow ? 100.0F : 240.0F;
     if (length > 0.0F)
     {
-        const float distance = (slow ? 100.0F : 240.0F) * seconds / length;
-        m_x += directionX * distance;
-        m_y += directionY * distance;
+        const float velocityLength = std::hypot(m_velocityX, m_velocityY);
+        if (velocityLength > speed)
+        {
+            m_velocityX *= speed / velocityLength;
+            m_velocityY *= speed / velocityLength;
+        }
+        const float targetX = directionX * speed / length;
+        const float targetY = directionY * speed / length;
+        const float decay = std::exp(-seconds / 0.045F);
+        // Exact integration keeps the short acceleration consistent across frame rates.
+        const float response = 0.045F * (1.0F - decay);
+        m_x += targetX * seconds + (m_velocityX - targetX) * response;
+        m_y += targetY * seconds + (m_velocityY - targetY) * response;
+        m_velocityX = targetX + (m_velocityX - targetX) * decay;
+        m_velocityY = targetY + (m_velocityY - targetY) * decay;
     }
+    else
+        m_velocityX = m_velocityY = 0.0F;
     m_x = std::clamp(m_x, 16.0F, 464.0F);
     m_y = std::clamp(m_y, 24.0F, 576.0F);
-    const int row = directionX < 0.0F ? 1 : directionX > 0.0F ? 2 : shooting ? 3 : 0;
+    if ((m_x == 16.0F && m_velocityX < 0.0F) || (m_x == 464.0F && m_velocityX > 0.0F))
+        m_velocityX = 0.0F;
+    if ((m_y == 24.0F && m_velocityY < 0.0F) || (m_y == 576.0F && m_velocityY > 0.0F))
+        m_velocityY = 0.0F;
+    const int row = m_velocityX < -1.0F ? 1 : m_velocityX > 1.0F ? 2 : shooting ? 3 : 0;
     if (row != m_row)
         m_animationSeconds = 0.0F;
     m_row = row;
@@ -49,9 +68,34 @@ bool GamePlayer::UseBomb()
     return true;
 }
 
+bool GamePlayer::Heal()
+{
+    if (Dead() || m_health >= MaxHealth)
+        return false;
+    ++m_health;
+    return true;
+}
+
+bool GamePlayer::AddBomb()
+{
+    if (Dead() || m_bombs >= MaxBombs)
+        return false;
+    ++m_bombs;
+    return true;
+}
+
+bool GamePlayer::AddPower()
+{
+    if (Dead() || m_power >= MaxPower)
+        return false;
+    ++m_power;
+    return true;
+}
+
 void GamePlayer::Render(const GameResources& resources) const
 {
     if (Dead())
+
         return;
     const float frameSeconds = m_row == 0 ? 0.12F : m_row == 3 ? 0.09F : 0.10F;
     const int column = static_cast<int>(m_animationSeconds / frameSeconds) % 4;

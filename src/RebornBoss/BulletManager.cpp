@@ -1,10 +1,11 @@
 #include "BulletManager.h"
 #include "GameResources.h"
+#include "GamePlayer.h"
 #include <algorithm>
 #include <cmath>
 #include <numbers>
 
-bool BulletManager::Update(float seconds, bool shooting, float playerX, float playerY)
+bool BulletManager::Update(float seconds, bool shooting, float playerX, float playerY, int power)
 {
     for (auto& bullet : m_bullets)
         if (bullet.active)
@@ -19,7 +20,12 @@ bool BulletManager::Update(float seconds, bool shooting, float playerX, float pl
     bool fired = false;
     while (m_shotTimer <= 0.000001F)
     {
-        Add({playerX, playerY - 28.0F});
+        const int level = std::clamp(power, 0, GamePlayer::MaxPower);
+        for (int i = -level; i <= level; ++i)
+        {
+            const float angle = i * 4.0F * std::numbers::pi_v<float> / 180.0F;
+            Add({playerX, playerY - 28.0F, -std::cos(angle) * 600.0F, std::sin(angle) * 600.0F});
+        }
         m_shotTimer += 0.12F;
         fired = true;
     }

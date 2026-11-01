@@ -17,8 +17,8 @@ void GameBossMob::Update(float seconds, BulletManager& bullets, float playerX, f
         return;
     m_animationSeconds += seconds;
     const float elapsed = static_cast<float>(m_animationSeconds);
-    m_x = 240.0F + 100.0F * std::sin(2.0F * std::numbers::pi_v<float> * elapsed / 7.0F);
-    m_y = 120.0F + 12.0F * std::sin(2.0F * std::numbers::pi_v<float> * elapsed / 5.0F);
+    m_x = 240.0F + 100.0F * std::sin(2.0F * std::numbers::pi_v<float> * elapsed / 10.5F);
+    m_y = 120.0F + 12.0F * std::sin(2.0F * std::numbers::pi_v<float> * elapsed / 7.5F);
     m_shotTimer -= seconds;
     while (m_shotTimer <= 0.000001F)
     {

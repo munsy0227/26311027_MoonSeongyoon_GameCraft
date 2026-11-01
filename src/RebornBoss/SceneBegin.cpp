@@ -94,8 +94,7 @@ int SceneBegin::Render()
              UIColor::Muted, FontStyle::Caption);
         Text(64, 484, remake ? "일시정지 중 R 재도전 · Q 타이틀" : "생명 3개 · 폭탄 3개로 시작합니다.",
              UIColor::Muted, FontStyle::Caption);
-        if (remake)
-            Text(64, 514, "조작법 1의 키와 숫자패드도 함께 사용할 수 있습니다.", UIColor::Muted, FontStyle::Caption);
+        Text(64, 514, "생명·폭탄 최대 5개 · 초록 구슬은 점수 · P는 파워", UIColor::Muted, FontStyle::Caption);
         Text(64, 556, remake ? "Z / J / Enter 결정 · X / K / Esc 돌아가기" : "Z로 결정 · X / Esc로 돌아가기",
              UIColor::Muted, FontStyle::Caption);
     }

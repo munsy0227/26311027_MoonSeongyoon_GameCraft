@@ -5,6 +5,7 @@
 #include "GameBossMob.h"
 #include "BulletManager.h"
 #include <vector>
+#include <random>
 
 class ScenePlay : public GameScene
 {
@@ -17,19 +18,27 @@ public:
 private:
     friend void CheckGameplay();
     enum class StagePhase { Intro, Waves, BossIntro, Boss, Finished };
-    enum Event : unsigned { Shot = 1, Hit = 2, EnemyDown = 4, Bomb = 8 };
+    enum Event : unsigned { Shot = 1, Hit = 2, EnemyDown = 4, Bomb = 8, ItemCollected = 16 };
+    enum class PickupType { Score, Power, Health, Bomb };
+    struct Pickup { float x; float y; PickupType type; float age{}; bool attracted{}; };
+    struct ScorePopup { float x; float y; float age{}; };
     struct Effect { float x; float y; float age{}; };
     void Reset();
     bool Tick(float seconds, float directionX, float directionY, bool slow,
               bool shooting, bool bombPressed = false);
     void Step(float seconds, float directionX, float directionY, bool slow, bool shooting);
     void Collide();
+    void DropLoot(float x, float y, int roll);
+    void UpdatePickups(float seconds);
     void Finish(bool cleared);
     GamePlayer m_player;
     BulletManager m_bullets;
     std::vector<GameMob> m_mobs;
     GameBossMob m_boss;
     std::vector<Effect> m_effects;
+    std::vector<Pickup> m_pickups;
+    std::vector<ScorePopup> m_scorePopups;
+    std::mt19937 m_dropRandom{0x52424F53U};
     StagePhase m_stagePhase{StagePhase::Intro};
     float m_elapsedSeconds{};
     float m_waveSeconds{};

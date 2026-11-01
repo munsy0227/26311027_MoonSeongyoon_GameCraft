@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <cstdio>
 #include <iterator>
+#include <cmath>
 
 namespace
 {
@@ -23,6 +24,9 @@ void ScenePlay::Reset()
     m_bullets.Clear();
     m_mobs.clear();
     m_effects.clear();
+    m_pickups.clear();
+    m_scorePopups.clear();
+    m_dropRandom.seed(0x52424F53U);
     m_stagePhase = StagePhase::Intro;
     m_elapsedSeconds = m_waveSeconds = 0.0F;
     m_hitEffectSeconds = m_bombEffectSeconds = 0.0F;
@@ -44,6 +48,8 @@ int ScenePlay::Destroy()
     m_bullets.Clear();
     m_mobs.clear();
     m_effects.clear();
+    m_pickups.clear();
+    m_scorePopups.clear();
     return 0;
 }
 
@@ -69,7 +75,7 @@ void ScenePlay::Collide()
             bullet.active = false;
             if (mob.Damage(bullet.damage) > 0 && mob.Dead())
             {
-                m_score += 100;
+                DropLoot(mob.X(), mob.Y(), std::uniform_int_distribution<int>{0, 99}(m_dropRandom));
                 m_effects.push_back({mob.X(), mob.Y()});
                 m_events |= EnemyDown;
             }
@@ -129,6 +135,66 @@ void ScenePlay::Collide()
     std::erase_if(m_mobs, [](const GameMob& mob) { return mob.Dead() || mob.Outside(); });
 }
 
+void ScenePlay::DropLoot(float x, float y, int roll)
+{
+    x = std::clamp(x, 32.0F, 448.0F);
+    y = std::clamp(y, 24.0F, 564.0F);
+    m_pickups.push_back({x - 14.0F, y, PickupType::Score});
+    m_pickups.push_back({x + 14.0F, y, PickupType::Power});
+    if (roll < 5)
+        m_pickups.push_back({x, y + 16.0F, PickupType::Health});
+    else if (roll < 10)
+        m_pickups.push_back({x, y + 16.0F, PickupType::Bomb});
+}
+
+void ScenePlay::UpdatePickups(float seconds)
+{
+    if (m_player.Dead())
+        return;
+    for (auto it = m_pickups.begin(); it != m_pickups.end();)
+    {
+        auto& item = *it;
+        const float previousAge = item.age;
+        item.age += seconds;
+        const float dx = m_player.X() - item.x;
+        const float dy = m_player.Y() - item.y;
+        const float distance = std::hypot(dx, dy);
+        if (distance <= 80.0F)
+            item.attracted = true;
+        if (item.attracted && distance > 0.001F)
+        {
+            const float travel = std::min(distance, 280.0F * seconds);
+            item.x += dx * travel / distance;
+            item.y += dy * travel / distance;
+        }
+        else if (!item.attracted)
+        {
+            const float rising = std::min(seconds, std::max(0.0F, 0.25F - previousAge));
+            item.y += -40.0F * rising + 28.0F * (seconds - rising);
+        }
+        if (item.age < 12.0F && Touching(item.x, item.y, 18.0F,
+                                        m_player.X(), m_player.Y(), GamePlayer::Radius))
+        {
+            switch (item.type)
+            {
+            case PickupType::Score:
+                m_score += 100;
+                m_scorePopups.push_back({item.x, item.y});
+                break;
+            case PickupType::Power: m_player.AddPower(); break;
+            case PickupType::Health: m_player.Heal(); break;
+            case PickupType::Bomb: m_player.AddBomb(); break;
+            }
+            m_events |= ItemCollected;
+            it = m_pickups.erase(it);
+        }
+        else if (item.age >= 12.0F || item.y > 628.0F)
+            it = m_pickups.erase(it);
+        else
+            ++it;
+    }
+}
+
 void ScenePlay::Step(float seconds, float directionX, float directionY, bool slow, bool shooting)
 {
     m_elapsedSeconds += seconds;
@@ -137,8 +203,11 @@ void ScenePlay::Step(float seconds, float directionX, float directionY, bool slo
     for (auto& effect : m_effects)
         effect.age += seconds;
     std::erase_if(m_effects, [](const Effect& effect) { return effect.age >= 0.36F; });
+    for (auto& popup : m_scorePopups)
+        popup.age += seconds;
+    std::erase_if(m_scorePopups, [](const ScorePopup& popup) { return popup.age >= 0.65F; });
     m_player.Update(seconds, directionX, directionY, slow, shooting);
-    if (m_bullets.Update(seconds, shooting, m_player.X(), m_player.Y()))
+    if (m_bullets.Update(seconds, shooting, m_player.X(), m_player.Y(), m_player.Power()))
         m_events |= Shot;
     if (m_stagePhase == StagePhase::Waves)
     {
@@ -163,6 +232,8 @@ void ScenePlay::Step(float seconds, float directionX, float directionY, bool slo
     else if (m_stagePhase == StagePhase::Boss)
         m_boss.Update(seconds, m_bullets, m_player.X(), m_player.Y());
     Collide();
+    if (m_stagePhase != StagePhase::Finished)
+        UpdatePickups(seconds);
     if (m_stagePhase == StagePhase::Waves && m_waveSeconds >= 90.0F)
     {
         m_mobs.clear();
@@ -256,6 +327,7 @@ int ScenePlay::Update()
     if (m_events & Hit) resources.PlaySound(SoundId::Hit);
     if (m_events & EnemyDown) resources.PlaySound(SoundId::EnemyDown);
     if (m_events & Bomb) resources.PlaySound(SoundId::Bomb);
+    if (m_events & ItemCollected) resources.PlaySound(SoundId::MenuMove);
     if (m_stagePhase == StagePhase::Finished)
     {
         g_pApp->SetResult({m_cleared, m_score, m_elapsedSeconds});
@@ -274,7 +346,41 @@ int ScenePlay::Render()
     if (m_stagePhase == StagePhase::Boss || m_stagePhase == StagePhase::BossIntro)
         m_boss.Render(resources);
     m_bullets.Render(resources);
+    for (const auto& item : m_pickups)
+    {
+        if (item.age > 10.0F && static_cast<int>(item.age * 8.0F) % 2 == 0)
+            continue;
+        if (item.type == PickupType::Score)
+        {
+            resources.Rect(item.x - 4, item.y - 11, 8, 22, 0xFF102C24);
+            resources.Rect(item.x - 8, item.y - 8, 16, 16, 0xFF102C24);
+            resources.Rect(item.x - 11, item.y - 4, 22, 8, 0xFF102C24);
+            resources.Rect(item.x - 3, item.y - 9, 6, 18, 0xFF86E7AB);
+            resources.Rect(item.x - 6, item.y - 6, 12, 12, 0xFF86E7AB);
+            resources.Rect(item.x - 9, item.y - 3, 18, 6, 0xFF86E7AB);
+            resources.Rect(item.x - 2, item.y - 4, 4, 6, 0xFFE5FFF0);
+        }
+        else if (item.type == PickupType::Power)
+        {
+            resources.Rect(item.x - 11, item.y - 11, 22, 22, UIColor::Accent);
+            resources.Rect(item.x - 9, item.y - 9, 18, 18, 0xFF302B47);
+            Text(static_cast<int>(item.x) - 5, static_cast<int>(item.y) - 9, "P", UIColor::Text, FontStyle::Caption);
+        }
+        else
+        {
+            resources.Rect(item.x - 14, item.y - 14, 28, 28, 0xE01A2030);
+            resources.Draw(item.type == PickupType::Health ? ImageId::Life : ImageId::Bomb,
+                           item.x - 12, item.y - 12);
+        }
+    }
     m_player.Render(resources);
+    for (const auto& popup : m_scorePopups)
+    {
+        const int x = static_cast<int>(std::clamp(popup.x - 20, 8.0F, 424.0F));
+        const int y = static_cast<int>(std::clamp(popup.y - 26.0F - popup.age * 32.0F, 8.0F, 556.0F));
+        resources.Rect(x - 4.0F, y - 3.0F, 52, 24, 0xC0102C24);
+        Text(x, y, "+100", 0xFF86E7AB, FontStyle::Caption);
+    }
     for (const auto& effect : m_effects)
         resources.DrawFrame(ImageId::Explosion, std::min(5, static_cast<int>(effect.age / 0.06F)),
                             0, 64, 64, effect.x - 32.0F, effect.y - 32.0F);
@@ -302,19 +408,24 @@ int ScenePlay::Render()
     Text(520, 204, number, UIColor::Text, FontStyle::Title);
     Text(520, 280, "LIFE", UIColor::Muted, FontStyle::Caption);
     Text(520, 326, "BOMB", UIColor::Muted, FontStyle::Caption);
-    for (int i = 0; i < m_player.Health(); ++i)
-        resources.Draw(ImageId::Life, 608.0F + i * 32.0F, 278);
-    for (int i = 0; i < m_player.Bombs(); ++i)
-        resources.Draw(ImageId::Bomb, 608.0F + i * 32.0F, 324);
-    if (m_player.Health() == 0)
-        Text(608, 280, "0", UIColor::Muted, FontStyle::Caption);
-    if (m_player.Bombs() == 0)
-        Text(608, 326, "0", UIColor::Muted, FontStyle::Caption);
+    for (int i = 0; i < GamePlayer::MaxHealth; ++i)
+        resources.Draw(ImageId::Life, 608.0F + i * 32.0F, 278, 1.0F,
+                       i < m_player.Health() ? 0xFFFFFFFF : 0x35FFFFFF);
+    for (int i = 0; i < GamePlayer::MaxBombs; ++i)
+        resources.Draw(ImageId::Bomb, 608.0F + i * 32.0F, 324, 1.0F,
+                       i < m_player.Bombs() ? 0xFFFFFFFF : 0x35FFFFFF);
     resources.Rect(520, 372, 176, 1, UIColor::Border);
     Text(520, 398, "TIME", UIColor::Muted, FontStyle::Caption);
     const int elapsed = static_cast<int>(m_elapsedSeconds);
     std::snprintf(number, sizeof(number), "%02d:%02d", elapsed / 60, elapsed % 60);
     Text(520, 428, number, UIColor::Text, FontStyle::Body);
+    resources.Rect(728, 390, 192, 80, 0xB00E111A);
+    Text(736, 398, "POWER", UIColor::Muted, FontStyle::Caption);
+    std::snprintf(number, sizeof(number), "%d / %d", m_player.Power(), GamePlayer::MaxPower);
+    Text(736, 428, number, UIColor::Text, FontStyle::Body);
+    for (int i = 0; i < GamePlayer::MaxPower; ++i)
+        resources.Rect(736.0F + i * 44.0F, 461, 36, 4,
+                       i < m_player.Power() ? UIColor::Accent : UIColor::Border);
     const bool boss = m_stagePhase == StagePhase::Boss || m_stagePhase == StagePhase::BossIntro;
     Text(520, 488, boss ? "BOSS BATTLE" : "FOREST", UIColor::Muted, FontStyle::Caption);
     if (!boss)
@@ -364,6 +475,7 @@ int ScenePlay::Render()
             Text(560, 224 + i * 44, keys[i], UIColor::Accent, FontStyle::Caption);
             Text(720, 224 + i * 44, actions[i], UIColor::Text, FontStyle::Caption);
         }
+        Text(560, 410, "초록: 점수 · P: 파워", UIColor::Muted, FontStyle::Caption);
         Text(560, 444, "작은 중심점으로 탄막을 피하세요.", UIColor::Muted, FontStyle::Caption);
         if (newClassic)
             Text(560, 492, "R 재도전 · Q 타이틀", UIColor::Muted, FontStyle::Caption);
