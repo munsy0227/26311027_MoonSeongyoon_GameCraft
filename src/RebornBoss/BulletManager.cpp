@@ -24,7 +24,7 @@ bool BulletManager::Update(float seconds, bool shooting, float playerX, float pl
         for (int i = -level; i <= level; ++i)
         {
             const float angle = i * 4.0F * std::numbers::pi_v<float> / 180.0F;
-            Add({playerX, playerY - 28.0F, -std::cos(angle) * 600.0F, std::sin(angle) * 600.0F});
+            Add({playerX, playerY - GamePlayer::ShotOffset, -std::cos(angle) * 600.0F, std::sin(angle) * 600.0F});
         }
         m_shotTimer += 0.12F;
         fired = true;
@@ -71,10 +71,12 @@ void BulletManager::Render(const GameResources& resources) const
         if (!bullet.active)
             continue;
         if (bullet.team == BulletTeam::Player)
-            resources.Draw(ImageId::PlayerShot, bullet.x - 6.0F, bullet.y - 12.0F);
+            resources.DrawRotated(ImageId::PlayerShot, bullet.x, bullet.y, 12, 24,
+                                  bullet.HeadingRadians(), GameBullet::RenderScale);
         else
-            resources.Draw(bullet.orb ? ImageId::EnemyOrb : ImageId::EnemyPetal,
-                           bullet.x - 8.0F, bullet.y - (bullet.orb ? 8.0F : 12.0F));
+            resources.DrawRotated(bullet.orb ? ImageId::EnemyOrb : ImageId::EnemyPetal,
+                                  bullet.x, bullet.y, 16, bullet.orb ? 16 : 24,
+                                  bullet.HeadingRadians(), GameBullet::RenderScale);
     }
 }
 

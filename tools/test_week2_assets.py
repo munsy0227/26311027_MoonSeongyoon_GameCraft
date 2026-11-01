@@ -1,5 +1,4 @@
 import ast
-from array import array
 import hashlib
 import json
 from pathlib import Path
@@ -14,7 +13,7 @@ import xml.etree.ElementTree as ET
 
 from PIL import Image
 from build_character_assets import check_border
-from build_week2_assets import centered, export_image, inspect_wav, make_sfx, pcm_bytes, runtime_paths, ui_source, RATE, ROOT
+from build_week2_assets import centered, export_image, inspect_wav, make_sfx, runtime_paths, ui_source, RATE, ROOT
 
 
 class Week2AssetsTest(unittest.TestCase):
@@ -64,20 +63,99 @@ class Week2AssetsTest(unittest.TestCase):
             self.assertAlmostEqual((top + bottom) / 2, 32, delta=0.5)
         self.assertLess(frames[0].getchannel("A").getbbox()[2] - frames[0].getchannel("A").getbbox()[0], 30)
 
-    def test_pcm_peak_is_normalized_without_clipping(self):
-        pcm = array("h")
-        pcm.frombytes(pcm_bytes([array("f", [0, 5, -5, 0])], 0.6))
-        self.assertAlmostEqual(max(abs(x) for x in pcm) / 32767, 0.6, places=4)
-        self.assertEqual(pcm[0], 0)
-        self.assertEqual(pcm[-1], 0)
+    def test_midi_sources_and_renderer_provenance_match_audio(self):
+        from build_midi_audio import BGM, SFX, SOURCE, digest
+        manifest = json.loads((SOURCE / "manifest.json").read_text())
+        self.assertEqual(digest(SOURCE / "MS-Basic.sf3"), manifest["soundfont"]["sha256"])
+        self.assertEqual((SOURCE / "MS-Basic-LICENSE.md").read_bytes(),
+                         (ROOT / manifest["soundfont"]["runtime_notice"]).read_bytes())
+        self.assertEqual(set(manifest["tracks"]), {spec[0] for spec in BGM + SFX})
+        for asset_id, name, seconds in BGM + SFX:
+            entry = manifest["tracks"][asset_id]
+            data = (SOURCE / "midi" / (name + ".mid")).read_bytes()
+            self.assertEqual(data[:4], b"MThd")
+            self.assertEqual(data[8:10], b"\0\1")
+            self.assertEqual(digest(SOURCE / "midi" / (name + ".mid")), entry["midi_sha256"])
+            self.assertGreater(entry["note_on_count"], 0)
+            self.assertEqual(entry["seconds"], seconds)
+            self.assertTrue(entry["instruments"] or entry["drum_notes"])
+            wav = ROOT / "src/RebornBoss/resources/audio" / ("bgm" if asset_id.startswith("BGM_") else "sfx") / (name + ".wav")
+            self.assertEqual(digest(wav), entry["sha256"])
+        self.assertLess(manifest["tracks"]["SFX_SHOT"]["peak"], .2)
 
+    def test_authored_music_fits_whole_bars_and_releases_every_note(self):
+        from build_midi_audio import BGM, write_midi
+        from compose_game_music import FORMS, TEMPOS, TPQ, compose_bgm
+        for _, name, seconds in BGM:
+            bars = sum(count for _, count in FORMS[name])
+            self.assertAlmostEqual(bars * 4 * 60 / TEMPOS[name], seconds)
+            tracks = compose_bgm(name, seconds)
+            for ch, events in tracks.items():
+                sounding = set()
+                for tick, event in sorted(events, key=lambda e: (e[0], e[1][0] & 0xf0 == 0x90)):
+                    self.assertGreaterEqual(tick, 0)
+                    self.assertLess(tick, bars * 4 * TPQ)
+                    if event[0] & 0xf0 == 0x90:
+                        self.assertNotIn(event[1], sounding, (name, ch, tick))
+                        sounding.add(event[1])
+                    elif event[0] & 0xf0 == 0x80:
+                        self.assertIn(event[1], sounding, (name, ch, tick))
+                        sounding.remove(event[1])
+                self.assertFalse(sounding, (name, ch))
+            with tempfile.TemporaryDirectory() as folder:
+                midi = Path(folder) / (name + ".mid")
+                write_midi(midi, tracks, seconds, TEMPOS[name])
+                data = midi.read_bytes()
+                tempo = data.index(b"\xff\x51\x03") + 3
+                self.assertEqual(int.from_bytes(data[tempo:tempo + 3], "big"), round(60_000_000 / TEMPOS[name]))
+            with self.assertRaises(ValueError):
+                compose_bgm(name, seconds + 1)
+
+    @unittest.skipUnless(shutil.which("node") and (ROOT / "tools/audio/node_modules/js-synthesizer/package.json").is_file(),
+                         "install the optional MIDI build tool with npm ci --prefix tools/audio")
     def test_generated_effect_is_valid_pcm_with_silent_edges(self):
         with tempfile.TemporaryDirectory() as folder:
-            with patch("build_week2_assets.RES", Path(folder)):
-                make_sfx(("SFX_MENU_MOVE", "menu_move", 0.08, 660, 660, 0))
+            with patch("build_week2_assets.RES", Path(folder)), \
+                    patch("build_midi_audio.MIDI_DIR", Path(folder) / "midi"):
+                make_sfx(("SFX_MENU_MOVE", "menu_move", 0.08))
             report = inspect_wav(Path(folder) / "audio/sfx/menu_move.wav", False)
         self.assertEqual(report["seconds"], 0.08)
         self.assertEqual(report["boundary_jump"], 0)
+
+    @unittest.skipUnless(shutil.which("node") and (ROOT / "tools/audio/node_modules/js-synthesizer/package.json").is_file(),
+                         "install the optional MIDI build tool with npm ci --prefix tools/audio")
+    def test_midi_render_preserves_edited_source_and_reports_actual_instrument(self):
+        from build_midi_audio import build_audio, digest, write_midi
+        with tempfile.TemporaryDirectory() as folder:
+            midi_dir = Path(folder) / "midi"
+            source = midi_dir / "menu_move.mid"
+            write_midi(source, {0: [(0, b"\xc0\x0b"), (0, b"\x90\x43\x50"),
+                                    (48, b"\x80\x43\x00")]}, .08)
+            before, modified = source.read_bytes(), source.stat().st_mtime_ns
+            with patch("build_midi_audio.MIDI_DIR", midi_dir):
+                report = build_audio("SFX_MENU_MOVE", "menu_move", .08, Path(folder) / "edited.wav")
+                self.assertEqual(source.read_bytes(), before)
+                self.assertEqual(source.stat().st_mtime_ns, modified)
+                self.assertEqual(report["midi_sha256"], digest(source))
+                self.assertEqual(report["instruments"], [{"program": 11, "name": "Vibraphone"}])
+                build_audio("SFX_MENU_MOVE", "menu_move", .08, Path(folder) / "reset.wav", regenerate=True)
+                self.assertNotEqual(source.read_bytes(), before)
+
+    @unittest.skipUnless(shutil.which("node") and (ROOT / "tools/audio/node_modules/js-synthesizer/package.json").is_file(),
+                         "install the optional MIDI build tool with npm ci --prefix tools/audio")
+    def test_midi_renderer_rejects_overlapping_note_pairs(self):
+        from build_midi_audio import SOURCE, write_midi
+        events = {0: [(0, b"\xc0\x0c"), (0, b"\x90\x3c\x50"), (48, b"\x90\x3c\x50"),
+                      (96, b"\x80\x3c\x00"), (120, b"\x80\x3c\x00")]}
+        with tempfile.TemporaryDirectory() as folder:
+            midi, output = Path(folder) / "overlap.mid", Path(folder) / "bad.wav"
+            write_midi(midi, events, .2)
+            result = subprocess.run(["node", str(ROOT / "tools/audio/render_midi.cjs"), str(midi),
+                                     str(SOURCE / "MS-Basic.sf3"), str(output), ".2", ".3", "effect"],
+                                    capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("Overlapping MIDI note", result.stderr)
+            self.assertFalse(output.exists())
 
     def test_invalid_sample_width_is_rejected(self):
         with tempfile.TemporaryDirectory() as folder:

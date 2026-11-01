@@ -6,6 +6,10 @@ class GamePlayer : public GameCharacter
 {
 public:
     static constexpr float Radius = 4.0F;
+    static constexpr float RenderScale = 2.0F;
+    static constexpr float RenderWidth = 32.0F * RenderScale;
+    static constexpr float RenderHeight = 48.0F * RenderScale;
+    static constexpr float ShotOffset = RenderHeight * 0.5F + 8.0F;
     static constexpr int MaxHealth = 5;
     static constexpr int MaxBombs = 5;
     static constexpr int MaxPower = 4;

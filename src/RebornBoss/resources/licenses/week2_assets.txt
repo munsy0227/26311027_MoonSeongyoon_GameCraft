@@ -1,11 +1,12 @@
 Week 2 resource creation record
-Date: 2026-10-26
+Updated: 2026-11-01
 
-Catalog: resources/week2_assets.json (30 representative PNGs and 15 WAVs).
+Catalog: resources/week2_assets.json (33 representative PNGs and 15 WAVs).
 Existing characters and portraits: eight representative files are reused unchanged.
 Their original creation record remains in character_assets_v1.txt.
 
-New images: 22 original assets generated with OpenAI built-in image_gen.
+Initial image generation (2026-10-26): 22 original assets generated with OpenAI built-in image_gen.
+Subsequent additions and procedural UI sources are recorded in the current catalog and asset_jobs.json.
 Style reference for backgrounds, ordinary enemies and player shot: existing Lillian portrait.
 This is a project art direction reference, not an external stock image license.
 Prompts and target specifications: art_sources/week2/asset_jobs.json.
@@ -15,13 +16,26 @@ User-approved Python/Pillow processing: tools/build_week2_assets.py.
 Processing: alpha cleanup, atlas separation, common framing, pixel-size export, shared enemy palettes.
 The original generated PNGs and all prior character assets were preserved.
 
-Audio: original synthesized compositions and sound effects in tools/build_week2_assets.py.
-Six music tracks use original eight-bar phrases, cyclic note tails, 120 BPM and stereo pan.
-The sixteen-second phrases repeat to 32 seconds (menu/ending) or 64 seconds (stage/boss).
-Nine mono effects use deterministic sweeps, fixed-seed noise or original note sequences.
-No external recordings, samples or downloaded melodies were incorporated.
-Format: 44100 Hz, signed 16-bit little-endian PCM WAV.
-Music normalized peak: 0.60; sound effect normalized peak: 0.78.
+Audio (recomposed 2026-11-01): six original music scores and nine original effect scores.
+Editable sources: art_sources/audio/midi/*.mid (Standard MIDI format 1).
+Normal builds preserve MIDI edits. Explicit --regenerate-midi restores the authored Python scores.
+Music composition: tools/compose_game_music.py; effect composition: tools/build_midi_audio.py.
+The scores use original themes, 4/8-bar phrases, section contrasts, controlled voice leading,
+and 120/135/150/165/180 BPM tempos. No melodies from other games are copied.
+Renderer: js-synthesizer 1.13.0 / FluidSynth 2.4.6 WebAssembly with libsndfile.
+Instrument bank: unchanged MS Basic.sf3 / MuseScore_General_HQ v0.2, licensed under MIT.
+Official source: musescore/MuseScore, share/sound, commit 37128c5ac8f9af804b63650610952414421828b8.
+SoundFont: art_sources/audio/MS-Basic.sf3 (51,278,610 bytes).
+Original complete notices: art_sources/audio/MS-Basic-LICENSE.md and MS-Basic-README.md.
+A complete license copy is distributed at resources/licenses/audio/MS-Basic-LICENSE.md.
+The SoundFont copyright/acknowledgements/MIT text remain verbatim in those notices.
+Per-source MIDI tempo, instruments, notes, hashes and rendering gain: art_sources/audio/manifest.json.
+Format: 44100 Hz, signed 16-bit little-endian PCM WAV (stereo music, mono effects).
+Music is 32 seconds (menu/ending) or 64 seconds (stages/boss); one warm-up cycle carries sample tails.
+Effects use percussion for combat, soft mallets for UI and piano/strings for short result jingles.
+Effects have 1.5ms attack protection and 12ms release protection; repeated shot peak is 0.09.
+Per-track peak/RMS/loop checks: art_sources/week2/validation.json.
+The game plays rendered WAVs; the MIDI renderer and bank are authoring resources.
 
 This file records provenance and production, and does not assign a license to third-party tools.
 The user reported normal operation on Windows on 2026-10-26.

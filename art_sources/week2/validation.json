@@ -10,106 +10,106 @@
     "BGM_MENU": {
       "seconds": 32.0,
       "channels": 2,
-      "peak": 0.59998,
-      "rms": 0.11597,
-      "boundary_jump": 0.00275
+      "peak": 0.42999,
+      "rms": 0.06312,
+      "boundary_jump": 0.0
     },
     "BGM_STAGE01": {
       "seconds": 64.0,
       "channels": 2,
-      "peak": 0.59998,
-      "rms": 0.1118,
-      "boundary_jump": 0.00186
+      "peak": 0.49997,
+      "rms": 0.07965,
+      "boundary_jump": 0.0
     },
     "BGM_STAGE02": {
       "seconds": 64.0,
       "channels": 2,
-      "peak": 0.59998,
-      "rms": 0.12145,
-      "boundary_jump": 0.00287
+      "peak": 0.46997,
+      "rms": 0.07168,
+      "boundary_jump": 0.0
     },
     "BGM_STAGE03": {
       "seconds": 64.0,
       "channels": 2,
-      "peak": 0.59998,
-      "rms": 0.12312,
-      "boundary_jump": 0.00052
+      "peak": 0.49997,
+      "rms": 0.07624,
+      "boundary_jump": 0.0
     },
     "BGM_BOSS": {
       "seconds": 64.0,
       "channels": 2,
-      "peak": 0.59998,
-      "rms": 0.12404,
-      "boundary_jump": 0.00354
+      "peak": 0.53,
+      "rms": 0.08279,
+      "boundary_jump": 0.0
     },
     "BGM_ENDING": {
       "seconds": 32.0,
       "channels": 2,
-      "peak": 0.59998,
-      "rms": 0.11684,
-      "boundary_jump": 0.00201
+      "peak": 0.42999,
+      "rms": 0.07498,
+      "boundary_jump": 0.0
     },
     "SFX_SHOT": {
       "seconds": 0.1,
       "channels": 1,
-      "peak": 0.77997,
-      "rms": 0.25204,
+      "peak": 0.09,
+      "rms": 0.01764,
       "boundary_jump": 0.0
     },
     "SFX_ENEMY_HIT": {
       "seconds": 0.12,
       "channels": 1,
-      "peak": 0.77997,
-      "rms": 0.23361,
+      "peak": 0.25998,
+      "rms": 0.0358,
       "boundary_jump": 0.0
     },
     "SFX_PLAYER_HIT": {
       "seconds": 0.32,
       "channels": 1,
-      "peak": 0.77997,
-      "rms": 0.16079,
+      "peak": 0.42999,
+      "rms": 0.06022,
       "boundary_jump": 0.0
     },
     "SFX_EXPLOSION": {
       "seconds": 0.45,
       "channels": 1,
-      "peak": 0.77997,
-      "rms": 0.12452,
+      "peak": 0.44998,
+      "rms": 0.07354,
       "boundary_jump": 0.0
     },
     "SFX_BOMB": {
       "seconds": 0.7,
       "channels": 1,
-      "peak": 0.77997,
-      "rms": 0.14293,
+      "peak": 0.59998,
+      "rms": 0.08676,
       "boundary_jump": 0.0
     },
     "SFX_MENU_MOVE": {
       "seconds": 0.08,
       "channels": 1,
-      "peak": 0.77997,
-      "rms": 0.25233,
+      "peak": 0.13,
+      "rms": 0.05201,
       "boundary_jump": 0.0
     },
     "SFX_MENU_CONFIRM": {
       "seconds": 0.18,
       "channels": 1,
-      "peak": 0.77997,
-      "rms": 0.24922,
+      "peak": 0.22998,
+      "rms": 0.07781,
       "boundary_jump": 0.0
     },
     "SFX_CLEAR": {
       "seconds": 2.0,
       "channels": 1,
-      "peak": 0.77997,
-      "rms": 0.24326,
+      "peak": 0.49997,
+      "rms": 0.13348,
       "boundary_jump": 0.0
     },
     "SFX_GAME_OVER": {
       "seconds": 2.0,
       "channels": 1,
-      "peak": 0.77997,
-      "rms": 0.25115,
+      "peak": 0.37997,
+      "rms": 0.08715,
       "boundary_jump": 0.0
     }
   },

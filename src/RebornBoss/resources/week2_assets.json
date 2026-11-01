@@ -552,136 +552,181 @@
       "id": "BGM_MENU",
       "path": "audio/bgm/menu.wav",
       "seconds": 32,
-      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "origin": "Original authored MIDI score rendered with FluidSynth / MS Basic",
+      "source": "art_sources/audio/midi/menu.mid",
+      "audio_manifest": "art_sources/audio/manifest.json",
       "applied": true,
       "status": "적용",
-      "sha256": "a8831f390206adafe80d638f57fecab394b9430df950a80933b44b6866dd14f2"
+      "sha256": "dd724e03f13f35315c9f405792a7571b89e5ea7b02f2c641e0205302bce8791d",
+      "source_sha256": "9f67bda5c2cb45b3314f68834892c37059d0f81050565c50ecc3dfc5c81c49e8"
     },
     {
       "id": "BGM_STAGE01",
       "path": "audio/bgm/stage01_forest.wav",
       "seconds": 64,
-      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "origin": "Original authored MIDI score rendered with FluidSynth / MS Basic",
+      "source": "art_sources/audio/midi/stage01_forest.mid",
+      "audio_manifest": "art_sources/audio/manifest.json",
       "applied": true,
       "status": "적용",
-      "sha256": "1c14f40e152f4001b65da0a4582b467acd7644c0ac0b1b1ba4714b86c347ee88"
+      "sha256": "be8e9fc7b68b9a794fe3e4f3bd8babe4b47e81cb67130a70cfc4d9d42d2651c8",
+      "source_sha256": "d10a762846440d3988b5e9568faf42adf6cf74154e165662d8448541b2008140"
     },
     {
       "id": "BGM_STAGE02",
       "path": "audio/bgm/stage02_lake.wav",
       "seconds": 64,
-      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "origin": "Original authored MIDI score rendered with FluidSynth / MS Basic",
+      "source": "art_sources/audio/midi/stage02_lake.mid",
+      "audio_manifest": "art_sources/audio/manifest.json",
       "applied": false,
       "status": "편집 완료",
-      "sha256": "56136e29f4e89bf8d599483052a44c8c4da6e967b9f17fc7331422b7688bae58"
+      "sha256": "1cbef561ff9aeb32a140e00ea613140dfcd7fc291563466d911e3a23952c93f5",
+      "source_sha256": "e5141c16313ce2021c24d458b940dbe1b21551dad4b92be17fa1a064738c29e2"
     },
     {
       "id": "BGM_STAGE03",
       "path": "audio/bgm/stage03_shrine.wav",
       "seconds": 64,
-      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "origin": "Original authored MIDI score rendered with FluidSynth / MS Basic",
+      "source": "art_sources/audio/midi/stage03_shrine.mid",
+      "audio_manifest": "art_sources/audio/manifest.json",
       "applied": false,
       "status": "편집 완료",
-      "sha256": "a68189be27d3a56933e3ca5b2ee04e179c1ef8298118482368b2011c107127f1"
+      "sha256": "76628e78281bef6f9519e7cef4cb33142c7b020cbcacbc4bef08248f2056900d",
+      "source_sha256": "a32c6cc51390826fdc2be4102cdff153df7cff079f22f4b51e597d4cc36f04a8"
     },
     {
       "id": "BGM_BOSS",
       "path": "audio/bgm/boss.wav",
       "seconds": 64,
-      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "origin": "Original authored MIDI score rendered with FluidSynth / MS Basic",
+      "source": "art_sources/audio/midi/boss.mid",
+      "audio_manifest": "art_sources/audio/manifest.json",
       "applied": true,
       "status": "적용",
-      "sha256": "0ec7f65961ab0d8743d41ea469d71be69c0f8ae47ad0fa3a72bf940b27be7e99"
+      "sha256": "89a7bcd9f063a610ee31a2a7241f24388945ff86538a423d5c96d945c15957c4",
+      "source_sha256": "096f16ba703b2311c7be313b854edeb0d262b34eb46278cc8d04e0578b53bf13"
     },
     {
       "id": "BGM_ENDING",
       "path": "audio/bgm/ending.wav",
       "seconds": 32,
-      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "origin": "Original authored MIDI score rendered with FluidSynth / MS Basic",
+      "source": "art_sources/audio/midi/ending.mid",
+      "audio_manifest": "art_sources/audio/manifest.json",
       "applied": false,
       "status": "편집 완료",
-      "sha256": "fd58b6867602136e62b5f300aeca0d8c357a6b0385639eee1e14f4f6236be220"
+      "sha256": "2799e0c8f8bb568c166a69b22697b9d70835533ff547b9cd3b73d5357d7a8131",
+      "source_sha256": "af62e375797827014529c09538f9d980f689516233d62d137c91827f6393e991"
     },
     {
       "id": "SFX_SHOT",
       "path": "audio/sfx/player_shot.wav",
       "seconds": 0.1,
-      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "origin": "Original authored MIDI score rendered with FluidSynth / MS Basic",
+      "source": "art_sources/audio/midi/player_shot.mid",
+      "audio_manifest": "art_sources/audio/manifest.json",
       "applied": true,
       "status": "적용",
-      "sha256": "d685be82c4873c14dec47982a74d790b75d730e7c5acad030122c0d3d0e264ab"
+      "sha256": "f246000d19b45ae15625b65206a4779949b3051bb83f8e8292a6cff133767739",
+      "source_sha256": "0a514c08485082cc09302d398a86537e8ce2451de4f98b18e764c8e3768e5959"
     },
     {
       "id": "SFX_ENEMY_HIT",
       "path": "audio/sfx/enemy_hit.wav",
       "seconds": 0.12,
-      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "origin": "Original authored MIDI score rendered with FluidSynth / MS Basic",
+      "source": "art_sources/audio/midi/enemy_hit.mid",
+      "audio_manifest": "art_sources/audio/manifest.json",
       "applied": false,
       "status": "편집 완료",
-      "sha256": "2960eb8a07c51ad91a960a8d2cc2242302e3a4f3822f17a1d8aeb9c73fec7a34"
+      "sha256": "f75e07a7fb5ca3f4001e778664d5447a91b3c23170071271ae6e6d3b77f752b3",
+      "source_sha256": "0c6261a685ba3ef6adf0e7f09758327e0aeb3ae542a2776f9bb4f5dfc9fff7c7"
     },
     {
       "id": "SFX_PLAYER_HIT",
       "path": "audio/sfx/player_hit.wav",
       "seconds": 0.32,
-      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "origin": "Original authored MIDI score rendered with FluidSynth / MS Basic",
+      "source": "art_sources/audio/midi/player_hit.mid",
+      "audio_manifest": "art_sources/audio/manifest.json",
       "applied": true,
       "status": "적용",
-      "sha256": "933a1426a2243e18cd2bbe91dc2a8f4bc8f9e397be878e1eee663ab7ec0a0ca2"
+      "sha256": "7bbcfd86f017218d06da004e9a16668f41a6c86ad1f15f373508daf815409faa",
+      "source_sha256": "c9d228884eae75bbf4d6326091735a5c409988d6b7b1ff6276de6cd6d35a6190"
     },
     {
       "id": "SFX_EXPLOSION",
       "path": "audio/sfx/explosion.wav",
       "seconds": 0.45,
-      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "origin": "Original authored MIDI score rendered with FluidSynth / MS Basic",
+      "source": "art_sources/audio/midi/explosion.mid",
+      "audio_manifest": "art_sources/audio/manifest.json",
       "applied": true,
       "status": "적용",
-      "sha256": "8d1b579562e6a0be45b9b126aebf20836fa72d8e92c20ecdd6cc84609892253e"
+      "sha256": "43f4ecf8f2938da9dc0c067a59a02db50737ea1ddbc9bc50bf1816570444fd7e",
+      "source_sha256": "30b01b1b426189536ece2d5c20daeb656fe85abd9766d2e15ffd7eab34cfd729"
     },
     {
       "id": "SFX_BOMB",
       "path": "audio/sfx/bomb.wav",
       "seconds": 0.7,
-      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "origin": "Original authored MIDI score rendered with FluidSynth / MS Basic",
+      "source": "art_sources/audio/midi/bomb.mid",
+      "audio_manifest": "art_sources/audio/manifest.json",
       "applied": true,
       "status": "적용",
-      "sha256": "3db52d15757040fb6dd2ddc7b015d41f09ae63b2c443bf0f57173351c111806e"
+      "sha256": "e1ede75633b0ac14c176ead5e0e284a43628afb2fb72211b2e20c9cf47794bfe",
+      "source_sha256": "fb523ffa46e86ab8f4a62ceb83188bc2d1b4f7f0a563a20f918a419278575d67"
     },
     {
       "id": "SFX_MENU_MOVE",
       "path": "audio/sfx/menu_move.wav",
       "seconds": 0.08,
-      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "origin": "Original authored MIDI score rendered with FluidSynth / MS Basic",
+      "source": "art_sources/audio/midi/menu_move.mid",
+      "audio_manifest": "art_sources/audio/manifest.json",
       "applied": true,
       "status": "적용",
-      "sha256": "025df3662c0d380adb610446b6d9de61d08ee6036a1c8480f5a1e4ea1ecbb149"
+      "sha256": "61374895e8ca4e06f941a4e07606bffee9ef6d072891c8018c47fc71ba5e9864",
+      "source_sha256": "c0fa28dcfe332dadb805e818b7f28a2d1afe82de326041315f240b724400bcec"
     },
     {
       "id": "SFX_MENU_CONFIRM",
       "path": "audio/sfx/menu_confirm.wav",
       "seconds": 0.18,
-      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "origin": "Original authored MIDI score rendered with FluidSynth / MS Basic",
+      "source": "art_sources/audio/midi/menu_confirm.mid",
+      "audio_manifest": "art_sources/audio/manifest.json",
       "applied": true,
       "status": "적용",
-      "sha256": "f516f3ba226fdda70b8e92e629f9675043f6022e74e370ac07c636ae8f19ee0c"
+      "sha256": "02a907be3e5fb5729815dc883e3a22adb8548f7cded6144ba05009613f6a04f5",
+      "source_sha256": "5f2959a7093138da9246a792c48ff3d29c43b80785a27f49c90754c68252aeb9"
     },
     {
       "id": "SFX_CLEAR",
       "path": "audio/sfx/stage_clear.wav",
       "seconds": 2.0,
-      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "origin": "Original authored MIDI score rendered with FluidSynth / MS Basic",
+      "source": "art_sources/audio/midi/stage_clear.mid",
+      "audio_manifest": "art_sources/audio/manifest.json",
       "applied": true,
       "status": "적용",
-      "sha256": "c6b8508cdc77b252aa7516a9c208b66ef78c52005add0a3d896c6526f7aec0fc"
+      "sha256": "411c0edd0693e4668fae8f36466e31341b6a86fa680c615bf22d47c08dde15ae",
+      "source_sha256": "1cd5333de3ab2aa3a2d89b98aeced3c84cddaff8003b2235f2f70ca1cababd71"
     },
     {
       "id": "SFX_GAME_OVER",
       "path": "audio/sfx/game_over.wav",
       "seconds": 2.0,
-      "origin": "Original procedural composition in tools/build_week2_assets.py",
+      "origin": "Original authored MIDI score rendered with FluidSynth / MS Basic",
+      "source": "art_sources/audio/midi/game_over.mid",
+      "audio_manifest": "art_sources/audio/manifest.json",
       "applied": true,
       "status": "적용",
-      "sha256": "3b43611cfd351b6bf43864391652ae16c3f3809df609934233ef099c17a970be"
+      "sha256": "d2f2d51c34e313a03da8e2b58686cf36f0048741ebc7ffc5c7a6a50df830b9e2",
+      "source_sha256": "3aa0618b525c2fa9cfe3d57bff0d31577262bf492c8d43da779e51b977ad92b5"
     }
   ]
 }

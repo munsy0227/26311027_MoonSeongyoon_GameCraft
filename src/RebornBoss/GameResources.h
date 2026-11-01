@@ -31,7 +31,9 @@ public:
     void Draw(ImageId image, float x, float y, float scale = 1.0F,
               DWORD color = 0xFFFFFFFF) const;
     void DrawFrame(ImageId image, int column, int row, int width, int height,
-                   float x, float y) const;
+                   float x, float y, float scale = 1.0F) const;
+    void DrawRotated(ImageId image, float centerX, float centerY, int width, int height,
+                     float angleRadians, float scale = 1.0F) const;
     static float ForestScrollOffset(float combatSeconds);
     void DrawScrollingForest(float combatSeconds) const;
     void Rect(float x, float y, float width, float height, DWORD color) const;

@@ -7,7 +7,7 @@
 GameBossMob::GameBossMob()
 {
     m_x = 240.0F;
-    m_y = 120.0F;
+    m_y = BaseY;
     m_health = MaxHealth;
 }
 
@@ -18,7 +18,7 @@ void GameBossMob::Update(float seconds, BulletManager& bullets, float playerX, f
     m_animationSeconds += seconds;
     const float elapsed = static_cast<float>(m_animationSeconds);
     m_x = 240.0F + 100.0F * std::sin(2.0F * std::numbers::pi_v<float> * elapsed / 10.5F);
-    m_y = 120.0F + 12.0F * std::sin(2.0F * std::numbers::pi_v<float> * elapsed / 7.5F);
+    m_y = BaseY + 12.0F * std::sin(2.0F * std::numbers::pi_v<float> * elapsed / 7.5F);
     m_shotTimer -= seconds;
     while (m_shotTimer <= 0.000001F)
     {
@@ -59,5 +59,6 @@ void GameBossMob::Render(const GameResources& resources) const
     if (Dead())
         return;
     const int column = static_cast<int>(m_animationSeconds / 0.09F) % 4;
-    resources.DrawFrame(ImageId::Lillian, column, 3, 64, 64, m_x - 32.0F, m_y - 32.0F);
+    resources.DrawFrame(ImageId::Lillian, column, 3, 64, 64,
+                        m_x - RenderSize * 0.5F, m_y - RenderSize * 0.5F, RenderScale);
 }

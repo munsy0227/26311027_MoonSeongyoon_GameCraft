@@ -1,0 +1,675 @@
+{
+  "format": "Standard MIDI File format 1; PPQN and tempo events are recorded per source track",
+  "initial_recipe": {
+    "ppqn": 480,
+    "tempos_bpm": {
+      "menu": 150,
+      "stage01_forest": 150,
+      "stage02_lake": 135,
+      "stage03_shrine": 165,
+      "boss": 180,
+      "ending": 120
+    },
+    "keys": {
+      "menu": "D minor",
+      "stage01_forest": "F minor",
+      "stage02_lake": "D minor",
+      "stage03_shrine": "A minor",
+      "boss": "C minor",
+      "ending": "D major"
+    },
+    "forms": {
+      "menu": [
+        [
+          "intro",
+          4
+        ],
+        [
+          "A",
+          8
+        ],
+        [
+          "B",
+          8
+        ]
+      ],
+      "stage01_forest": [
+        [
+          "intro",
+          4
+        ],
+        [
+          "A",
+          8
+        ],
+        [
+          "A_prime",
+          8
+        ],
+        [
+          "B",
+          8
+        ],
+        [
+          "A_return",
+          8
+        ],
+        [
+          "turn",
+          4
+        ]
+      ],
+      "stage02_lake": [
+        [
+          "intro",
+          4
+        ],
+        [
+          "A",
+          8
+        ],
+        [
+          "A_prime",
+          8
+        ],
+        [
+          "B",
+          8
+        ],
+        [
+          "A_return",
+          8
+        ]
+      ],
+      "stage03_shrine": [
+        [
+          "intro",
+          4
+        ],
+        [
+          "A",
+          8
+        ],
+        [
+          "A_prime",
+          8
+        ],
+        [
+          "B",
+          8
+        ],
+        [
+          "A_return",
+          8
+        ],
+        [
+          "coda",
+          8
+        ]
+      ],
+      "boss": [
+        [
+          "intro",
+          4
+        ],
+        [
+          "A",
+          8
+        ],
+        [
+          "A_prime",
+          8
+        ],
+        [
+          "B",
+          8
+        ],
+        [
+          "C",
+          8
+        ],
+        [
+          "A_return",
+          8
+        ],
+        [
+          "turn",
+          4
+        ]
+      ],
+      "ending": [
+        [
+          "A",
+          8
+        ],
+        [
+          "B",
+          8
+        ]
+      ]
+    },
+    "score_sha256": "d7d0b0d1eb4ffdb30066083eb0154c3eded137b7dd4427df5c6b7cbc8f62567b"
+  },
+  "composition": "Original authored themes and phrase arrangements in tools/compose_game_music.py; existing MIDI files are authoritative",
+  "renderer": "js-synthesizer 1.13.0 / FluidSynth 2.4.6 WebAssembly with libsndfile",
+  "renderer_install": "npm ci --ignore-scripts --prefix tools/audio",
+  "soundfont": {
+    "path": "art_sources/audio/MS-Basic.sf3",
+    "sha256": "5ea2375e8bd7d8e71def1036978c1621e85b66934169b6a2744b27b9b3c2d99c",
+    "name": "MS Basic / MuseScore_General_HQ v0.2",
+    "license_type": "MIT",
+    "author": "MuseScore contributors; full notices in MS-Basic-LICENSE.md",
+    "url": "https://github.com/musescore/MuseScore",
+    "commit": "37128c5ac8f9af804b63650610952414421828b8",
+    "license": "art_sources/audio/MS-Basic-LICENSE.md",
+    "runtime_notice": "src/RebornBoss/resources/licenses/audio/MS-Basic-LICENSE.md"
+  },
+  "loop_processing": "One full MIDI cycle warms sample/reverb tails; capture the next cycle and match endpoints over 3 ms.",
+  "tracks": {
+    "BGM_MENU": {
+      "midi": "menu.mid",
+      "midi_sha256": "9f67bda5c2cb45b3314f68834892c37059d0f81050565c50ecc3dfc5c81c49e8",
+      "seconds": 32,
+      "channels": 2,
+      "ticks_per_quarter": 480,
+      "tempo_changes": [
+        {
+          "tick": 0,
+          "microseconds_per_quarter": 400000
+        }
+      ],
+      "note_on_count": 333,
+      "instruments": [
+        {
+          "program": 60,
+          "name": "French Horns"
+        },
+        {
+          "program": 0,
+          "name": "Grand Piano"
+        },
+        {
+          "program": 48,
+          "name": "Strings Fast"
+        },
+        {
+          "program": 33,
+          "name": "Fingered Bass"
+        },
+        {
+          "program": 71,
+          "name": "Clarinet"
+        }
+      ],
+      "drum_notes": [],
+      "peak": 0.42999267578125,
+      "rms": 0.06312285039882837,
+      "warmup_cycles": 1,
+      "sha256": "dd724e03f13f35315c9f405792a7571b89e5ea7b02f2c641e0205302bce8791d"
+    },
+    "BGM_STAGE01": {
+      "midi": "stage01_forest.mid",
+      "midi_sha256": "d10a762846440d3988b5e9568faf42adf6cf74154e165662d8448541b2008140",
+      "seconds": 64,
+      "channels": 2,
+      "ticks_per_quarter": 480,
+      "tempo_changes": [
+        {
+          "tick": 0,
+          "microseconds_per_quarter": 400000
+        }
+      ],
+      "note_on_count": 1457,
+      "instruments": [
+        {
+          "program": 56,
+          "name": "Trumpet"
+        },
+        {
+          "program": 0,
+          "name": "Grand Piano"
+        },
+        {
+          "program": 48,
+          "name": "Strings Fast"
+        },
+        {
+          "program": 33,
+          "name": "Fingered Bass"
+        },
+        {
+          "program": 73,
+          "name": "Flute"
+        }
+      ],
+      "drum_notes": [
+        36,
+        38,
+        42,
+        45,
+        47,
+        50
+      ],
+      "peak": 0.499969482421875,
+      "rms": 0.079653864292029,
+      "warmup_cycles": 1,
+      "sha256": "be8e9fc7b68b9a794fe3e4f3bd8babe4b47e81cb67130a70cfc4d9d42d2651c8"
+    },
+    "BGM_STAGE02": {
+      "midi": "stage02_lake.mid",
+      "midi_sha256": "e5141c16313ce2021c24d458b940dbe1b21551dad4b92be17fa1a064738c29e2",
+      "seconds": 64,
+      "channels": 2,
+      "ticks_per_quarter": 480,
+      "tempo_changes": [
+        {
+          "tick": 0,
+          "microseconds_per_quarter": 444444
+        }
+      ],
+      "note_on_count": 1001,
+      "instruments": [
+        {
+          "program": 68,
+          "name": "Oboe"
+        },
+        {
+          "program": 4,
+          "name": "Tine Electric Piano"
+        },
+        {
+          "program": 48,
+          "name": "Strings Fast"
+        },
+        {
+          "program": 33,
+          "name": "Fingered Bass"
+        },
+        {
+          "program": 27,
+          "name": "Clean Guitar"
+        }
+      ],
+      "drum_notes": [
+        36,
+        38,
+        42,
+        45,
+        47,
+        50
+      ],
+      "peak": 0.469970703125,
+      "rms": 0.071680982313188,
+      "warmup_cycles": 1,
+      "sha256": "1cbef561ff9aeb32a140e00ea613140dfcd7fc291563466d911e3a23952c93f5"
+    },
+    "BGM_STAGE03": {
+      "midi": "stage03_shrine.mid",
+      "midi_sha256": "a32c6cc51390826fdc2be4102cdff153df7cff079f22f4b51e597d4cc36f04a8",
+      "seconds": 64,
+      "channels": 2,
+      "ticks_per_quarter": 480,
+      "tempo_changes": [
+        {
+          "tick": 0,
+          "microseconds_per_quarter": 363636
+        }
+      ],
+      "note_on_count": 1701,
+      "instruments": [
+        {
+          "program": 56,
+          "name": "Trumpet"
+        },
+        {
+          "program": 107,
+          "name": "Koto"
+        },
+        {
+          "program": 48,
+          "name": "Strings Fast"
+        },
+        {
+          "program": 34,
+          "name": "Picked Bass"
+        },
+        {
+          "program": 77,
+          "name": "Shakuhachi"
+        }
+      ],
+      "drum_notes": [
+        36,
+        38,
+        42,
+        45,
+        47,
+        50
+      ],
+      "peak": 0.499969482421875,
+      "rms": 0.07624117021147114,
+      "warmup_cycles": 1,
+      "sha256": "76628e78281bef6f9519e7cef4cb33142c7b020cbcacbc4bef08248f2056900d"
+    },
+    "BGM_BOSS": {
+      "midi": "boss.mid",
+      "midi_sha256": "096f16ba703b2311c7be313b854edeb0d262b34eb46278cc8d04e0578b53bf13",
+      "seconds": 64,
+      "channels": 2,
+      "ticks_per_quarter": 480,
+      "tempo_changes": [
+        {
+          "tick": 0,
+          "microseconds_per_quarter": 333333
+        }
+      ],
+      "note_on_count": 1878,
+      "instruments": [
+        {
+          "program": 56,
+          "name": "Trumpet"
+        },
+        {
+          "program": 0,
+          "name": "Grand Piano"
+        },
+        {
+          "program": 48,
+          "name": "Strings Fast"
+        },
+        {
+          "program": 34,
+          "name": "Picked Bass"
+        },
+        {
+          "program": 29,
+          "name": "Overdrive Guitar"
+        }
+      ],
+      "drum_notes": [
+        36,
+        38,
+        42,
+        45,
+        47,
+        50
+      ],
+      "peak": 0.529998779296875,
+      "rms": 0.08279434374105693,
+      "warmup_cycles": 1,
+      "sha256": "89a7bcd9f063a610ee31a2a7241f24388945ff86538a423d5c96d945c15957c4"
+    },
+    "BGM_ENDING": {
+      "midi": "ending.mid",
+      "midi_sha256": "af62e375797827014529c09538f9d980f689516233d62d137c91827f6393e991",
+      "seconds": 32,
+      "channels": 2,
+      "ticks_per_quarter": 480,
+      "tempo_changes": [
+        {
+          "tick": 0,
+          "microseconds_per_quarter": 500000
+        }
+      ],
+      "note_on_count": 295,
+      "instruments": [
+        {
+          "program": 0,
+          "name": "Grand Piano"
+        },
+        {
+          "program": 24,
+          "name": "Nylon String Guitar"
+        },
+        {
+          "program": 48,
+          "name": "Strings Fast"
+        },
+        {
+          "program": 32,
+          "name": "Acoustic Bass"
+        },
+        {
+          "program": 73,
+          "name": "Flute"
+        }
+      ],
+      "drum_notes": [],
+      "peak": 0.42999267578125,
+      "rms": 0.07498344613031754,
+      "warmup_cycles": 1,
+      "sha256": "2799e0c8f8bb568c166a69b22697b9d70835533ff547b9cd3b73d5357d7a8131"
+    },
+    "SFX_SHOT": {
+      "midi": "player_shot.mid",
+      "midi_sha256": "0a514c08485082cc09302d398a86537e8ce2451de4f98b18e764c8e3768e5959",
+      "seconds": 0.1,
+      "channels": 1,
+      "ticks_per_quarter": 480,
+      "tempo_changes": [
+        {
+          "tick": 0,
+          "microseconds_per_quarter": 500000
+        }
+      ],
+      "note_on_count": 1,
+      "instruments": [],
+      "drum_notes": [
+        42
+      ],
+      "peak": 0.089996337890625,
+      "rms": 0.017641800953023385,
+      "warmup_cycles": 0,
+      "sha256": "f246000d19b45ae15625b65206a4779949b3051bb83f8e8292a6cff133767739"
+    },
+    "SFX_ENEMY_HIT": {
+      "midi": "enemy_hit.mid",
+      "midi_sha256": "0c6261a685ba3ef6adf0e7f09758327e0aeb3ae542a2776f9bb4f5dfc9fff7c7",
+      "seconds": 0.12,
+      "channels": 1,
+      "ticks_per_quarter": 480,
+      "tempo_changes": [
+        {
+          "tick": 0,
+          "microseconds_per_quarter": 500000
+        }
+      ],
+      "note_on_count": 2,
+      "instruments": [],
+      "drum_notes": [
+        37,
+        42
+      ],
+      "peak": 0.259979248046875,
+      "rms": 0.03579749393239464,
+      "warmup_cycles": 0,
+      "sha256": "f75e07a7fb5ca3f4001e778664d5447a91b3c23170071271ae6e6d3b77f752b3"
+    },
+    "SFX_PLAYER_HIT": {
+      "midi": "player_hit.mid",
+      "midi_sha256": "c9d228884eae75bbf4d6326091735a5c409988d6b7b1ff6276de6cd6d35a6190",
+      "seconds": 0.32,
+      "channels": 1,
+      "ticks_per_quarter": 480,
+      "tempo_changes": [
+        {
+          "tick": 0,
+          "microseconds_per_quarter": 500000
+        }
+      ],
+      "note_on_count": 2,
+      "instruments": [],
+      "drum_notes": [
+        40,
+        43
+      ],
+      "peak": 0.42999267578125,
+      "rms": 0.060223655950717415,
+      "warmup_cycles": 0,
+      "sha256": "7bbcfd86f017218d06da004e9a16668f41a6c86ad1f15f373508daf815409faa"
+    },
+    "SFX_EXPLOSION": {
+      "midi": "explosion.mid",
+      "midi_sha256": "30b01b1b426189536ece2d5c20daeb656fe85abd9766d2e15ffd7eab34cfd729",
+      "seconds": 0.45,
+      "channels": 1,
+      "ticks_per_quarter": 480,
+      "tempo_changes": [
+        {
+          "tick": 0,
+          "microseconds_per_quarter": 500000
+        }
+      ],
+      "note_on_count": 4,
+      "instruments": [],
+      "drum_notes": [
+        35,
+        40,
+        41,
+        49
+      ],
+      "peak": 0.449981689453125,
+      "rms": 0.07353751169306841,
+      "warmup_cycles": 0,
+      "sha256": "43f4ecf8f2938da9dc0c067a59a02db50737ea1ddbc9bc50bf1816570444fd7e"
+    },
+    "SFX_BOMB": {
+      "midi": "bomb.mid",
+      "midi_sha256": "fb523ffa46e86ab8f4a62ceb83188bc2d1b4f7f0a563a20f918a419278575d67",
+      "seconds": 0.7,
+      "channels": 1,
+      "ticks_per_quarter": 480,
+      "tempo_changes": [
+        {
+          "tick": 0,
+          "microseconds_per_quarter": 500000
+        }
+      ],
+      "note_on_count": 4,
+      "instruments": [
+        {
+          "program": 116,
+          "name": "Taiko Drum"
+        }
+      ],
+      "drum_notes": [
+        35,
+        41,
+        52
+      ],
+      "peak": 0.5999755859375,
+      "rms": 0.08675976613496894,
+      "warmup_cycles": 0,
+      "sha256": "e1ede75633b0ac14c176ead5e0e284a43628afb2fb72211b2e20c9cf47794bfe"
+    },
+    "SFX_MENU_MOVE": {
+      "midi": "menu_move.mid",
+      "midi_sha256": "c0fa28dcfe332dadb805e818b7f28a2d1afe82de326041315f240b724400bcec",
+      "seconds": 0.08,
+      "channels": 1,
+      "ticks_per_quarter": 480,
+      "tempo_changes": [
+        {
+          "tick": 0,
+          "microseconds_per_quarter": 500000
+        }
+      ],
+      "note_on_count": 1,
+      "instruments": [
+        {
+          "program": 11,
+          "name": "Vibraphone"
+        }
+      ],
+      "drum_notes": [],
+      "peak": 0.1300048828125,
+      "rms": 0.052005741647642566,
+      "warmup_cycles": 0,
+      "sha256": "61374895e8ca4e06f941a4e07606bffee9ef6d072891c8018c47fc71ba5e9864"
+    },
+    "SFX_MENU_CONFIRM": {
+      "midi": "menu_confirm.mid",
+      "midi_sha256": "5f2959a7093138da9246a792c48ff3d29c43b80785a27f49c90754c68252aeb9",
+      "seconds": 0.18,
+      "channels": 1,
+      "ticks_per_quarter": 480,
+      "tempo_changes": [
+        {
+          "tick": 0,
+          "microseconds_per_quarter": 500000
+        }
+      ],
+      "note_on_count": 2,
+      "instruments": [
+        {
+          "program": 11,
+          "name": "Vibraphone"
+        }
+      ],
+      "drum_notes": [],
+      "peak": 0.22998046875,
+      "rms": 0.0778081777942733,
+      "warmup_cycles": 0,
+      "sha256": "02a907be3e5fb5729815dc883e3a22adb8548f7cded6144ba05009613f6a04f5"
+    },
+    "SFX_CLEAR": {
+      "midi": "stage_clear.mid",
+      "midi_sha256": "1cd5333de3ab2aa3a2d89b98aeced3c84cddaff8003b2235f2f70ca1cababd71",
+      "seconds": 2,
+      "channels": 1,
+      "ticks_per_quarter": 480,
+      "tempo_changes": [
+        {
+          "tick": 0,
+          "microseconds_per_quarter": 500000
+        }
+      ],
+      "note_on_count": 9,
+      "instruments": [
+        {
+          "program": 0,
+          "name": "Grand Piano"
+        },
+        {
+          "program": 48,
+          "name": "Strings Fast"
+        }
+      ],
+      "drum_notes": [],
+      "peak": 0.499969482421875,
+      "rms": 0.13348302331711828,
+      "warmup_cycles": 0,
+      "sha256": "411c0edd0693e4668fae8f36466e31341b6a86fa680c615bf22d47c08dde15ae"
+    },
+    "SFX_GAME_OVER": {
+      "midi": "game_over.mid",
+      "midi_sha256": "3aa0618b525c2fa9cfe3d57bff0d31577262bf492c8d43da779e51b977ad92b5",
+      "seconds": 2,
+      "channels": 1,
+      "ticks_per_quarter": 480,
+      "tempo_changes": [
+        {
+          "tick": 0,
+          "microseconds_per_quarter": 500000
+        }
+      ],
+      "note_on_count": 7,
+      "instruments": [
+        {
+          "program": 0,
+          "name": "Grand Piano"
+        },
+        {
+          "program": 48,
+          "name": "Strings Fast"
+        }
+      ],
+      "drum_notes": [],
+      "peak": 0.379974365234375,
+      "rms": 0.08714867879553494,
+      "warmup_cycles": 0,
+      "sha256": "d2f2d51c34e313a03da8e2b58686cf36f0048741ebc7ffc5c7a6a50df830b9e2"
+    }
+  },
+  "windows_verified": false
+}

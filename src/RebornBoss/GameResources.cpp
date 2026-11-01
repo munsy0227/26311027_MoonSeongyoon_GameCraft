@@ -144,11 +144,24 @@ void GameResources::Draw(ImageId image, float x, float y, float scale, DWORD col
 }
 
 void GameResources::DrawFrame(ImageId image, int column, int row, int width, int height,
-                             float x, float y) const
+                             float x, float y, float scale) const
 {
     const RECT source{column * width, row * height, (column + 1) * width, (row + 1) * height};
     const VEC2 position{x, y};
-    g2_Draw2D(m_images[static_cast<size_t>(image)], &source, &position);
+    const VEC2 scaling{scale, scale};
+    g2_Draw2D(m_images[static_cast<size_t>(image)], &source, &position, &scaling);
+}
+
+void GameResources::DrawRotated(ImageId image, float centerX, float centerY, int width, int height,
+                               float angleRadians, float scale) const
+{
+    const VEC2 position{centerX - width * scale * 0.5F, centerY - height * scale * 0.5F};
+    const VEC2 scaling{scale, scale};
+    // glc2d uses a back-buffer pivot and negates its input angle.
+    const float screenScale = g2_GetScnScale();
+    const VEC2 pivot{centerX * screenScale, centerY * screenScale};
+    g2_Draw2D(m_images[static_cast<size_t>(image)], nullptr, &position, &scaling,
+              &pivot, -angleRadians);
 }
 
 float GameResources::ForestScrollOffset(float combatSeconds)

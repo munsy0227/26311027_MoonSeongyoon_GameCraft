@@ -1,9 +1,12 @@
 #pragma once
+#include <cmath>
 
 enum class BulletTeam { Player, Enemy };
 
 struct GameBullet
 {
+    static constexpr float RenderScale = 1.25F;
+    static constexpr float CullMargin = 20.0F;
     float x{};
     float y{};
     float velocityY{-600.0F};
@@ -18,5 +21,13 @@ struct GameBullet
         x += velocityX * seconds;
         y += velocityY * seconds;
     }
-    bool Outside() const { return x < -12.0F || x > 492.0F || y < -12.0F || y > 612.0F; }
+    float HeadingRadians() const
+    {
+        return std::hypot(velocityX, velocityY) <= 0.001F ? 0.0F : std::atan2(velocityX, -velocityY);
+    }
+    bool Outside() const
+    {
+        return x < -CullMargin || x > 480.0F + CullMargin
+            || y < -CullMargin || y > 600.0F + CullMargin;
+    }
 };

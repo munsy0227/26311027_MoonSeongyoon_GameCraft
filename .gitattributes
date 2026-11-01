@@ -2,3 +2,8 @@
 src/RebornBoss/* whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 src/RebornBoss/resources/fonts/*.ttf binary
 src/RebornBoss/resources/fonts/licenses/cafe24/License-Classictype.pdf binary
+art_sources/audio/**/*.mid binary
+art_sources/audio/*.sf3 binary
+# Preserve upstream notices byte-for-byte, including their original spacing.
+art_sources/audio/MS-Basic-*.md -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
+src/RebornBoss/resources/licenses/audio/MS-Basic-LICENSE.md -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol

@@ -40,7 +40,7 @@ void GameMob::Update(float seconds, BulletManager& bullets, float playerX, float
     m_shotTimer -= seconds;
     while (m_shotTimer <= 0.000001F)
     {
-        const float sourceY = m_y + (m_type == MobType::Guardian ? 20.0F : 16.0F);
+        const float sourceY = m_y + RenderSize() * 0.5F;
         const float dx = playerX - m_x;
         const float dy = playerY - sourceY;
         const bool stationary = m_type != MobType::Guardian
@@ -64,6 +64,7 @@ void GameMob::Render(const GameResources& resources) const
     const int column = static_cast<int>(m_animationSeconds / 0.12F) % 4;
     const ImageId image = m_type == MobType::Patrol ? ImageId::PatrolFairy
                         : m_type == MobType::Familiar ? ImageId::MistFamiliar : ImageId::BarrierGuardian;
-    const int cell = m_type == MobType::Guardian ? 40 : 32;
-    resources.DrawFrame(image, column, 0, cell, cell, m_x - cell * 0.5F, m_y - cell * 0.5F);
+    const int cell = CellSize();
+    const float halfSize = RenderSize() * 0.5F;
+    resources.DrawFrame(image, column, 0, cell, cell, m_x - halfSize, m_y - halfSize, RenderScale);
 }

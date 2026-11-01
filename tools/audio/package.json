@@ -1,0 +1,6 @@
+{
+  "name": "rebornboss-midi-renderer",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {"js-synthesizer": "1.13.0"}
+}

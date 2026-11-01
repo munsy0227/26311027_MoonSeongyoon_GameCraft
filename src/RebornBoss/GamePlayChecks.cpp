@@ -6,6 +6,7 @@
 #include <cassert>
 #include <cmath>
 #include <numbers>
+#include <utility>
 
 void CheckGameplay()
 {
@@ -48,6 +49,26 @@ void CheckGameplay()
     assert(almostEqual(GameResources::ForestScrollOffset(20.99F), 503.76F));
     assert(almostEqual(GameResources::ForestScrollOffset(21.01F), 0.24F));
 
+    static_assert(GameBossMob::RenderSize > GamePlayer::RenderHeight);
+    static_assert(GameBossMob::RenderSize > GamePlayer::RenderWidth);
+    assert(GamePlayer::RenderWidth > GameMob(240, MobType::Guardian).RenderSize());
+    assert(GamePlayer::RenderHeight > GameMob(240, MobType::Patrol).RenderSize());
+    assert(GamePlayer::ShotOffset > GamePlayer::RenderHeight * 0.5F);
+    assert(GameBullet::CullMargin >= std::hypot(16.0F, 24.0F) * GameBullet::RenderScale * 0.5F);
+    for (const auto [vx, vy] : {std::pair{0.0F, -100.0F}, std::pair{100.0F, 0.0F},
+                                std::pair{0.0F, 100.0F}, std::pair{-100.0F, 0.0F},
+                                std::pair{100.0F, -100.0F}, std::pair{-100.0F, -100.0F},
+                                std::pair{100.0F, 100.0F}, std::pair{-100.0F, 100.0F}})
+    {
+        const GameBullet direction{240, 300, vy, vx};
+        const float heading = direction.HeadingRadians();
+        const float speed = std::hypot(vx, vy);
+        assert(std::isfinite(heading));
+        assert(almostEqual(std::sin(heading), vx / speed));
+        assert(almostEqual(-std::cos(heading), vy / speed));
+    }
+    assert(almostEqual((GameBullet{240, 300, 0, 0}).HeadingRadians(), 0));
+
     GamePlayer normal;
     normal.Update(0.1F, 1, 0, false, false);
     assert(almostEqual(normal.X(), 254.37037F));
@@ -75,11 +96,11 @@ void CheckGameplay()
     reverse.Update(0.1F, -1, 0, false, false);
     assert(reverse.X() < reverseX);
     slow.Update(1000, -1, -1, false, false);
-    assert(almostEqual(slow.X(), 16) && almostEqual(slow.Y(), 24));
+    assert(almostEqual(slow.X(), 32) && almostEqual(slow.Y(), 48));
     slow.Update(1000, 1, 1, false, false);
-    assert(almostEqual(slow.X(), 464) && almostEqual(slow.Y(), 576));
+    assert(almostEqual(slow.X(), 448) && almostEqual(slow.Y(), 552));
     slow.Update(0.01F, -1, 0, false, false);
-    assert(slow.X() < 464.0F);
+    assert(slow.X() < 448.0F);
     GamePlayer stocked;
     assert(stocked.Health() == 3 && stocked.Bombs() == 3 && stocked.Power() == 0);
     assert(stocked.Heal() && stocked.Heal() && !stocked.Heal());
@@ -109,6 +130,7 @@ void CheckGameplay()
         const int level = std::clamp(power, 0, GamePlayer::MaxPower);
         const auto count = static_cast<std::size_t>(2 * level + 1);
         assert(spread.Count() == count);
+        assert(almostEqual(spread.Bullets()[level].y, 520.0F - GamePlayer::ShotOffset));
         for (const auto& bullet : spread.Bullets())
         {
             assert(hasSpeed(bullet, 600) && bullet.team == BulletTeam::Player && bullet.damage == 1);
@@ -139,10 +161,17 @@ void CheckGameplay()
     assert(coarse.Count() == 8);
     coarse.Clear();
     assert(coarse.Count() == 0);
-    GameBullet sideways{490, 100, 0, 100, BulletTeam::Enemy};
+    GameBullet sideways{490, 100, 0, 120, BulletTeam::Enemy};
     sideways.Update(0.1F);
     assert(sideways.Outside());
-    assert((GameBullet{240, 613, 0}).Outside());
+    assert((GameBullet{240, 621, 0}).Outside());
+    assert(!(GameBullet{240, 620, 0}).Outside());
+    assert(!(GameBullet{500, 100, 0}).Outside());
+    assert((GameBullet{501, 100, 0}).Outside());
+    assert(!(GameBullet{-20, 100, 0}).Outside());
+    assert((GameBullet{-21, 100, 0}).Outside());
+    assert(!(GameBullet{240, -20, 0}).Outside());
+    assert((GameBullet{240, -21, 0}).Outside());
 
     BulletManager aimed;
     aimed.AddAimedFan(240, 100, 96, 500, 3, 8, 150);
@@ -504,15 +533,15 @@ void CheckGameplay()
     GameBossMob moving;
     BulletManager movingShots;
     moving.Update(2.625F, movingShots, 240, 520);
-    assert(almostEqual(moving.X(), 340) && !almostEqual(moving.Y(), 120));
+    assert(almostEqual(moving.X(), 340) && !almostEqual(moving.Y(), 144));
     for (int i = 0; i < 28; ++i)
     {
         moving.Update(0.25F, movingShots, 240, 520);
         assert(moving.X() >= 140 && moving.X() <= 340);
-        assert(moving.Y() >= 108 && moving.Y() <= 132);
+        assert(moving.Y() >= 132 && moving.Y() <= 156);
     }
     moving = GameBossMob{};
-    assert(almostEqual(moving.X(), 240) && almostEqual(moving.Y(), 120));
+    assert(almostEqual(moving.X(), 240) && almostEqual(moving.Y(), 144));
 
     GameBossMob boss;
     BulletManager bossBullets;
@@ -611,7 +640,7 @@ void CheckGameplay()
     assert(scene.m_pickups.empty() && scene.m_scorePopups.empty());
     assert(scene.m_dialogueIndex == 0 && !scene.m_dialogueReady && scene.m_fastDialogueSeconds == 0);
     assert(scene.m_boss.Health() == 500 && !scene.m_boss.PhaseTwo());
-    assert(almostEqual(scene.m_boss.X(), 240) && almostEqual(scene.m_boss.Y(), 120));
+    assert(almostEqual(scene.m_boss.X(), 240) && almostEqual(scene.m_boss.Y(), 144));
     assert(!scene.m_paused && !scene.m_cleared);
     scene.Tick(10, 1, 0, true, true, true);
     assert(scene.m_elapsedSeconds == 0 && scene.m_bullets.Count() == 0);
