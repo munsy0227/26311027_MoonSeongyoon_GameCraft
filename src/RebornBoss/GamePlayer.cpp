@@ -86,9 +86,9 @@ bool GamePlayer::AddBomb()
 
 bool GamePlayer::AddPower()
 {
-    if (Dead() || m_power >= MaxPower)
+    if (Dead() || m_powerPoints >= MaxPowerPoints)
         return false;
-    ++m_power;
+    ++m_powerPoints;
     return true;
 }
 

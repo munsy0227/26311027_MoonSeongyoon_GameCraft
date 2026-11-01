@@ -77,8 +77,12 @@ void CheckGameplay()
     assert(stocked.Heal() && stocked.Heal() && !stocked.Heal());
     assert(stocked.AddBomb() && stocked.AddBomb() && !stocked.AddBomb());
     assert(stocked.Health() == 5 && stocked.Bombs() == 5);
-    for (int i = 0; i < GamePlayer::MaxPower; ++i) assert(stocked.AddPower());
-    assert(stocked.Power() == 4 && !stocked.AddPower());
+    for (int i = 1; i <= GamePlayer::MaxPowerPoints; ++i)
+    {
+        assert(stocked.AddPower());
+        assert(stocked.PowerPoints() == i && stocked.Power() == i / GamePlayer::PowerPerLevel);
+    }
+    assert(stocked.Power() == 4 && stocked.PowerPoints() == 40 && !stocked.AddPower());
     assert(stocked.UseBomb() && stocked.Bombs() == 4);
     GamePlayer defeated;
     assert(defeated.Damage(3) == 3 && defeated.Dead());
@@ -242,6 +246,47 @@ void CheckGameplay()
     }
 
     ScenePlay scene;
+    scene.Reset();
+    assert(scene.DialogueCount() == 8 && scene.m_dialogueIndex == 0);
+    // A held/repeating Enter carried into dialogue cannot consume the first line.
+    for (int i = 0; i < 60; ++i) assert(!scene.UpdateDialogue(1.0F / 60, true, true, false));
+    assert(scene.m_dialogueIndex == 0 && scene.m_elapsedSeconds == 0);
+    assert(!scene.UpdateDialogue(0.01F, false, false, false));
+    assert(scene.UpdateDialogue(0.01F, true, true, false));
+    assert(scene.m_dialogueIndex == 1);
+    for (int i = 0; i < 60; ++i) assert(!scene.UpdateDialogue(1.0F / 60, true, true, false));
+    assert(scene.m_dialogueIndex == 1);
+    // Shooting has no dialogue advance input and combat also remains frozen.
+    for (int i = 0; i < 60; ++i)
+    {
+        scene.Tick(1.0F / 60, 1, 0, false, true);
+        assert(!scene.UpdateDialogue(1.0F / 60, false, false, false));
+    }
+    assert(scene.m_dialogueIndex == 1 && scene.m_bullets.Count() == 0 && scene.m_elapsedSeconds == 0);
+    scene.m_paused = true;
+    assert(!scene.UpdateDialogue(30, false, false, true));
+    assert(scene.m_dialogueIndex == 1 && scene.m_fastDialogueSeconds == 0);
+    scene.m_paused = false;
+    assert(!scene.UpdateDialogue(0.119F, false, false, true));
+    assert(scene.UpdateDialogue(0.002F, false, false, true) && scene.m_dialogueIndex == 2);
+    while (scene.DialogueCount() > 0)
+    {
+        scene.UpdateDialogue(0.01F, false, false, false);
+        assert(scene.UpdateDialogue(0.01F, true, true, false));
+    }
+    assert(scene.m_stagePhase == ScenePlay::StagePhase::Waves && scene.m_dialogueIndex == 0);
+    assert(!scene.UpdateDialogue(30, false, true, true));
+    scene.Reset();
+    scene.m_stagePhase = ScenePlay::StagePhase::BossIntro;
+    assert(scene.DialogueCount() == 14 && !scene.UpdateDialogue(0.01F, true, true, false));
+    for (int i = 0; i < 14; ++i)
+    {
+        assert(scene.m_dialogueIndex == i);
+        scene.UpdateDialogue(0.01F, false, false, false);
+        assert(scene.UpdateDialogue(0.01F, true, true, false));
+    }
+    assert(scene.m_stagePhase == ScenePlay::StagePhase::Boss && scene.m_elapsedSeconds == 0);
+    assert(scene.m_bullets.Count() == 0 && scene.m_boss.Health() == 500);
     waves(scene);
     scene.Tick(0.8F, 0, 0, false, false);
     assert(scene.m_mobs.size() == 1);
@@ -308,10 +353,10 @@ void CheckGameplay()
     assert(scene.m_mobs.empty() && scene.m_score == 0 && scene.m_pickups.size() == dropCount);
     for (auto& item : scene.m_pickups) { item.x = scene.m_player.X(); item.y = scene.m_player.Y(); }
     scene.UpdatePickups(0);
-    assert(scene.m_score == 100 && scene.m_player.Power() == 1 && scene.m_pickups.empty());
+    assert(scene.m_score == 100 && scene.m_player.Power() == 0 && scene.m_player.PowerPoints() == 1 && scene.m_pickups.empty());
     assert(scene.m_scorePopups.size() == 1);
     scene.UpdatePickups(0);
-    assert(scene.m_score == 100 && scene.m_player.Power() == 1);
+    assert(scene.m_score == 100 && scene.m_player.Power() == 0 && scene.m_player.PowerPoints() == 1);
 
     waves(scene);
     GameMob fastTarget(240);
@@ -347,26 +392,54 @@ void CheckGameplay()
     scene.UpdatePickups(0);
     assert(scene.m_score == 100 && scene.m_pickups.empty());
     waves(scene);
-    scene.m_pickups.push_back({scene.m_player.X() + 80, scene.m_player.Y(), ScenePlay::PickupType::Score});
+    scene.m_pickups.push_back({scene.m_player.X() + 36, scene.m_player.Y(), ScenePlay::PickupType::Score});
     scene.UpdatePickups(0.05F);
-    assert(scene.m_pickups.front().attracted && almostEqual(scene.m_pickups.front().x, scene.m_player.X() + 66));
-    scene.UpdatePickups(0.2F);
+    assert(scene.m_pickups.front().attracted && almostEqual(scene.m_pickups.front().x, scene.m_player.X() + 25));
+    scene.UpdatePickups(0.02F);
     assert(scene.m_score == 100 && scene.m_pickups.empty());
-    waves(scene);
-    scene.m_pickups.push_back({scene.m_player.X() + 80.01F, scene.m_player.Y(), ScenePlay::PickupType::Score});
-    scene.UpdatePickups(0.1F);
-    assert(!scene.m_pickups.front().attracted && almostEqual(scene.m_pickups.front().y, 516));
-    scene.UpdatePickups(11.9F);
-    assert(scene.m_pickups.empty() && scene.m_score == 0);
+    for (const auto type : {ScenePlay::PickupType::Score, ScenePlay::PickupType::Power})
+    {
+        waves(scene);
+        scene.m_pickups.push_back({scene.m_player.X() + 36.01F, scene.m_player.Y(), type});
+        scene.UpdatePickups(0.1F);
+        assert(!scene.m_pickups.front().attracted && almostEqual(scene.m_pickups.front().y, 516));
+        scene.UpdatePickups(0.4F);
+        assert(!scene.m_pickups.front().attracted && almostEqual(scene.m_pickups.front().y, 532.5F));
+        scene.m_pickups.front().attracted = true;
+        scene.m_pickups.front().x = 400;
+        scene.UpdatePickups(0);
+        assert(!scene.m_pickups.front().attracted);
+        scene.UpdatePickups(12);
+        assert(scene.m_pickups.empty() && scene.m_score == 0 && scene.m_player.PowerPoints() == 0);
+    }
+    for (const auto type : {ScenePlay::PickupType::Health, ScenePlay::PickupType::Bomb})
+    {
+        waves(scene);
+        scene.m_pickups.push_back({scene.m_player.X() + 80, scene.m_player.Y(), type});
+        scene.UpdatePickups(0.05F);
+        assert(scene.m_pickups.front().attracted && almostEqual(scene.m_pickups.front().x, scene.m_player.X() + 66));
+        scene.UpdatePickups(0.2F);
+        assert(scene.m_pickups.empty());
+        assert(type == ScenePlay::PickupType::Health ? scene.m_player.Health() == 4 : scene.m_player.Bombs() == 4);
+    }
+    ScenePlay falling30;
+    ScenePlay falling60;
+    waves(falling30); waves(falling60);
+    falling30.m_pickups.push_back({100, 100, ScenePlay::PickupType::Power});
+    falling60.m_pickups = falling30.m_pickups;
+    for (int i = 0; i < 30; ++i) falling30.UpdatePickups(1.0F / 30);
+    for (int i = 0; i < 60; ++i) falling60.UpdatePickups(1.0F / 60);
+    assert(almostEqual(falling30.m_pickups.front().y, 157.5F));
+    assert(almostEqual(falling30.m_pickups.front().y, falling60.m_pickups.front().y));
     waves(scene);
     for (int i = 0; i < 3; ++i)
     {
         scene.m_pickups.push_back({240, 520, ScenePlay::PickupType::Health});
         scene.m_pickups.push_back({240, 520, ScenePlay::PickupType::Bomb});
     }
-    for (int i = 0; i < 6; ++i) scene.m_pickups.push_back({240, 520, ScenePlay::PickupType::Power});
+    for (int i = 0; i < GamePlayer::MaxPowerPoints + 2; ++i) scene.m_pickups.push_back({240, 520, ScenePlay::PickupType::Power});
     scene.UpdatePickups(0);
-    assert(scene.m_player.Health() == 5 && scene.m_player.Bombs() == 5 && scene.m_player.Power() == 4);
+    assert(scene.m_player.Health() == 5 && scene.m_player.Bombs() == 5 && scene.m_player.Power() == 4 && scene.m_player.PowerPoints() == 40);
     assert(scene.m_pickups.empty() && scene.m_score == 0);
     waves(scene);
     scene.m_player.Damage(2);
@@ -398,6 +471,7 @@ void CheckGameplay()
     scene.m_bullets.Add(enemyBullet(400, 200));
     scene.Tick(0.02F, 0, 0, false, false);
     assert(scene.m_stagePhase == ScenePlay::StagePhase::BossIntro);
+    assert(scene.m_dialogueIndex == 0 && !scene.m_dialogueReady && scene.m_fastDialogueSeconds == 0);
     assert(scene.m_mobs.empty() && scene.m_bullets.Count() == 0);
     assert(scene.m_pickups.size() == 1);
     const float dialogueItemAge = scene.m_pickups.front().age;
@@ -516,11 +590,12 @@ void CheckGameplay()
     scene.m_paused = true;
     scene.Reset();
     assert(scene.m_stagePhase == ScenePlay::StagePhase::Intro);
-    assert(scene.m_player.Health() == 3 && scene.m_player.Bombs() == 3 && scene.m_player.Power() == 0);
+    assert(scene.m_player.Health() == 3 && scene.m_player.Bombs() == 3 && scene.m_player.Power() == 0 && scene.m_player.PowerPoints() == 0);
     assert(almostEqual(scene.m_player.InvulnerabilitySeconds(), 0));
     assert(scene.m_score == 0 && scene.m_elapsedSeconds == 0 && scene.m_waveSeconds == 0);
     assert(scene.m_bullets.Count() == 0 && scene.m_mobs.empty() && scene.m_effects.empty());
     assert(scene.m_pickups.empty() && scene.m_scorePopups.empty());
+    assert(scene.m_dialogueIndex == 0 && !scene.m_dialogueReady && scene.m_fastDialogueSeconds == 0);
     assert(scene.m_boss.Health() == 500 && !scene.m_boss.PhaseTwo());
     assert(almostEqual(scene.m_boss.X(), 240) && almostEqual(scene.m_boss.Y(), 120));
     assert(!scene.m_paused && !scene.m_cleared);

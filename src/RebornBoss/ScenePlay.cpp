@@ -8,6 +8,35 @@
 
 namespace
 {
+    struct DialogueLine { bool lillian; const char* line1; const char* line2; };
+    constexpr DialogueLine IntroDialogue[] = {
+        {false, "분명 내 방에서 잠들었는데...", "눈을 뜨니 숲이라니. 전생인가?"},
+        {false, "보라색 망토에 붉은 마력 문양.", "누가 봐도 최종 보스의 차림이군!"},
+        {false, "좋아. 이 숲을 내 영지로 삼겠다.", "큰 나무 밑에 성을 짓고 낮잠을..."},
+        {true, "거기, 망토 입은 분!", "발밑의 꽃부터 피해서 걸어요!"},
+        {false, "오, 벌써 내 등장을 알아봤나?", "숲의 지배자를 맞이할 준비는..."},
+        {true, "침입자를 알아본 거예요.", "그쪽 길은 요정들이 지키고 있어요."},
+        {false, "첫 영지에는 시련도 따르는 법!", "길만 비켜 주면 서로 편할 텐데."},
+        {true, "편한 건 그쪽뿐이잖아요.", "꽃 한 송이도 밟지 말고 와 봐요!"},
+    };
+
+    constexpr DialogueLine BossDialogue[] = {
+        {false, "드디어 이 숲의 책임자를 찾았군!", "오늘부터 이곳은 내 영지다!"},
+        {true, "남의 집에 들어오자마자 무슨 소리예요?", "저는 이 숲을 지키는 릴리안이에요."},
+        {false, "레온 애쉬포드. 곧 이세계의 최종 보스.", "통치에 앞서 나무 그늘부터..."},
+        {true, "그 통치라는 게 설마 낮잠인가요?", "요정들이 일하는 동안 혼자만요?"},
+        {false, "최종 보스에게도 휴식은 필요하다.", "싸우지 않고 영지를 얻을 방법은..."},
+        {true, "있죠. 정복하겠다는 말부터 거둬요.", "그러면 손님용 그늘은 빌려줄게요."},
+        {false, "빌리는 건 최종 보스답지 않다!", "초록 구슬쯤은 주워 줄 수도 있다만."},
+        {true, "흘린 마력을 치워 주면 좋긴 하죠.", "그걸로 주인이 되는 건 아니에요."},
+        {false, "P 문양의 마력까지 모으면...", "내 마법도 훨씬 넓게 퍼질 테지!"},
+        {true, "힘을 모을 생각만 가득하네요.", "꽃을 피할 생각도 좀 해 줘요."},
+        {false, "꽃만 피하면 길을 열어 주겠나?", "나도 품위 없는 정복은 사양이지."},
+        {true, "우리 숲을 빼앗으려는 동안은 안 돼요.", "요정들 대신 제가 상대할게요."},
+        {false, "좋다! 최종 보스의 첫 무대를 열겠다!", "레온 애쉬포드, 영지 확보를 개시한다!"},
+        {true, "첫 무대부터 남의 집이라니...", "꽃잎 사이로 잘 피해 보세요!"},
+    };
+
     bool Touching(float x1, float y1, float r1, float x2, float y2, float r2)
     {
         const float dx = x1 - x2;
@@ -33,6 +62,9 @@ void ScenePlay::Reset()
     m_spawnTimer = 0.75F;
     m_spawnCount = m_score = m_selected = 0;
     m_events = 0;
+    m_dialogueIndex = 0;
+    m_fastDialogueSeconds = 0.0F;
+    m_dialogueReady = false;
     m_paused = m_cleared = false;
 }
 
@@ -57,6 +89,35 @@ void ScenePlay::Finish(bool cleared)
 {
     m_cleared = cleared;
     m_stagePhase = StagePhase::Finished;
+}
+
+int ScenePlay::DialogueCount() const
+{
+    if (m_stagePhase == StagePhase::Intro)
+        return static_cast<int>(std::size(IntroDialogue));
+    if (m_stagePhase == StagePhase::BossIntro)
+        return static_cast<int>(std::size(BossDialogue));
+    return 0;
+}
+
+bool ScenePlay::UpdateDialogue(float seconds, bool advanceHeld, bool advancePressed, bool fastHeld)
+{
+    if (m_paused || DialogueCount() == 0)
+        return false;
+    if (!advanceHeld)
+        m_dialogueReady = true;
+    m_fastDialogueSeconds = fastHeld ? m_fastDialogueSeconds + seconds : 0.0F;
+    // Enter must be released between lines, including after entering or resuming dialogue.
+    if (!(m_dialogueReady && advancePressed) && m_fastDialogueSeconds < 0.12F)
+        return false;
+    m_dialogueReady = false;
+    m_fastDialogueSeconds = 0.0F;
+    if (++m_dialogueIndex >= DialogueCount())
+    {
+        m_stagePhase = m_stagePhase == StagePhase::Intro ? StagePhase::Waves : StagePhase::Boss;
+        m_dialogueIndex = 0;
+    }
+    return true;
 }
 
 void ScenePlay::Collide()
@@ -159,18 +220,21 @@ void ScenePlay::UpdatePickups(float seconds)
         const float dx = m_player.X() - item.x;
         const float dy = m_player.Y() - item.y;
         const float distance = std::hypot(dx, dy);
-        if (distance <= 80.0F)
+        const bool challenging = item.type == PickupType::Score || item.type == PickupType::Power;
+        if (distance <= (challenging ? 36.0F : 80.0F))
             item.attracted = true;
+        else if (challenging)
+            item.attracted = false;
         if (item.attracted && distance > 0.001F)
         {
-            const float travel = std::min(distance, 280.0F * seconds);
+            const float travel = std::min(distance, (challenging ? 220.0F : 280.0F) * seconds);
             item.x += dx * travel / distance;
             item.y += dy * travel / distance;
         }
         else if (!item.attracted)
         {
             const float rising = std::min(seconds, std::max(0.0F, 0.25F - previousAge));
-            item.y += -40.0F * rising + 28.0F * (seconds - rising);
+            item.y += -40.0F * rising + (challenging ? 90.0F : 28.0F) * (seconds - rising);
         }
         if (item.age < 12.0F && Touching(item.x, item.y, 18.0F,
                                         m_player.X(), m_player.Y(), GamePlayer::Radius))
@@ -239,6 +303,9 @@ void ScenePlay::Step(float seconds, float directionX, float directionY, bool slo
         m_mobs.clear();
         m_bullets.ClearEnemy();
         m_stagePhase = StagePhase::BossIntro;
+        m_dialogueIndex = 0;
+        m_dialogueReady = false;
+        m_fastDialogueSeconds = 0.0F;
     }
 }
 
@@ -272,6 +339,8 @@ int ScenePlay::Update()
     {
         m_paused = !m_paused;
         m_selected = 0;
+        m_dialogueReady = false;
+        m_fastDialogueSeconds = 0.0F;
         return 0;
     }
     if (m_paused)
@@ -304,18 +373,14 @@ int ScenePlay::Update()
         }
         return 0;
     }
-    if (m_stagePhase == StagePhase::Intro || m_stagePhase == StagePhase::BossIntro)
+    if (DialogueCount() > 0)
     {
-        if (input->ConfirmPressed() || input->SkipDialogueHeld())
+        if (UpdateDialogue(g_pApp->DeltaSeconds(), input->Held(VK_RETURN),
+                           input->Pressed(VK_RETURN), input->SkipDialogueHeld()))
         {
-            g_pApp->Resources().PlaySound(SoundId::MenuConfirm);
-            if (m_stagePhase == StagePhase::Intro)
-                m_stagePhase = StagePhase::Waves;
-            else
-            {
-                m_stagePhase = StagePhase::Boss;
+            g_pApp->Resources().PlaySound(SoundId::MenuMove);
+            if (m_stagePhase == StagePhase::Boss)
                 g_pApp->Resources().PlayBgm(SoundId::Boss);
-            }
         }
         return 0;
     }
@@ -423,9 +488,21 @@ int ScenePlay::Render()
     Text(736, 398, "POWER", UIColor::Muted, FontStyle::Caption);
     std::snprintf(number, sizeof(number), "%d / %d", m_player.Power(), GamePlayer::MaxPower);
     Text(736, 428, number, UIColor::Text, FontStyle::Body);
+    if (m_player.Power() == GamePlayer::MaxPower)
+        Text(812, 430, "MAX", UIColor::Accent, FontStyle::Caption);
+    else
+    {
+        std::snprintf(number, sizeof(number), "P %d/%d",
+                      m_player.PowerPoints() % GamePlayer::PowerPerLevel, GamePlayer::PowerPerLevel);
+        Text(812, 430, number, UIColor::Muted, FontStyle::Caption);
+    }
     for (int i = 0; i < GamePlayer::MaxPower; ++i)
-        resources.Rect(736.0F + i * 44.0F, 461, 36, 4,
-                       i < m_player.Power() ? UIColor::Accent : UIColor::Border);
+    {
+        const float fill = std::clamp((m_player.PowerPoints() - i * GamePlayer::PowerPerLevel)
+                                      / static_cast<float>(GamePlayer::PowerPerLevel), 0.0F, 1.0F);
+        resources.Rect(736.0F + i * 44.0F, 461, 36, 4, UIColor::Border);
+        resources.Rect(736.0F + i * 44.0F, 461, 36 * fill, 4, UIColor::Accent);
+    }
     const bool boss = m_stagePhase == StagePhase::Boss || m_stagePhase == StagePhase::BossIntro;
     Text(520, 488, boss ? "BOSS BATTLE" : "FOREST", UIColor::Muted, FontStyle::Caption);
     if (!boss)
@@ -442,18 +519,21 @@ int ScenePlay::Render()
         resources.Rect(24, 46, 432, 4, UIColor::Border);
         resources.Rect(24, 46, 432.0F * m_boss.Health() / GameBossMob::MaxHealth, 4, UIColor::Accent);
     }
-    if (m_stagePhase == StagePhase::Intro || m_stagePhase == StagePhase::BossIntro)
+    if (DialogueCount() > 0)
     {
-        const bool bossIntro = m_stagePhase == StagePhase::BossIntro;
+        const auto& line = m_stagePhase == StagePhase::BossIntro
+            ? BossDialogue[m_dialogueIndex] : IntroDialogue[m_dialogueIndex];
         resources.Rect(0, 0, 960, 600, 0x40000000);
         resources.Rect(0, 402, 960, 198, 0xF0080D17);
-        resources.Draw(bossIntro ? ImageId::LillianPortrait : ImageId::LeonPortrait, 32, 346, 0.5F);
-        Text(224, 419, bossIntro ? "릴리안 블룸" : "레온 애쉬포드", UIColor::Accent, FontStyle::Heading);
+        resources.Draw(line.lillian ? ImageId::LillianPortrait : ImageId::LeonPortrait, 32, 346, 0.5F);
+        Text(224, 419, line.lillian ? "릴리안 블룸" : "레온 애쉬포드", UIColor::Accent, FontStyle::Heading);
         resources.Rect(224, 458, 672, 1, UIColor::Border);
-        Text(224, 480, bossIntro ? "남의 집에 들어오자마자 무슨 소리예요?"
-                                   : "좋아, 오늘부터 이 세계의 최종 보스는 나다!",
-             UIColor::Text, FontStyle::Body);
-        Text(224, 550, newClassic ? "Z / J / Enter 계속 · Ctrl / ; 건너뛰기" : "Z로 계속", UIColor::Muted, FontStyle::Caption);
+        Text(224, 478, line.line1, UIColor::Text, FontStyle::Body);
+        Text(224, 510, line.line2, UIColor::Text, FontStyle::Body);
+        Text(224, 550, newClassic ? "Enter 다음 대사 · Ctrl / ; 빠르게 넘기기" : "Enter 다음 대사",
+             UIColor::Muted, FontStyle::Caption);
+        std::snprintf(number, sizeof(number), "%02d / %02d", m_dialogueIndex + 1, DialogueCount());
+        Text(824, 550, number, UIColor::Muted, FontStyle::Caption);
     }
     if (m_paused)
     {

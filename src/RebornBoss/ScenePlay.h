@@ -31,6 +31,8 @@ private:
     void DropLoot(float x, float y, int roll);
     void UpdatePickups(float seconds);
     void Finish(bool cleared);
+    int DialogueCount() const;
+    bool UpdateDialogue(float seconds, bool advanceHeld, bool advancePressed, bool fastHeld);
     GamePlayer m_player;
     BulletManager m_bullets;
     std::vector<GameMob> m_mobs;
@@ -45,10 +47,13 @@ private:
     float m_spawnTimer{0.75F};
     float m_hitEffectSeconds{};
     float m_bombEffectSeconds{};
+    float m_fastDialogueSeconds{};
     int m_spawnCount{};
     int m_score{};
     int m_selected{};
+    int m_dialogueIndex{};
     unsigned m_events{};
     bool m_paused{};
     bool m_cleared{};
+    bool m_dialogueReady{};
 };

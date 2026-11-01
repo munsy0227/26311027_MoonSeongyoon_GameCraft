@@ -81,7 +81,7 @@ int SceneBegin::Render()
         constexpr const char* classicKeys[] = {"방향키 / Num", "Z", "X", "Shift", "Esc"};
         constexpr const char* remakeKeys[] = {"방향키 / WASD", "Z / J", "X / K", "LShift·Space·L", "Esc"};
         constexpr const char* descriptions[] = {
-            "이동 / 메뉴 선택", "누르는 동안 사격 / 결정 / 대사", "폭탄 사용 / 메뉴 취소",
+            "이동 / 메뉴 선택", "누르는 동안 사격 / 메뉴 결정", "폭탄 사용 / 메뉴 취소",
             "저속 이동 / 피격 중심점 표시", "일시정지 / 이전 화면"
         };
         for (int i = 0; i < 5; ++i)
@@ -90,11 +90,11 @@ int SceneBegin::Render()
             Text(280, 212 + i * 48, descriptions[i]);
             resources.Rect(96, 248.0F + i * 48, 768, 1, 0x5039425A);
         }
-        Text(64, 454, remake ? "Enter: 결정 · 왼쪽 Ctrl / ;: 대사 빨리 넘기기" : "숫자패드로도 이동할 수 있습니다.",
+        Text(64, 454, remake ? "Enter: 대사 진행 · 왼쪽 Ctrl / ;: 빨리 넘기기" : "Enter: 다음 대사",
              UIColor::Muted, FontStyle::Caption);
         Text(64, 484, remake ? "일시정지 중 R 재도전 · Q 타이틀" : "생명 3개 · 폭탄 3개로 시작합니다.",
              UIColor::Muted, FontStyle::Caption);
-        Text(64, 514, "생명·폭탄 최대 5개 · 초록 구슬은 점수 · P는 파워", UIColor::Muted, FontStyle::Caption);
+        Text(64, 514, "생명·폭탄 최대 5개 · 초록은 점수 · P 10개로 파워 1단계", UIColor::Muted, FontStyle::Caption);
         Text(64, 556, remake ? "Z / J / Enter 결정 · X / K / Esc 돌아가기" : "Z로 결정 · X / Esc로 돌아가기",
              UIColor::Muted, FontStyle::Caption);
     }
