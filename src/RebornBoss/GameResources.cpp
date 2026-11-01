@@ -26,7 +26,10 @@ namespace
         "resources/images/poses/leon/leon_idle.png",
         "resources/images/poses/lillian/lillian_idle.png",
         "resources/images/poses/vivian/vivian_idle.png",
-        "resources/images/poses/eleanor/eleanor_idle.png"
+        "resources/images/poses/eleanor/eleanor_idle.png",
+        "resources/images/backgrounds/title_atmosphere.png",
+        "resources/images/enemies/mist_familiar_sheet.png",
+        "resources/images/enemies/barrier_guardian_sheet.png"
     };
     constexpr const char* soundPaths[] = {
         "resources/audio/bgm/menu.wav",

@@ -257,6 +257,16 @@
       "source": "art_sources/week2/generated/surface.png",
       "reference_images": [],
       "transparent_background": true
+    },
+    {
+      "id": "BG_TITLE_ATMOSPHERE",
+      "date": "2026-11-01",
+      "tool": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/title_atmosphere.png",
+      "original_path": "/home/munsy0227/.codex/generated_images/01a1921e-caaa-73a2-944e-e380cfc2f8d3/exec-ea2645aa-9bc4-4266-b175-d400e8171e02.png",
+      "reference_images": [],
+      "transparent_background": false,
+      "prompt": "Use case: stylized-concept. Asset type: finished background artwork for the main title of an original 2D fantasy bullet-hell game, target composition 960 by 600 (wide 16:10). Generate one clean background image, not a mockup. Primary request: replace an overly busy shrine/castle panorama with a quiet mysterious nocturnal fairy forest, atmospheric and understated. No characters, no person, no mascot, no foreground standee. Style: restrained hand-painted 2D game background with soft silhouettes, subtle texture and a cohesive limited midnight indigo, blue-gray, muted moss green palette. Composition: left 55 percent must be dark, calm low-detail negative space for an existing white multi-line Korean game title and a small text menu; no text should be generated. On the right, a few layered tree silhouettes and a faint meandering forest path receding into soft moonlit mist, with a small diffused area of cool light behind the trees. Quiet depth and breathing room, no dramatic giant moon, no buildings, no shrine gate, no mountain palace, no glowing magic circle, no UI panels, no golden border, no logos, no letters, no watermark. A few very faint floating pale petals in the distant forest are acceptable, but keep the scene mostly still and visually restful. Low luminance and saturation; avoid neon purple, glossy mobile-game art, cinematic lens flares, high-detail clutter, and photorealism. The art must be an original fantasy forest, not a copy of any Touhou or other game screenshot."
     }
   ]
 }

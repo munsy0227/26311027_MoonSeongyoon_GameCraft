@@ -1,9 +1,9 @@
 {
-  "images": 32,
+  "images": 33,
   "sounds": 15,
-  "new_images": 24,
-  "applied": 29,
-  "runtime_images": 22,
+  "new_images": 25,
+  "applied": 32,
+  "runtime_images": 25,
   "runtime_sounds": 11,
   "runtime_fonts": 2,
   "audio": {

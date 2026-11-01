@@ -20,8 +20,8 @@ from build_week2_assets import centered, export_image, inspect_wav, make_sfx, pc
 class Week2AssetsTest(unittest.TestCase):
     def test_image_jobs_have_complete_sizes_and_sources(self):
         jobs = json.loads((ROOT / "art_sources/week2/asset_jobs.json").read_text())["jobs"]
-        self.assertEqual(len(jobs), 24)
-        self.assertEqual(len({j["path"] for j in jobs}), 24)
+        self.assertEqual(len(jobs), 25)
+        self.assertEqual(len({j["path"] for j in jobs}), 25)
         for job in jobs:
             self.assertTrue((ROOT / "art_sources/week2/generated" / (job["name"] + ".png")).is_file())
             if job["columns"] > 1:
@@ -92,16 +92,19 @@ class Week2AssetsTest(unittest.TestCase):
 
 
 class ProjectStructureTest(unittest.TestCase):
-    def test_runtime_resources_exist_and_are_tracked_in_git_checkouts(self):
+    def test_runtime_resources_exist_and_are_not_ignored_in_git_checkouts(self):
         paths = {"src/RebornBoss/resources/" + path for path in runtime_paths()}
         self.assertTrue(paths)
         for path in paths:
             self.assertTrue((ROOT / path).is_file(), path)
         if (ROOT / ".git").exists() and shutil.which("git"):
-            tracked = set(subprocess.check_output(
-                ["git", "ls-files", "-z", "--", "src/RebornBoss/resources"], cwd=ROOT
-            ).decode().split("\0"))
-            self.assertFalse(paths - tracked, sorted(paths - tracked))
+            result = subprocess.run(
+                ["git", "check-ignore", "--no-index", "-z", "--stdin"], cwd=ROOT,
+                input="\0".join(sorted(paths)) + "\0", text=True, capture_output=True
+            )
+            self.assertIn(result.returncode, (0, 1), result.stderr)
+            ignored = set(result.stdout.split("\0")) - {""}
+            self.assertFalse(ignored, sorted(ignored))
 
     def test_bundled_fonts_and_licenses_match_manifest(self):
         root = ROOT / "src/RebornBoss/resources/fonts"

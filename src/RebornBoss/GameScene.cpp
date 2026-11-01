@@ -35,8 +35,7 @@ void GameScene::MenuItem(int x, int y, const char* label, bool selected, float w
 bool GameScene::MoveSelection(int& selected, int count) const
 {
     const auto* input = GetGameInput();
-    const int direction = (input->Pressed(VK_DOWN) || input->Pressed(VK_RIGHT) ? 1 : 0)
-                        - (input->Pressed(VK_UP) || input->Pressed(VK_LEFT) ? 1 : 0);
+    const int direction = input->MenuDirection();
     if (direction == 0)
         return false;
     selected = (selected + direction + count) % count;

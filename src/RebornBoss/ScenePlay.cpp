@@ -3,6 +3,7 @@
 #include "App.h"
 #include <algorithm>
 #include <cstdio>
+#include <iterator>
 
 namespace
 {
@@ -143,18 +144,24 @@ void ScenePlay::Step(float seconds, float directionX, float directionY, bool slo
     {
         m_waveSeconds += seconds;
         m_spawnTimer -= seconds;
-        constexpr float positions[] = {96.0F, 240.0F, 384.0F};
+        struct Spawn { float x; MobType type; };
+        constexpr Spawn spawns[] = {
+            {96.0F, MobType::Patrol}, {384.0F, MobType::Familiar},
+            {240.0F, MobType::Patrol}, {240.0F, MobType::Guardian},
+            {96.0F, MobType::Familiar}, {384.0F, MobType::Patrol}
+        };
         while (m_spawnTimer <= 0.0F)
         {
-            m_mobs.emplace_back(positions[m_spawnCount % 3]);
-            m_spawnCount = (m_spawnCount + 1) % 3;
+            const auto& spawn = spawns[m_spawnCount];
+            m_mobs.emplace_back(spawn.x, spawn.type);
+            m_spawnCount = (m_spawnCount + 1) % static_cast<int>(std::size(spawns));
             m_spawnTimer += 1.5F;
         }
         for (auto& mob : m_mobs)
-            mob.Update(seconds, m_bullets);
+            mob.Update(seconds, m_bullets, m_player.X(), m_player.Y());
     }
     else if (m_stagePhase == StagePhase::Boss)
-        m_boss.Update(seconds, m_bullets);
+        m_boss.Update(seconds, m_bullets, m_player.X(), m_player.Y());
     Collide();
     if (m_stagePhase == StagePhase::Waves && m_waveSeconds >= 90.0F)
     {
@@ -198,8 +205,23 @@ int ScenePlay::Update()
     }
     if (m_paused)
     {
+        if (input->IsNewClassic() && input->Pressed('R'))
+        {
+            Init();
+            return 0;
+        }
+        if (input->IsNewClassic() && input->Pressed('Q'))
+        {
+            g_pApp->ChangeScene(SCENE_BEGIN);
+            return 0;
+        }
+        if (input->CancelPressed())
+        {
+            m_paused = false;
+            return 0;
+        }
         MoveSelection(m_selected, 4);
-        if (input->Pressed(VK_RETURN))
+        if (input->ConfirmPressed())
         {
             g_pApp->Resources().PlaySound(SoundId::MenuConfirm);
             if (m_selected == 0)
@@ -213,7 +235,7 @@ int ScenePlay::Update()
     }
     if (m_stagePhase == StagePhase::Intro || m_stagePhase == StagePhase::BossIntro)
     {
-        if (input->Pressed(VK_RETURN))
+        if (input->ConfirmPressed() || input->SkipDialogueHeld())
         {
             g_pApp->Resources().PlaySound(SoundId::MenuConfirm);
             if (m_stagePhase == StagePhase::Intro)
@@ -226,9 +248,9 @@ int ScenePlay::Update()
         }
         return 0;
     }
-    const float x = static_cast<float>(input->Held(VK_RIGHT)) - input->Held(VK_LEFT);
-    const float y = static_cast<float>(input->Held(VK_DOWN)) - input->Held(VK_UP);
-    Tick(g_pApp->DeltaSeconds(), x, y, input->Held(VK_SHIFT), input->Held('Z'), input->Pressed('X'));
+    const float x = input->MovementX();
+    const float y = input->MovementY();
+    Tick(g_pApp->DeltaSeconds(), x, y, input->SlowHeld(), input->ShotHeld(), input->BombPressed());
     auto& resources = g_pApp->Resources();
     if (m_events & Shot) resources.PlaySound(SoundId::Shot);
     if (m_events & Hit) resources.PlaySound(SoundId::Hit);
@@ -244,6 +266,7 @@ int ScenePlay::Update()
 
 int ScenePlay::Render()
 {
+    const bool newClassic = GetGameInput()->IsNewClassic();
     auto& resources = g_pApp->Resources();
     resources.Draw(ImageId::Forest, 0, 0, 1.0F, 0xFFB8B8B8);
     for (const auto& mob : m_mobs)
@@ -319,7 +342,7 @@ int ScenePlay::Render()
         Text(224, 480, bossIntro ? "남의 집에 들어오자마자 무슨 소리예요?"
                                    : "좋아, 오늘부터 이 세계의 최종 보스는 나다!",
              UIColor::Text, FontStyle::Body);
-        Text(224, 550, "Enter로 계속", UIColor::Muted, FontStyle::Caption);
+        Text(224, 550, newClassic ? "Z / J / Enter 계속 · Ctrl / ; 건너뛰기" : "Z로 계속", UIColor::Muted, FontStyle::Caption);
     }
     if (m_paused)
     {
@@ -331,15 +354,20 @@ int ScenePlay::Render()
             MenuItem(96, 210 + i * 68, labels[i], m_selected == i, 344);
         Text(560, 140, "조작", UIColor::Text, FontStyle::Heading);
         resources.Rect(560, 188, 304, 1, UIColor::Border);
-        constexpr const char* keys[] = {"방향키", "Z", "Shift", "X"};
-        constexpr const char* actions[] = {"이동", "연속 사격", "저속 / 중심점", "폭탄"};
+        const char* keys[] = {newClassic ? "방향키/WASD" : "방향키",
+                              newClassic ? "Z / J" : "Z",
+                              newClassic ? "Shift/Space/L" : "Shift",
+                              newClassic ? "X / K" : "X"};
+        constexpr const char* actions[] = {"이동 / 텐키", "사격 / 결정", "저속 / 중심점", "폭탄 / 취소"};
         for (int i = 0; i < 4; ++i)
         {
             Text(560, 224 + i * 44, keys[i], UIColor::Accent, FontStyle::Caption);
-            Text(650, 224 + i * 44, actions[i], UIColor::Text, FontStyle::Caption);
+            Text(720, 224 + i * 44, actions[i], UIColor::Text, FontStyle::Caption);
         }
         Text(560, 444, "작은 중심점으로 탄막을 피하세요.", UIColor::Muted, FontStyle::Caption);
-        Text(96, 536, "Enter로 선택 · Esc로 계속", UIColor::Muted, FontStyle::Caption);
+        if (newClassic)
+            Text(560, 492, "R 재도전 · Q 타이틀", UIColor::Muted, FontStyle::Caption);
+        Text(96, 536, newClassic ? "Z / J / Enter 선택 · X / K / Esc 계속" : "Z로 선택 · X / Esc로 계속", UIColor::Muted, FontStyle::Caption);
     }
     return 0;
 }

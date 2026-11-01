@@ -11,27 +11,36 @@ GameBossMob::GameBossMob()
     m_health = MaxHealth;
 }
 
-void GameBossMob::Update(float seconds, BulletManager& bullets)
+void GameBossMob::Update(float seconds, BulletManager& bullets, float playerX, float playerY)
 {
     if (Dead())
         return;
     m_animationSeconds += seconds;
+    const float elapsed = static_cast<float>(m_animationSeconds);
+    m_x = 240.0F + 100.0F * std::sin(2.0F * std::numbers::pi_v<float> * elapsed / 7.0F);
+    m_y = 120.0F + 12.0F * std::sin(2.0F * std::numbers::pi_v<float> * elapsed / 5.0F);
     m_shotTimer -= seconds;
     while (m_shotTimer <= 0.000001F)
     {
-        const int count = m_phaseTwo ? 24 : 7;
-        const float speed = m_phaseTwo ? 120.0F : 140.0F;
-        for (int i = 0; i < count; ++i)
+        if (!m_phaseTwo)
+            bullets.AddAimedFan(m_x, m_y, playerX, playerY, 7, 8.0F, 155.0F);
+        else
         {
-            const float angle = m_phaseTwo
-                ? 2.0F * std::numbers::pi_v<float> * i / count
-                : std::numbers::pi_v<float> * (0.25F + i / 12.0F);
-            GameBullet bullet{m_x, m_y, std::sin(angle) * speed,
-                              std::cos(angle) * speed, BulletTeam::Enemy};
-            bullet.orb = m_phaseTwo;
-            bullets.Add(bullet);
+            for (int i = 0; i < 36; ++i)
+            {
+                const float angle = m_ringAngle + 2.0F * std::numbers::pi_v<float> * i / 36;
+                GameBullet bullet{m_x, m_y, std::sin(angle) * 125.0F,
+                                  std::cos(angle) * 125.0F, BulletTeam::Enemy};
+                bullet.orb = true;
+                bullets.Add(bullet);
+            }
+            if (m_aimNextRing)
+                bullets.AddAimedFan(m_x, m_y, playerX, playerY, 5, 8.0F, 175.0F);
+            m_aimNextRing = !m_aimNextRing;
+            m_ringAngle = std::fmod(m_ringAngle + std::numbers::pi_v<float> / 30.0F,
+                                   2.0F * std::numbers::pi_v<float>);
         }
-        m_shotTimer += m_phaseTwo ? 1.5F : 1.2F;
+        m_shotTimer += m_phaseTwo ? 1.0F : 0.85F;
     }
 }
 
@@ -40,7 +49,7 @@ bool GameBossMob::AdvancePhase(BulletManager& bullets)
     if (Dead() || m_phaseTwo || m_health > MaxHealth / 2)
         return false;
     m_phaseTwo = true;
-    m_shotTimer = 1.5F;
+    m_shotTimer = 1.0F;
     bullets.ClearEnemy();
     return true;
 }

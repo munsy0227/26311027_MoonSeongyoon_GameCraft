@@ -15,9 +15,9 @@ int SceneLobby::Update()
     const auto* input = GetGameInput();
     if (MoveSelection(m_selected, 3))
         m_lockedNotice = false;
-    if (input->Pressed(VK_ESCAPE))
+    if (input->CancelPressed())
         g_pApp->ChangeScene(SCENE_BEGIN);
-    else if (input->Pressed(VK_RETURN))
+    else if (input->ConfirmPressed())
     {
         if (m_selected == 0)
         {
@@ -45,7 +45,7 @@ int SceneLobby::Render()
     constexpr const char* numbers[] = {"01", "02", "03"};
     constexpr const char* names[] = {"꽃빛 요정의 숲", "안개 요괴의 호수", "월광의 결계 신전"};
     constexpr const char* bosses[] = {"릴리안 블룸", "비비안 미스트우드", "엘레노어 나이트베일"};
-    constexpr const char* requirements[] = {"Enter로 시작", "1스테이지 클리어 후 해금 예정", "2스테이지 클리어 후 해금 예정"};
+    constexpr const char* requirements[] = {"Z로 시작", "1스테이지 클리어 후 해금 예정", "2스테이지 클리어 후 해금 예정"};
     for (int i = 0; i < 3; ++i)
     {
         const int y = 182 + i * 108;
@@ -62,8 +62,12 @@ int SceneLobby::Render()
         if (i != 2)
             resources.Rect(148, y + 94.0F, 280, 1, 0x5039425A);
     }
-    Text(64, 516, m_lockedNotice ? "아직 준비 중인 스테이지입니다." : requirements[m_selected],
+    const bool remake = GetGameInput()->IsNewClassic();
+    const char* notice = m_selected == 0 && remake ? "Z / J / Enter로 시작" : requirements[m_selected];
+    Text(64, 516, m_lockedNotice ? "아직 준비 중인 스테이지입니다." : notice,
          m_lockedNotice ? UIColor::Accent : UIColor::Muted, FontStyle::Caption);
-    Text(64, 556, "방향키로 선택 · Enter로 시작 · Esc로 돌아가기", UIColor::Muted, FontStyle::Caption);
+    Text(64, 556, remake ? "방향키 / WASD / Num 선택 · Z / J / Enter 결정 · X / K / Esc 취소"
+                         : "방향키 / Num으로 선택 · Z로 시작 · X / Esc로 돌아가기",
+         UIColor::Muted, FontStyle::Caption);
     return 0;
 }

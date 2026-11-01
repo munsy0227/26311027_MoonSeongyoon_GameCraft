@@ -6,7 +6,7 @@ enum class ImageId
 {
     Title, Forest, LeonPortrait, LillianPortrait,
     Leon, PatrolFairy, PlayerShot, Lock, Hitbox, Lillian, EnemyPetal, EnemyOrb,
-    Life, Bomb, Explosion, PlayerHit, BombEffect, White, LeonArt, LillianArt, VivianArt, EleanorArt, Count
+    Life, Bomb, Explosion, PlayerHit, BombEffect, White, LeonArt, LillianArt, VivianArt, EleanorArt, TitleAtmosphere, MistFamiliar, BarrierGuardian, Count
 };
 
 enum class SoundId { Menu, Forest, Shot, MenuMove, MenuConfirm, Boss, Hit, EnemyDown, Bomb, Clear, Fail, Count };

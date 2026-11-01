@@ -16,9 +16,9 @@ int ScenePlayResult::Update()
 {
     const auto* input = GetGameInput();
     MoveSelection(m_selected, 2);
-    if (input->Pressed(VK_ESCAPE))
+    if (input->CancelPressed())
         g_pApp->ChangeScene(SCENE_LOBBY);
-    else if (input->Pressed(VK_RETURN))
+    else if (input->ConfirmPressed())
     {
         g_pApp->Resources().PlaySound(SoundId::MenuConfirm);
         g_pApp->ChangeScene(m_selected == 0 ? SCENE_PLAY : SCENE_LOBBY);
@@ -45,6 +45,8 @@ int ScenePlayResult::Render()
     Text(64, 326, timer, UIColor::Muted, FontStyle::Caption);
     MenuItem(90, 390, "재도전", m_selected == 0);
     MenuItem(90, 452, "스테이지 선택", m_selected == 1);
-    Text(64, 552, "Enter로 결정 · Esc로 스테이지 선택", UIColor::Muted, FontStyle::Caption);
+    Text(64, 552, GetGameInput()->IsNewClassic() ? "Z / J / Enter 결정 · X / K / Esc 스테이지 선택"
+                                               : "Z로 결정 · X / Esc로 스테이지 선택",
+         UIColor::Muted, FontStyle::Caption);
     return 0;
 }

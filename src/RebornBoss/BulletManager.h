@@ -10,6 +10,8 @@ public:
     bool Update(float seconds, bool shooting, float playerX, float playerY);
     void Render(const GameResources& resources) const;
     void Add(GameBullet bullet);
+    void AddAimedFan(float x, float y, float targetX, float targetY,
+                     int count, float stepDegrees, float speed);
     std::vector<GameBullet>& Bullets() { return m_bullets; }
     const std::vector<GameBullet>& Bullets() const { return m_bullets; }
     void ClearEnemy();

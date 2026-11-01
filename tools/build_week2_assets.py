@@ -252,7 +252,7 @@ def make_catalog(jobs):
         entry["sha256"] = digest(RES / entry["path"])
         if "source" in entry:
             entry["source_sha256"] = digest(ROOT / entry["source"])
-    return {"date": "2026-10-31", "windows_verified": False, "catalog": catalog}
+    return {"date": "2026-11-01", "windows_verified": False, "catalog": catalog}
 
 
 def validate(manifest):

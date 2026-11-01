@@ -1,6 +1,8 @@
 #include "BulletManager.h"
 #include "GameResources.h"
 #include <algorithm>
+#include <cmath>
+#include <numbers>
 
 bool BulletManager::Update(float seconds, bool shooting, float playerX, float playerY)
 {
@@ -27,6 +29,23 @@ bool BulletManager::Update(float seconds, bool shooting, float playerX, float pl
 void BulletManager::Add(GameBullet bullet)
 {
     m_bullets.push_back(bullet);
+}
+
+void BulletManager::AddAimedFan(float x, float y, float targetX, float targetY,
+                                int count, float stepDegrees, float speed)
+{
+    const float dx = targetX - x;
+    const float dy = targetY - y;
+    if (std::hypot(dx, dy) <= 0.001F)
+        return;
+    const float direction = std::atan2(dy, dx);
+    const float step = stepDegrees * std::numbers::pi_v<float> / 180.0F;
+    // Snapshot the target once; released bullets keep this velocity.
+    for (int i = 0; i < count; ++i)
+    {
+        const float angle = direction + (i - (count - 1) * 0.5F) * step;
+        Add({x, y, std::sin(angle) * speed, std::cos(angle) * speed, BulletTeam::Enemy});
+    }
 }
 
 void BulletManager::ClearEnemy()

@@ -11,4 +11,5 @@ public:
 private:
     int m_selected{};
     bool m_controls{};
+    float m_backgroundSeconds{};
 };

@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-31",
+  "date": "2026-11-01",
   "windows_verified": false,
   "catalog": [
     {
@@ -222,8 +222,8 @@
       "transparent": true,
       "origin": "OpenAI built-in image_gen",
       "source": "art_sources/week2/generated/mist_familiar_sheet.png",
-      "applied": false,
-      "status": "편집 완료",
+      "applied": true,
+      "status": "적용",
       "sha256": "b4496b1fc4fb7da125d1c5aa538d6fc62ffea7372343bbfe78dd8eae4e7ac867",
       "source_sha256": "255bdf3f6311b7b4a56b86f1cbcd7cf90cb99aac49b28878844486eab2bd2a8e"
     },
@@ -242,8 +242,8 @@
       "transparent": true,
       "origin": "OpenAI built-in image_gen",
       "source": "art_sources/week2/generated/barrier_guardian_sheet.png",
-      "applied": false,
-      "status": "편집 완료",
+      "applied": true,
+      "status": "적용",
       "sha256": "ba13fcda3b7cd1c4402f35c344c8d9303a374e4b67291c0721bad00ff48e3a8e",
       "source_sha256": "38aed21964d07ed875ae1e299d82c68c5fd31ddc2cdd87b619d25eacee81ab46"
     },
@@ -530,6 +530,23 @@
       "status": "편집 완료",
       "sha256": "4eca3d7f0087e592ce9ace1466a25eca9c3a591930759086503dd3a7c35b2626",
       "source_sha256": "4eca3d7f0087e592ce9ace1466a25eca9c3a591930759086503dd3a7c35b2626"
+    },
+    {
+      "id": "BG_TITLE_ATMOSPHERE",
+      "path": "images/backgrounds/title_atmosphere.png",
+      "size": [
+        960,
+        600
+      ],
+      "columns": 1,
+      "cell": null,
+      "transparent": false,
+      "origin": "OpenAI built-in image_gen",
+      "source": "art_sources/week2/generated/title_atmosphere.png",
+      "applied": true,
+      "status": "적용",
+      "sha256": "1ca84a22d042cf444dbbfca5fe20343a9e2d8a3a2d414b3729c923d237a52674",
+      "source_sha256": "03e9eeebcc1e2d8d3345cc9a95b6a9f68b689b54a94ce013afa7c026e2bdcd7e"
     },
     {
       "id": "BGM_MENU",
